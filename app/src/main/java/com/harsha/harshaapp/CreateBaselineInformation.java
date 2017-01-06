@@ -233,7 +233,7 @@ public class CreateBaselineInformation extends AppCompatActivity
             }
         });
 
-        village.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        socialCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position==0) {
@@ -244,11 +244,11 @@ public class CreateBaselineInformation extends AppCompatActivity
                     //long pos = parent.getItemIdAtPosition(position);
                     // Showing selected spinner item
                     int i=0;
-                    while(i<villageArray.size()) {
-                        Village vl = villageArray.get(i);
-                        Log.d("villageName", "item="+item+ " vl="+vl+" vl.getVillageName="+vl.getVillageName()+ " i="+i);
-                        if(vl.getVillageName().equals(item)) {
-                            finalVillage = vl;
+                    while(i<socialCategoryArray.size()) {
+                        SocialCategory sc = socialCategoryArray.get(i);
+                        Log.d("socialCategoryName", "item="+item+ " vl="+sc+" vl.getSocialCategoryName="+sc.getSocialCategoryName()+ " i="+i);
+                        if(sc.getSocialCategoryName().equals(item)) {
+                            finalSocialCategory = sc;
                             break;
                         }
                         i++;
@@ -263,7 +263,7 @@ public class CreateBaselineInformation extends AppCompatActivity
             }
         });
 
-        village.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        occupation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position==0) {
@@ -274,11 +274,11 @@ public class CreateBaselineInformation extends AppCompatActivity
                     //long pos = parent.getItemIdAtPosition(position);
                     // Showing selected spinner item
                     int i=0;
-                    while(i<villageArray.size()) {
-                        Village vl = villageArray.get(i);
-                        Log.d("villageName", "item="+item+ " vl="+vl+" vl.getVillageName="+vl.getVillageName()+ " i="+i);
-                        if(vl.getVillageName().equals(item)) {
-                            finalVillage = vl;
+                    while(i<occupationArray.size()) {
+                        Occupation oc = occupationArray.get(i);
+                        Log.d("occupationName", "item="+item+ " vl="+oc+" vl.getOccupationName="+oc.getOccupationName()+ " i="+i);
+                        if(oc.getOccupationName().equals(item)) {
+                            finalOccupation = oc;
                             break;
                         }
                         i++;
@@ -315,6 +315,84 @@ public class CreateBaselineInformation extends AppCompatActivity
     }
 
     public void showVillage(String s) {
+        Log.d("AysncTask", "onPostExecute(" + s + ")");
+        // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
+        try {
+            String msg = "---- Select State ----";
+            nameVillage.add(msg);
+            JSONArray jsonArray = new JSONArray(s);
+            String villageNames[] = new String[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Village villageBean = new Village();
+                villageBean.setVillageName(jsonObject.getString("villageName"));
+                villageBean.setVillageId(jsonObject.getInt("villageId"));
+                villageBean.setVillageCode(jsonObject.getString("villageCode"));
+                villageArray.add(villageBean);
+                //stateNames[i] = state.getStateName();
+                nameVillage.add(villageBean.getVillageName());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ArrayAdapter<String> stateListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameVillage);
+        stateListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        village.setAdapter(stateListAdapter);
+    }
+
+    public void showReligion(String s) {
+        Log.d("AysncTask", "onPostExecute(" + s + ")");
+        // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
+        try {
+            String msg = "---- Select State ----";
+            nameVillage.add(msg);
+            JSONArray jsonArray = new JSONArray(s);
+            String villageNames[] = new String[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Village villageBean = new Village();
+                villageBean.setVillageName(jsonObject.getString("villageName"));
+                villageBean.setVillageId(jsonObject.getInt("villageId"));
+                villageBean.setVillageCode(jsonObject.getString("villageCode"));
+                villageArray.add(villageBean);
+                //stateNames[i] = state.getStateName();
+                nameVillage.add(villageBean.getVillageName());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ArrayAdapter<String> stateListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameVillage);
+        stateListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        village.setAdapter(stateListAdapter);
+    }
+
+    public void showSocialCategory(String s) {
+        Log.d("AysncTask", "onPostExecute(" + s + ")");
+        // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
+        try {
+            String msg = "---- Select State ----";
+            nameVillage.add(msg);
+            JSONArray jsonArray = new JSONArray(s);
+            String villageNames[] = new String[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Village villageBean = new Village();
+                villageBean.setVillageName(jsonObject.getString("villageName"));
+                villageBean.setVillageId(jsonObject.getInt("villageId"));
+                villageBean.setVillageCode(jsonObject.getString("villageCode"));
+                villageArray.add(villageBean);
+                //stateNames[i] = state.getStateName();
+                nameVillage.add(villageBean.getVillageName());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ArrayAdapter<String> stateListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameVillage);
+        stateListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        village.setAdapter(stateListAdapter);
+    }
+
+    public void showOccupation(String s) {
         Log.d("AysncTask", "onPostExecute(" + s + ")");
         // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
         try {
@@ -416,9 +494,11 @@ public class CreateBaselineInformation extends AppCompatActivity
         @Override
         protected void onPostExecute(String s) {
 
-            if(flag==1) {
-                showVillage(s);
-            }
+            showVillage(s);
+            showReligion(s);
+            showSocialCategory(s);
+            showOccupation(s);
+
             progressDialog.dismiss();
         }
     }
