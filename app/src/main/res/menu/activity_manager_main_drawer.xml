@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:title="Menu">
+            <menu>
+                <item
+                    android:id="@+id/home"
+                    android:icon="@drawable/home"
+                    android:title="Home" />
+
+                <item
+                    android:id="@+id/b_info"
+                    android:icon="@drawable/b_info"
+                    android:title="Baseline Information" />
+
+                <item
+                    android:id="@+id/impact_area"
+                    android:icon="@drawable/impact_area"
+                    android:title="Impact Area" />
+
+            </menu>
+        </item>
+
+        <item android:title="My Account">
+            <menu>
+                <item
+                    android:id="@+id/profile"
+                    android:icon="@drawable/profile"
+                    android:title="My Profile" />
+
+                <item
+                    android:id="@+id/change_password"
+                    android:icon="@drawable/change_password"
+                    android:title="Change Password" />
+
+            </menu>
+        </item>
+
+
+        <item android:title="Settings">
+            <menu>
+                <item
+                    android:id="@+id/serverUpload"
+                    android:icon="@drawable/upload"
+                    android:title="Data Upload" />
+
+                <item
+                    android:id="@+id/address"
+                    android:icon="@drawable/address"
+                    android:title="Address" />
+
+                <item
+                    android:id="@+id/logout"
+                    android:icon="@drawable/logout"
+                    android:title="Logout" />
+
+            </menu>
+        </item>
+    </group>
+
+</menu>

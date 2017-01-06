@@ -1,0 +1,189 @@
+<resources>
+    <string name="app_name">HarshaApp</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!--Welcome Page-->
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Welcome To Harsha Trust</string>
+    <string name="slide_1_desc">You can help a lot of people by donating a little.</string>
+
+    <string name="slide_2_title">Mission</string>
+    <string name="slide_2_desc">To ensure the livelihood security and improve the quality of life of rural poor.</string>
+
+    <string name="slide_3_title">Vision</string>
+    <string name="slide_3_desc">To be a professional based institution of excellence for promoting technology led and market driven.</string>
+
+    <string name="slide_4_title">Values</string>
+    <string name="slide_4_desc">Integrity, Discipline, Transparency, Caring, Quality And Innovation</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+
+    <string-array name="state_list">
+        <item>Select State</item>
+        <item>Jammu and Kashmir</item>
+        <item>Himachal Pradesh</item>
+        <item>Punjab</item>
+        <item>Chandigarh</item>
+        <item>Uttrakhand</item>
+        <item>Haryana</item>
+    </string-array>
+
+    <string-array name="district_list">
+        <item>Select District</item>
+        <item>Khordha</item>
+        <item>Cuttack</item>
+        <item>Jajpur</item>
+        <item>Baleshwar</item>
+        <item>Khandgiri</item>
+        <item>Parlakamundi</item>
+        <item>Palasa</item>
+        <item>sundarNagar</item>
+        <item>Patia</item>
+    </string-array>
+
+    <string-array name="block_list">
+        <item>Select Block</item>
+        <item>Jajpur</item>
+        <item>Kuliana</item>
+        <item>Suliapada</item>
+        <item>Rasgovindpur</item>
+        <item>Morada</item>
+        <item>Samakhunta</item>
+        <item>Bodasahi</item>
+        <item>Bangiriposi</item>
+    </string-array>
+
+    <string-array name="village_list">
+        <item>Select Village</item>
+        <item>Hazaridang</item>
+        <item>gogonomati</item>
+        <item>Godaragudi</item>
+        <item>Dadipada</item>
+        <item>Gatiguda</item>
+        <item>Sanagatiguda</item>
+    </string-array>
+
+    <string-array name="project_list">
+        <item>Select Project</item>
+        <item>Kharif</item>
+        <item>Rabi</item>
+        <item>Tomato</item>
+        <item>potato</item>
+        <item>Crop</item>
+        <item>Mango</item>
+        <item>Cshew</item>
+        <item>poultry </item>
+    </string-array>
+
+    <string-array name="quota_list">
+        <item>Select Quota</item>
+        <item>SC</item>
+        <item>ST</item>
+        <item>OBC</item>
+        <item>General</item>
+    </string-array>
+
+    <string-array name="familyMember_list">
+        <item>Select No.of Family Members</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="farmAssets_list">
+        <item>Select Farm Assets</item>
+        <item>Plough</item>
+        <item>Pumpset</item>
+        <item>Pipeline</item>
+        <item>Thresher</item>
+        <item>Tractor, trolley</item>
+        <item>Genset</item>
+        <item>Bullock Cart</item>
+        <item>Power tiller</item>
+        <item>Drip sprinkler</item>
+        <item>Hoe/harrow</item>
+        <item>Seed drill</item>
+        <item>Weeder</item>
+        <item>Sprayer</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="nonFarmAssets_list">
+        <item>Select Non-Farm Assets</item>
+        <item>Bicycle</item>
+        <item>TV</item>
+        <item>Radio</item>
+        <item>VCR etc</item>
+        <item>Mobile</item>
+        <item>Landline</item>
+        <item>Refrigerator</item>
+        <item>Thermoware</item>
+        <item>Sewing machine</item>
+        <item>Almirah/dressing table</item>
+        <item>Temp/truck</item>
+        <item>Car/Jeep</item>
+        <item>Mcycle/Scotter</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="liveStock_list">
+        <item>Select Livestock</item>
+        <item>Cow-local</item>
+        <item>Cow-cross breed</item>
+        <item>Buffalo</item>
+        <item>He-buffalo</item>
+        <item>Goat</item>
+        <item>Sheep</item>
+        <item>Pigs</item>
+        <item>Poultry</item>
+        <item>Fish</item>
+        <item>Bees</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="plantingYear_list">
+        <item>Select Year of Planting</item>
+        <item>2013</item>
+        <item>2014</item>
+        <item>2015</item>
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+        <item>2021</item>
+        <item>2022</item>
+        <item>2023</item>
+    </string-array>
+
+    <string-array name="plantsNo_list">
+        <item>Select No. of Plants</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+    </string-array>
+
+</resources>

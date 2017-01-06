@@ -1,0 +1,448 @@
+package com.harsha.harshaapp;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.harsha.harshaapp.bean.Block;
+import com.harsha.harshaapp.bean.District;
+import com.harsha.harshaapp.bean.State;
+import com.harsha.harshaapp.bean.User;
+import com.harsha.harshaapp.database.DBHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
+
+/**
+ * Created by Jeevani on 1/4/2017.
+ */
+public class ServerDownload extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+
+    DBHandler dbHandler = new DBHandler(ServerDownload.this, null, null, 1);
+    Bundle bundle;
+    User user = new User();
+
+    TextView nav_username,nav_email;
+
+    State finalState;
+    District finalDistrict;
+    Block finalBlock;
+
+    ArrayList<State> stateArray = new ArrayList<State>();
+    ArrayList<District> districtArray = new ArrayList<District>();
+    ArrayList<Block> blockArray = new ArrayList<Block>();
+
+    String URL0 = "https://harsha-guptas.rhcloud.com/api/state/getallstate";
+    String URL2 = "https://harsha-guptas.rhcloud.com/api/district/getbystateid";
+    String URL3 = "https://harsha-guptas.rhcloud.com/api/block/getbydistrictid";
+    String URL1 = "";
+
+    ArrayList<String> nameState = new ArrayList<String>();
+    ArrayList<String> nameDistrict = new ArrayList<String>();
+    ArrayList<String> nameBlock = new ArrayList<String>();
+
+    Spinner stateName,districtName,blockName;
+    Button dataDownload;
+
+    int flag = 1;
+
+    //ProgressDialog progressDialog = new ProgressDialog(this);
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_server_download);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        stateName = (Spinner) findViewById(R.id.state);
+        districtName = (Spinner) findViewById(R.id.district);
+        blockName = (Spinner) findViewById(R.id.block);
+        dataDownload = (Button) findViewById(R.id.dataDownload);
+
+        stateArray.add(new State(0, "0", "---- Select State ----"));
+        districtArray.add(new District(0, "---- Select District ----", "0", 0));
+        blockArray.add(new Block(0, "---- Select Block ----", "0", 0));
+
+        URL1 = URL0;
+        GetAllStateAsyncTask obj = new GetAllStateAsyncTask(ServerDownload.this);
+        obj.execute(URL1);
+
+        dataDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new GetAllStateAsyncTask(ServerDownload.this).execute(URL1);
+            }
+        });
+
+        stateName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    //long pos = parent.getItemIdAtPosition(position);
+                    // Showing selected spinner item
+                    int i=0;
+                    while(i<stateArray.size()) {
+                        State st = stateArray.get(i);
+                        Log.d("stateName", "item="+item+ " st="+st+" st.getStateName="+st.getStateName()+ " i="+i);
+                        if(st.getStateName().equals(item)) {
+                            finalState = st;
+                            break;
+                        }
+                        i++;
+                    }
+                    flag=2;
+                    URL1 = URL2 + "?stateId="+finalState.getStateId();
+                    GetAllStateAsyncTask obj = new GetAllStateAsyncTask(ServerDownload.this);
+                    obj.execute(URL1);
+                    Toast.makeText(parent.getContext(), "Selected: " + item + " " + (position) , Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        districtName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    //long pos = parent.getItemIdAtPosition(position);
+                    // Showing selected spinner item
+                    int i=0;
+                    while(i<districtArray.size()) {
+                        District dt = districtArray.get(i);
+                        if(dt.getDistrictName().equals(item)) {
+                            finalDistrict = dt;
+                            break;
+                        }
+                        i++;
+                    }
+                    flag=3;
+                    URL1 = URL3 + "?districtId="+finalDistrict.getDistrictId();
+                    GetAllStateAsyncTask obj = new GetAllStateAsyncTask(ServerDownload.this);
+                    obj.execute(URL1);
+                    Toast.makeText(parent.getContext(), "Selected: " + item + " " + (position) , Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        /*blockName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                    Toast.makeText(parent.getContext(), "Selected: " + item + " " + (position) , Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+*/
+
+        Intent receive = getIntent();
+        bundle = receive.getExtras();
+        user = dbHandler.getUserDetail();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
+
+        View headerView = navigationView.getHeaderView(0);
+        nav_username = (TextView) headerView.findViewById(R.id.nav_username);
+        nav_username.setText(user.getUserName());
+        nav_email = (TextView) headerView.findViewById(R.id.nav_email);
+        nav_email.setText(user.getEmail());
+    }
+
+    public void showState(String s) {
+        Log.d("AysncTask", "onPostExecute(" + s + ")");
+        // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
+        try {
+            String msg = "---- Select State ----";
+            nameState.add(msg);
+            JSONArray jsonArray = new JSONArray(s);
+            String stateNames[] = new String[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                State state = new State();
+                state.setStateName(jsonObject.getString("stateName"));
+                state.setStateId(jsonObject.getInt("stateId"));
+                state.setStateCode(jsonObject.getString("stateCode"));
+                stateArray.add(state);
+                //stateNames[i] = state.getStateName();
+                nameState.add(state.getStateName());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ArrayAdapter<String> stateListAdapter = new ArrayAdapter<String>(ServerDownload.this, android.R.layout.simple_spinner_item, nameState);
+        stateListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        stateName.setAdapter(stateListAdapter);
+    }
+
+    public void showDistrict(String s) {
+        Log.d("AysncTask", "onPostExecute(" + s + ")");
+        // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
+        try {
+            String msg = "---- Select District ----";
+            nameDistrict.add(msg);
+            JSONArray jsonArray = new JSONArray(s);
+            String districtNames[] = new String[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                District district = new District();
+                district.setDistrictId(jsonObject.getInt("districtId"));
+                district.setDistrictName(jsonObject.getString("districtName"));
+                district.setDistrictCode(jsonObject.getString("districtCode"));
+                district.setStateId(jsonObject.getInt("stateId"));
+                districtArray.add(district);
+                //stateNames[i] = state.getStateName();
+                nameDistrict.add(district.getDistrictName());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ArrayAdapter<String> districtListAdapter = new ArrayAdapter<String>(ServerDownload.this, android.R.layout.simple_spinner_item, nameDistrict);
+        districtListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        districtName.setAdapter(districtListAdapter);
+    }
+
+    public void showBlock(String s) {
+        Log.d("AysncTask", "onPostExecute(" + s + ")");
+        // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
+        try {
+            String msg = "---- Select Block ----";
+            nameBlock.add(msg);
+            JSONArray jsonArray = new JSONArray(s);
+            String blockNames[] = new String[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Block block = new Block();
+                block.setBlockName(jsonObject.getString("blockName"));
+                block.setDistrictId(jsonObject.getInt("districtId"));
+                block.setBlockCode(jsonObject.getString("blockCode"));
+                block.setBlockId(jsonObject.getInt("blockId"));
+                blockArray.add(block);
+                //stateNames[i] = state.getStateName();
+                nameBlock.add(block.getBlockName());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ArrayAdapter<String> blockListAdapter = new ArrayAdapter<String>(ServerDownload.this, android.R.layout.simple_spinner_item, nameBlock);
+        blockListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        blockName.setAdapter(blockListAdapter);
+    }
+
+    public String testingRestAPI(String urls) {
+        StringBuilder result = new StringBuilder();
+        HttpsURLConnection httpsURLConnection = null;
+        Log.d("Line-61 - urls:",urls);
+        try {
+            URL url = new URL(urls);
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setConnectTimeout(30 * 1000);
+            httpsURLConnection.setReadTimeout(30 * 1000);
+            httpsURLConnection.setRequestMethod("POST");
+            httpsURLConnection.setDoInput(true);
+            httpsURLConnection.setDoOutput(true);
+
+            httpsURLConnection.connect();
+            DataOutputStream out = new DataOutputStream(httpsURLConnection.getOutputStream());
+            //out.writeBytes(parameter);
+            out.flush();
+            out.close();
+
+            Log.d("Line-72 - https:",httpsURLConnection.toString());
+
+            Log.d("Line-721 - status code:","" + httpsURLConnection.getResponseCode());
+
+            if (httpsURLConnection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
+                InputStream in = new BufferedInputStream(httpsURLConnection.getInputStream());
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+                Log.d("Line-78 - reader:",reader.toString());
+                String line;
+                while((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+            }
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            //httpsURLConnection.disconnect();
+        }
+
+        Log.d("Line-94 - result:",result.toString());
+        return result.toString();
+    }
+
+    class GetAllStateAsyncTask extends AsyncTask<String, String, String> {
+
+        Context mContext;
+        ProgressDialog progressDialog;
+
+        public GetAllStateAsyncTask(Context mContext) {
+            this.mContext = mContext;
+            progressDialog = new ProgressDialog(mContext);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            Log.d("Line-117 - AysncTask:", "doInBackground");
+            return testingRestAPI(URL1);
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setTitle(R.string.app_name);
+            progressDialog.setMessage("Loading, Please Wait...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            if(flag==1) {
+                showState(s);
+            }
+            else if(flag==2) {
+                showDistrict(s);
+            }
+            else if(flag==3) {
+                showBlock(s);
+            }
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.home) {
+            Intent intent = new Intent(getApplicationContext(), Home.class);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (id == R.id.b_info) {
+            Intent intent = new Intent(getApplicationContext(), BaselineInformation.class);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (id == R.id.create_info) {
+            Intent intent = new Intent(getApplicationContext(), CreateBaselineInformation.class);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (id == R.id.impact_area) {
+            Intent intent = new Intent(getApplicationContext(), ImpactArea.class);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (id == R.id.uploads) {
+            Intent intent = new Intent(getApplicationContext(), ProjectDetails.class);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (id == R.id.profile) {
+            Intent intent = new Intent(getApplicationContext(), MyProfile.class);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (id == R.id.change_password) {
+            Intent intent = new Intent(getApplicationContext(), ChangePassword.class);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (id == R.id.serverDownload) {
+            Intent intent = new Intent(getApplicationContext(), ServerDownload.class);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (id == R.id.serverUpload) {
+            Intent intent = new Intent(getApplicationContext(), ServerUpload.class);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (id == R.id.address) {
+            Intent intent = new Intent(getApplicationContext(), Address.class);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (id == R.id.logout) {
+            dbHandler.deleteUser(user);
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+}

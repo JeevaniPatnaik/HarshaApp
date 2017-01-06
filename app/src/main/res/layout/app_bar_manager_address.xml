@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.harsha.harshaapp.ManagerAddress">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Registered Office"
+                android:textColor="#97152d"
+                android:id="@+id/t1"
+                android:textSize="40dp"
+                android:layout_marginTop="82dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Plot No-217/B,"
+                android:textColor="#0f135b"
+                android:id="@+id/t2"
+                android:layout_marginStart="55dp"
+                android:layout_below="@+id/t1"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Bayababa Matha Lane Unit-9 Flats,"
+                android:textColor="#0f135b"
+                android:id="@+id/t3"
+                android:layout_below="@+id/t2"
+                android:layout_alignStart="@+id/t2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Bhubaneswar; District: Khurda,"
+                android:textColor="#0f135b"
+                android:id="@+id/t4"
+                android:layout_below="@+id/t3"
+                android:layout_alignStart="@+id/t3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Pin:-751022, Odisha, India"
+                android:textSize="30dp"
+                android:textColor="#0f135b"
+                android:id="@+id/t5"
+                android:layout_below="@+id/t4"
+                android:layout_alignStart="@+id/t4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Admin Office"
+                android:textColor="#97152d"
+                android:id="@+id/t6"
+                android:textSize="40dp"
+                android:layout_below="@+id/t5"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="45dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="A-50, Ground Floor, "
+                android:textSize="30dp"
+                android:textColor="#0f135b"
+                android:id="@+id/t7"
+                android:layout_below="@+id/t6"
+                android:layout_alignStart="@+id/t5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Nilakantha Nagar, Unit – 8,"
+                android:textColor="#0f135b"
+                android:id="@+id/t8"
+                android:layout_below="@+id/t7"
+                android:layout_alignStart="@+id/t7" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Bhubaneswar; District: Khurda,"
+                android:textSize="30dp"
+                android:textColor="#0f135b"
+                android:id="@+id/t9"
+                android:layout_below="@+id/t8"
+                android:layout_alignStart="@+id/t8" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Pin:-751022, Odisha, India"
+                android:textColor="#0f135b"
+                android:id="@+id/t10"
+                android:layout_below="@+id/t9"
+                android:layout_alignStart="@+id/t9" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="E-mail : harshaho@harshatrust.org"
+                android:textColor="#520f5b"
+                android:textSize="40dp"
+                android:id="@+id/t11"
+                android:layout_marginTop="52dp"
+                android:layout_below="@+id/t10"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textSize="40dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Website : www.harshatrust.org"
+                android:textColor="#520f5b"
+                android:id="@+id/t12"
+                android:layout_below="@+id/t11"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

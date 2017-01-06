@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.harsha.harshaapp.CreateBaselineInformation">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:layout_marginTop="70dp"
+                android:layout_alignParentTop="true"
+                android:id="@+id/familyHeadName"
+                android:layout_alignParentEnd="true"
+                android:hint="Name of the Head of Family"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:layout_below="@+id/familyHeadName"
+                android:id="@+id/stateName"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:layout_below="@+id/stateName"
+                android:layout_alignParentStart="true"
+                android:id="@+id/districtName"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:layout_below="@+id/districtName"
+                android:layout_alignParentStart="true"
+                android:id="@+id/blockName"
+                android:layout_alignParentEnd="true" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:layout_below="@+id/blockName"
+                android:layout_alignParentStart="true"
+                android:id="@+id/villageName" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:layout_below="@+id/villageName"
+                android:layout_alignParentStart="true"
+                android:id="@+id/religion" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:layout_below="@+id/religion"
+                android:layout_alignParentStart="true"
+                android:id="@+id/socialCategory" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:layout_below="@+id/socialCategory"
+                android:layout_alignParentStart="true"
+                android:id="@+id/occupation" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/contactNo"
+                android:hint="Contact Number"
+                android:layout_below="@+id/occupation"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/income"
+                android:hint="Income"
+                android:layout_below="@+id/contactNo"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="numberDecimal"
+                android:hint="Number of Members"
+                android:ems="10"
+                android:id="@+id/noOfFamilyMember"
+                android:layout_below="@+id/income"
+                android:layout_alignParentStart="true"/>
+
+            <Button
+                android:text="Confirm"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/noOfFamilyMember"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/confirm"
+                android:background="#a854d4"
+                android:layout_marginTop="37dp"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
