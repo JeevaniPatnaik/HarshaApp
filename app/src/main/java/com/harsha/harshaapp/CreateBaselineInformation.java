@@ -334,87 +334,87 @@ public class CreateBaselineInformation extends AppCompatActivity
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        ArrayAdapter<String> stateListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameVillage);
-        stateListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        village.setAdapter(stateListAdapter);
+        ArrayAdapter<String> villageListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameVillage);
+        villageListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        village.setAdapter(villageListAdapter);
     }
 
     public void showReligion(String s) {
         Log.d("AysncTask", "onPostExecute(" + s + ")");
         // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
         try {
-            String msg = "---- Select State ----";
-            nameVillage.add(msg);
+            String msg = "---- Select Religion ----";
+            nameReligion.add(msg);
             JSONArray jsonArray = new JSONArray(s);
-            String villageNames[] = new String[jsonArray.length()];
+            String religionNames[] = new String[jsonArray.length()];
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Village villageBean = new Village();
-                villageBean.setVillageName(jsonObject.getString("villageName"));
-                villageBean.setVillageId(jsonObject.getInt("villageId"));
-                villageBean.setVillageCode(jsonObject.getString("villageCode"));
-                villageArray.add(villageBean);
+                Religion religionBean = new Religion();
+                religionBean.setReligionName(jsonObject.getString("religionName"));
+                religionBean.setReligionId(jsonObject.getInt("religionId"));
+                religionBean.setReligionCode(jsonObject.getString("religionCode"));
+                religionArray.add(religionBean);
                 //stateNames[i] = state.getStateName();
-                nameVillage.add(villageBean.getVillageName());
+                nameReligion.add(religionBean.getReligionName());
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        ArrayAdapter<String> stateListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameVillage);
-        stateListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        village.setAdapter(stateListAdapter);
+        ArrayAdapter<String> religionListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameReligion);
+        religionListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        religion.setAdapter(religionListAdapter);
     }
 
     public void showSocialCategory(String s) {
         Log.d("AysncTask", "onPostExecute(" + s + ")");
         // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
         try {
-            String msg = "---- Select State ----";
-            nameVillage.add(msg);
+            String msg = "---- Select Social Category ----";
+            nameSocialCategory.add(msg);
             JSONArray jsonArray = new JSONArray(s);
-            String villageNames[] = new String[jsonArray.length()];
+            String socialCategoryNames[] = new String[jsonArray.length()];
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Village villageBean = new Village();
-                villageBean.setVillageName(jsonObject.getString("villageName"));
-                villageBean.setVillageId(jsonObject.getInt("villageId"));
-                villageBean.setVillageCode(jsonObject.getString("villageCode"));
-                villageArray.add(villageBean);
+                SocialCategory socialCategoryBean = new SocialCategory();
+                socialCategoryBean.setSocialCategoryName(jsonObject.getString("socialCategoryName"));
+                socialCategoryBean.setSocialCategoryId(jsonObject.getInt("socialCategoryId"));
+                socialCategoryBean.setSocialCategoryCode(jsonObject.getString("socialCategoryCode"));
+                socialCategoryArray.add(socialCategoryBean);
                 //stateNames[i] = state.getStateName();
-                nameVillage.add(villageBean.getVillageName());
+                nameSocialCategory.add(socialCategoryBean.getSocialCategoryName());
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        ArrayAdapter<String> stateListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameVillage);
-        stateListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        village.setAdapter(stateListAdapter);
+        ArrayAdapter<String> socialCategoryListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameSocialCategory);
+        socialCategoryListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        socialCategory.setAdapter(socialCategoryListAdapter);
     }
 
     public void showOccupation(String s) {
         Log.d("AysncTask", "onPostExecute(" + s + ")");
         // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
         try {
-            String msg = "---- Select State ----";
-            nameVillage.add(msg);
+            String msg = "---- Select Occupation ----";
+            nameOccupation.add(msg);
             JSONArray jsonArray = new JSONArray(s);
-            String villageNames[] = new String[jsonArray.length()];
+            String occupationNames[] = new String[jsonArray.length()];
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Village villageBean = new Village();
-                villageBean.setVillageName(jsonObject.getString("villageName"));
-                villageBean.setVillageId(jsonObject.getInt("villageId"));
-                villageBean.setVillageCode(jsonObject.getString("villageCode"));
-                villageArray.add(villageBean);
+                Occupation occupationBean = new Occupation();
+                occupationBean.setOccupationName(jsonObject.getString("occupationName"));
+                occupationBean.setOccupationId(jsonObject.getInt("occupationId"));
+                occupationBean.setOccupationCode(jsonObject.getString("occupationCode"));
+                occupationArray.add(occupationBean);
                 //stateNames[i] = state.getStateName();
-                nameVillage.add(villageBean.getVillageName());
+                nameOccupation.add(occupationBean.getOccupationName());
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        ArrayAdapter<String> stateListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameVillage);
-        stateListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        village.setAdapter(stateListAdapter);
+        ArrayAdapter<String> occupationListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameOccupation);
+        occupationListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        occupation.setAdapter(occupationListAdapter);
     }
 
     public String testingRestAPI(String urls) {

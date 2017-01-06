@@ -34,6 +34,10 @@ public class SocialCategory {
         this.socialCategoryName = socialCategoryName;
     }
 
+    public SocialCategory(){
+
+    }
+
     public SocialCategory(int socialCategoryId, String socialCategoryName, String socialCategoryCode) {
         this.socialCategoryId = socialCategoryId;
         this.socialCategoryName = socialCategoryName;
