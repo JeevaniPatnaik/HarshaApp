@@ -48,7 +48,6 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by Jeevani on 12/14/2016.
  */
-
 public class CreateBaselineInformation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
