@@ -58,7 +58,7 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/village"
+                android:id="@+id/block"
                 android:layout_below="@+id/district"
                 android:layout_alignStart="@+id/district"
                 android:layout_alignEnd="@+id/district" />
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:text="DOWNLOAD"
                 android:id="@+id/dataDownload"
-                android:layout_below="@+id/village"
+                android:layout_below="@+id/block"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="37dp"
                 android:background="#a854d4"/>
