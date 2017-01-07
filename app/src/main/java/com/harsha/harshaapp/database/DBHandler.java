@@ -19,6 +19,7 @@ import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.bean.Village;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -668,6 +669,25 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
+    //fetch from religion table
+    public ArrayList<String> getAllReligion(){
+
+        ArrayList<String> religionList = new ArrayList<String>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+RELIGION;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                String religionName = cursor.getString(cursor.getColumnIndex("religionName"));
+                String religionCode = cursor.getString(cursor.getColumnIndex("religionCode"));
+                religionList.add(religionCode);
+                religionList.add(religionName);
+            }
+        }
+        return religionList;
+    }
+
     //insert into SocialCategory Table
     public void insertSocialCategory(SocialCategory socialCategory){
 
@@ -691,6 +711,25 @@ public class DBHandler extends SQLiteOpenHelper {
         Log.d(TAG, "Row Deleted in SOCIAL_CATEGORY");
     }
 
+    //fetch from social category table
+    public ArrayList<String> getAllSocialCategory(){
+
+        ArrayList<String> socialCategoryList = new ArrayList<String>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+SOCIAL_CATEGORY;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                String socialCategoryName = cursor.getString(cursor.getColumnIndex("socialCategoryName"));
+                String socialCategoryCode = cursor.getString(cursor.getColumnIndex("socialCategoryCode"));
+                socialCategoryList.add(socialCategoryCode);
+                socialCategoryList.add(socialCategoryName);
+            }
+        }
+        return socialCategoryList;
+    }
+
     //insert into Occupation Table
     public void insertOccupation(Occupation occupation){
 
@@ -712,5 +751,24 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + OCCUPATION + ";");
         Log.d(TAG, "Row Deleted in OCCUPATION");
+    }
+
+    //fetch from occupation table
+    public ArrayList<String> getAllOccupation(){
+
+        ArrayList<String> occupationList = new ArrayList<String>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+OCCUPATION;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                String occupationName = cursor.getString(cursor.getColumnIndex("occupationName"));
+                String occupationCode = cursor.getString(cursor.getColumnIndex("occupationCode"));
+                occupationList.add(occupationCode);
+                occupationList.add(occupationName);
+            }
+        }
+        return occupationList;
     }
 }
