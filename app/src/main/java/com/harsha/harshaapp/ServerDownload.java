@@ -127,6 +127,7 @@ public class ServerDownload extends AppCompatActivity
                         i++;
                     }
                     flag=2;
+                    resetSpinner1();
                     URL1 = URL2 + "?stateId="+finalState.getStateId();
                     GetAllStateAsyncTask obj = new GetAllStateAsyncTask(ServerDownload.this);
                     obj.execute(URL1);
@@ -161,6 +162,7 @@ public class ServerDownload extends AppCompatActivity
                         i++;
                     }
                     flag=3;
+                    resetSpinner2();
                     URL1 = URL3 + "?districtId="+finalDistrict.getDistrictId();
                     GetAllStateAsyncTask obj = new GetAllStateAsyncTask(ServerDownload.this);
                     obj.execute(URL1);
@@ -209,6 +211,30 @@ public class ServerDownload extends AppCompatActivity
         nav_email.setText(user.getEmail());
     }
 
+    public void resetSpinner1() {
+        String msg2 = "---- Select District ----";
+        String msg3 = "---- Select Block ----";
+        nameDistrict.clear();
+        nameBlock.clear();
+        nameDistrict.add(msg2);
+        nameBlock.add(msg3);
+        ArrayAdapter<String> districtListAdapter = new ArrayAdapter<String>(ServerDownload.this, android.R.layout.simple_spinner_item, nameDistrict);
+        districtListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        districtName.setAdapter(districtListAdapter);
+        ArrayAdapter<String> blockListAdapter = new ArrayAdapter<String>(ServerDownload.this, android.R.layout.simple_spinner_item, nameBlock);
+        blockListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        blockName.setAdapter(blockListAdapter);
+    }
+
+    public void resetSpinner2() {
+        String msg3 = "---- Select Block ----";
+        nameBlock.clear();
+        nameBlock.add(msg3);
+        ArrayAdapter<String> blockListAdapter = new ArrayAdapter<String>(ServerDownload.this, android.R.layout.simple_spinner_item, nameBlock);
+        blockListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        blockName.setAdapter(blockListAdapter);
+    }
+
     public void showState(String s) {
         Log.d("AysncTask", "onPostExecute(" + s + ")");
         // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
@@ -239,8 +265,8 @@ public class ServerDownload extends AppCompatActivity
         Log.d("AysncTask", "onPostExecute(" + s + ")");
         // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
         try {
-            String msg = "---- Select District ----";
-            nameDistrict.add(msg);
+            /*String msg = "---- Select District ----";
+            nameDistrict.add(msg);*/
             JSONArray jsonArray = new JSONArray(s);
             String districtNames[] = new String[jsonArray.length()];
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -266,10 +292,9 @@ public class ServerDownload extends AppCompatActivity
         Log.d("AysncTask", "onPostExecute(" + s + ")");
         // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
         try {
-            String msg = "---- Select Block ----";
-            nameBlock.add(msg);
+            /*String msg = "---- Select Block ----";
+            nameBlock.add(msg);*/
             JSONArray jsonArray = new JSONArray(s);
-            String blockNames[] = new String[jsonArray.length()];
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Block block = new Block();
@@ -280,6 +305,7 @@ public class ServerDownload extends AppCompatActivity
                 blockArray.add(block);
                 //stateNames[i] = state.getStateName();
                 nameBlock.add(block.getBlockName());
+                Toast.makeText(this,"nameBlock="+nameBlock.get(i),Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();
