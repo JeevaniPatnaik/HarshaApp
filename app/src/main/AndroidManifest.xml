@@ -72,7 +72,7 @@
         <activity
             android:name=".ManagerBaselineInformation"
             android:label="Baseline Information"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.ManagerHome"
             android:theme="@style/Theme.DesignDemo">
@@ -89,7 +89,7 @@
         <activity
             android:name=".ManagerImpactArea"
             android:label="Impact Area"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.ManagerHome"
             android:theme="@style/Theme.DesignDemo">
@@ -106,7 +106,7 @@
         <activity
             android:name=".ManagerProfile"
             android:label="My Profile"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.ManagerHome"
             android:theme="@style/Theme.DesignDemo">
@@ -123,7 +123,7 @@
         <activity
             android:name=".ManagerChangePassword"
             android:label="Change Password"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.ManagerHome"
             android:theme="@style/Theme.DesignDemo">
@@ -140,7 +140,7 @@
         <activity
             android:name=".ManagerAddress"
             android:label="Address"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.ManagerHome"
             android:theme="@style/Theme.DesignDemo">
@@ -157,7 +157,7 @@
         <activity
             android:name=".ManagerServerUpload"
             android:label="Server Data Upload"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.ManagerHome"
             android:theme="@style/Theme.DesignDemo">
@@ -174,7 +174,7 @@
         <activity
             android:name=".Home"
             android:label="Home"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Login"
             android:theme="@style/Theme.DesignDemo">
@@ -191,7 +191,7 @@
         <activity
             android:name=".BaselineInformation"
             android:label="Baseline Information"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Home"
             android:theme="@style/Theme.DesignDemo">
@@ -208,7 +208,7 @@
         <activity
             android:name=".FamilyInformation"
             android:label="Family Information"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Home"
             android:theme="@style/Theme.DesignDemo">
@@ -225,7 +225,7 @@
         <activity
             android:name=".CreateBaselineInformation"
             android:label="Create Baseline Information"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Home"
             android:theme="@style/Theme.DesignDemo">
@@ -242,7 +242,7 @@
         <activity
             android:name=".UpdateBaselineInformation"
             android:label="Update Baseline Information"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.BaselineInformation"
             android:theme="@style/Theme.DesignDemo">
@@ -293,7 +293,7 @@
         <activity
             android:name=".ImpactArea"
             android:label="Impact Area"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Home"
             android:theme="@style/Theme.DesignDemo">
@@ -310,7 +310,7 @@
         <activity
             android:name=".ProjectDetails"
             android:label="Uploads"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Home"
             android:theme="@style/Theme.DesignDemo">
@@ -327,7 +327,7 @@
         <activity
             android:name=".MyProfile"
             android:label="My Profile"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Home"
             android:theme="@style/Theme.DesignDemo">
@@ -344,7 +344,7 @@
         <activity
             android:name=".ChangePassword"
             android:label="Change Password"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Home"
             android:theme="@style/Theme.DesignDemo">
@@ -361,7 +361,7 @@
         <activity
             android:name=".ServerDownload"
             android:label="Server Data Download"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Home"
             android:theme="@style/Theme.DesignDemo">
@@ -395,7 +395,7 @@
         <activity
             android:name=".Address"
             android:label="Address"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Home"
             android:theme="@style/Theme.DesignDemo">

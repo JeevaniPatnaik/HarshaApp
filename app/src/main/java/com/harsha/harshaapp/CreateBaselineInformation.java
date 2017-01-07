@@ -169,6 +169,8 @@ public class CreateBaselineInformation extends AppCompatActivity
                         + "&contactNo" + contactNo.getText().toString() + "&income" + income.getText().toString()
                         + "&noOfFamilyMember" + noOfFamilyMember.getText().toString();
                 new AddBaselineAsyncTask().execute(URL2);*/
+                Intent intent = new Intent(CreateBaselineInformation.this,AddMemberInformation.class);
+                startActivity(intent);
             }
         });
 
