@@ -140,7 +140,7 @@ public class Login extends AppCompatActivity {
                 //Log.d("URL2",URL2);
                 URL url=new URL(URL2);
                 HttpURLConnection con=(HttpURLConnection) url.openConnection();
-                con.setRequestMethod("GET");
+                con.setRequestMethod("POST");
                 con.connect();
 
                 BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(con.getInputStream()));
