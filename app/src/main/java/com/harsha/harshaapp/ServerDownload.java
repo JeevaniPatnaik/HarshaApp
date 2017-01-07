@@ -305,7 +305,7 @@ public class ServerDownload extends AppCompatActivity
                 blockArray.add(block);
                 //stateNames[i] = state.getStateName();
                 nameBlock.add(block.getBlockName());
-                Toast.makeText(this,"nameBlock="+nameBlock.get(i),Toast.LENGTH_LONG).show();
+                //Toast.makeText(this,"nameBlock="+nameBlock.get(i),Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();
