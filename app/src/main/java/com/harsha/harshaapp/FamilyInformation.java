@@ -90,6 +90,11 @@ public class FamilyInformation extends AppCompatActivity
             //intent.putExtras(bundle);
             startActivity(intent);
         }
+        else if (id == R.id.update_baseline_info) {
+            Intent intent = new Intent(getApplicationContext(), UpdateBaselineInformation.class);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }

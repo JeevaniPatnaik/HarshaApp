@@ -15,4 +15,10 @@
         android:title="Update Member Information"
         android:icon="@drawable/update_info"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/update_baseline_info"
+        android:orderInCategory="100"
+        android:title="Update BaseLine Information"
+        android:icon="@drawable/update_info"
+        app:showAsAction="never" />
 </menu>
