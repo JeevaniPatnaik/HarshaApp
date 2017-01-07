@@ -1,9 +1,12 @@
 package com.harsha.harshaapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +32,12 @@ import java.net.URL;
  */
 public class Login extends AppCompatActivity {
 
+
+    Context mContext = Login.this;
+    SharedPreferences appPreferences;
+    boolean isAppInstalled = false;
+
+
     //String URL1 = "http://10.1.6.140:8085/HarshaTrust/api/checkpoint/login";
     String URL1 = "http://harsha-guptas.rhcloud.com/api/checkpoint/login";
     String URL2 = "";
@@ -51,6 +60,37 @@ public class Login extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
 
         forgotpassword = (TextView) findViewById(R.id.forgotpassword);
+
+
+                            /**
+                             * check if application is running first time, only then create shorcut
+                             */
+                            appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                            isAppInstalled = appPreferences.getBoolean("isAppInstalled", false);
+                            if (isAppInstalled == false) {
+                                /**
+                                 * create short code
+                                 */
+                                Intent shortcutIntent = new Intent(getApplicationContext(), Login.class);
+                                shortcutIntent.setAction(Intent.ACTION_MAIN);
+                                Intent intent = new Intent();
+                                intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+                                intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "Lovvy");
+                                intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                                        Intent.ShortcutIconResource.fromContext(getApplicationContext(),
+                                                R.mipmap.ic_launcher));
+                                intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+                                getApplicationContext().sendBroadcast(intent);
+                                /**
+                                 * Make preference true
+                                 */
+                                SharedPreferences.Editor editor = appPreferences.edit();
+                                editor.putBoolean("isAppInstalled", true);
+                                editor.commit();
+
+                            }
+
+
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/LatoLight.ttf");
         Typeface custom_font1 = Typeface.createFromAsset(getAssets(), "fonts/LatoRegular.ttf");
         login.setTypeface(custom_font1);
