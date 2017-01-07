@@ -1,5 +1,7 @@
 package com.harsha.harshaapp;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -94,8 +97,10 @@ public class ChangePassword extends AppCompatActivity
                     newPass = newPassword.getText().toString();
                     retypePass = retypePassword.getText().toString();
 
-                    URL2 = URL1 + "?userid="+user.getUserId()+"&password="+newPass;
-                    new ChangePasswordAsyncTask().execute(URL2);
+                    URL2 = URL1 + "?userId="+user.getUserId()+"&oldPassword="+oldPass+"&newPassword="+newPass;
+                    Log.d("URL:", URL2);
+                    ChangePasswordAsyncTask obj = new ChangePasswordAsyncTask(ChangePassword.this);
+                    obj.execute(URL2);
 
                 }
                 else {
@@ -244,6 +249,14 @@ public class ChangePassword extends AppCompatActivity
 
     class ChangePasswordAsyncTask extends AsyncTask<String, String, String> {
 
+        Context mContext;
+        ProgressDialog progressDialog;
+
+        public ChangePasswordAsyncTask(Context mContext) {
+            this.mContext = mContext;
+            progressDialog = new ProgressDialog(mContext);
+        }
+
         @Override
         protected String doInBackground(String... params) {
             try {
@@ -267,6 +280,9 @@ public class ChangePassword extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog.setTitle(R.string.app_name);
+            progressDialog.setMessage("Loading, Please Wait...");
+            progressDialog.show();
         }
 
         @Override
@@ -321,6 +337,8 @@ public class ChangePassword extends AppCompatActivity
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            progressDialog.dismiss();
         }
     }
 }

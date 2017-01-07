@@ -461,7 +461,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public void updateUser(User user){
 
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("UPDATE"+ TABLE_USER + "SET " + USER_PASSWORD + "=" + user.getPassword() + " WHERE "+ USER_ID+"="+user.getUserId()+ ";");
+        db.execSQL("UPDATE "+ TABLE_USER + " SET " + USER_PASSWORD + "='" + user.getPassword() + "' WHERE "+ USER_ID+"="+user.getUserId()+ ";");
         Log.d(TAG, "Row Updated in TABLE_USER");
 
     }

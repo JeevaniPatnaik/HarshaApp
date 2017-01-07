@@ -214,8 +214,6 @@ public class Login extends AppCompatActivity {
         protected void onPostExecute(String s) {
            // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
 
-            progressDialog.dismiss();
-
             try {
                 JSONArray jsonArray = new JSONArray(s);
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -332,6 +330,8 @@ public class Login extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            progressDialog.dismiss();
         }
     }
 
