@@ -74,7 +74,7 @@ public class Login extends AppCompatActivity {
                                 shortcutIntent.setAction(Intent.ACTION_MAIN);
                                 Intent intent = new Intent();
                                 intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-                                intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "Lovvy");
+                                intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, R.string.app_name);
                                 intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
                                         Intent.ShortcutIconResource.fromContext(getApplicationContext(),
                                                 R.mipmap.ic_launcher));
@@ -214,8 +214,6 @@ public class Login extends AppCompatActivity {
         protected void onPostExecute(String s) {
            // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
 
-            progressDialog.dismiss();
-
             try {
                 JSONArray jsonArray = new JSONArray(s);
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -332,6 +330,8 @@ public class Login extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            progressDialog.dismiss();
         }
     }
 
