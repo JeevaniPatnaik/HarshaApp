@@ -7,7 +7,7 @@ package com.harsha.harshaapp.bean;
 public class Disabilities {
 
     private int disabilitiesId;
-    private String disbilitiesCode;
+    private String disabilitiesCode;
     private String disabilitiesName;
 
     public int getDisabilitiesId() {
@@ -19,11 +19,11 @@ public class Disabilities {
     }
 
     public String getDisbilitiesCode() {
-        return disbilitiesCode;
+        return getDisbilitiesCode();
     }
 
-    public void setDisbilitiesCode(String disbilitiesCode) {
-        this.disbilitiesCode = disbilitiesCode;
+    public void setDisabilitiesCode(String disabilitiesCode) {
+        this.disabilitiesCode = disabilitiesCode;
     }
 
     public String getDisabilitiesName() {
