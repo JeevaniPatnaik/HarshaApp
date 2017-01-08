@@ -39,10 +39,11 @@ public class AddMemberInformation extends AppCompatActivity
 
     TextView nav_username,nav_email;
 
+    TextView familyInformation, personalInformation;
     EditText name,dob,aadhaarCard,voterId,familyHeadName,personalSalary;
     RadioGroup gender;
     RadioButton male,female,other;
-    Spinner quota;
+    Spinner quota, occupation, disabilities, relationship, education, educationStatus, migrationReason, religion, centralScheme, maritalStatus;
     Button add;
     boolean flag = false;
     MemberInfo memberInfo = new MemberInfo();
@@ -54,6 +55,8 @@ public class AddMemberInformation extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        familyInformation = (TextView) findViewById(R.id.familyInformation);
+        personalInformation = (TextView) findViewById(R.id.personalInformation);
         name = (EditText) findViewById(R.id.name);
         dob = (EditText) findViewById(R.id.date);
         aadhaarCard = (EditText) findViewById(R.id.aadhaarCard);
@@ -65,6 +68,15 @@ public class AddMemberInformation extends AppCompatActivity
         female = (RadioButton) findViewById(R.id.female);
         other = (RadioButton) findViewById(R.id.other);
         quota = (Spinner) findViewById(R.id.quota);
+        occupation = (Spinner) findViewById(R.id.occupation);
+        disabilities = (Spinner) findViewById(R.id.disabilities);
+        relationship = (Spinner) findViewById(R.id.relationship);
+        education = (Spinner) findViewById(R.id.education);
+        educationStatus = (Spinner) findViewById(R.id.educationStatus);
+        migrationReason = (Spinner) findViewById(R.id.migrationReason);
+        maritalStatus = (Spinner) findViewById(R.id.maritalStatus);
+        religion = (Spinner) findViewById(R.id.religion);
+        centralScheme = (Spinner) findViewById(R.id.centralScheme);
         add = (Button) findViewById(R.id.add);
 
         ArrayAdapter<CharSequence> quotaListAdapter = ArrayAdapter

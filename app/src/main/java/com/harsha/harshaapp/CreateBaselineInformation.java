@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,10 @@ import com.harsha.harshaapp.bean.SocialCategory;
 import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.bean.Village;
 import com.harsha.harshaapp.database.DBHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -83,7 +88,7 @@ public class CreateBaselineInformation extends AppCompatActivity
     EditText familyHeadName,contactNo,income,noOfFamilyMember;
     TextView stateName,districtName,blockName;
     Spinner village,religion,occupation,socialCategory;
-    Button confirm;
+    Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,39 +108,23 @@ public class CreateBaselineInformation extends AppCompatActivity
         occupation = (Spinner) findViewById(R.id.occupation);
         socialCategory = (Spinner) findViewById(R.id.socialCategory);
         noOfFamilyMember = (EditText) findViewById(R.id.noOfFamilyMember);
-        confirm = (Button) findViewById(R.id.confirm);
+        next = (Button) findViewById(R.id.next);
 
         villageArray.add(new Village(0,  "---- Select Village ----","0",0));
         religionArray.add(new Religion(0, "---- Select Religion ----", "0"));
         socialCategoryArray.add(new SocialCategory(0, "---- Select Social Category ----", "0"));
         occupationArray.add(new Occupation(0,"---- Select Occupation ----","0"));
 
-        /*CreateBaselineInformationAsyncTask obj1 = new CreateBaselineInformationAsyncTask(CreateBaselineInformation.this);
+        CreateBaselineInformationAsyncTask obj1 = new CreateBaselineInformationAsyncTask(CreateBaselineInformation.this);
         obj1.execute(villageUrl);
         CreateBaselineInformationAsyncTask obj2 = new CreateBaselineInformationAsyncTask(CreateBaselineInformation.this);
         obj2.execute(religionUrl);
         CreateBaselineInformationAsyncTask obj3 = new CreateBaselineInformationAsyncTask(CreateBaselineInformation.this);
         obj3.execute(socialCategoryUrl);
         CreateBaselineInformationAsyncTask obj4 = new CreateBaselineInformationAsyncTask(CreateBaselineInformation.this);
-        obj4.execute(occupationUrl);*/
+        obj4.execute(occupationUrl);
 
-        ArrayList<String> listReligion = dbHandler.getAllReligion();
-        ArrayList<String> listSocialCategory = dbHandler.getAllSocialCategory();
-        ArrayList<String> listOccupation = dbHandler.getAllOccupation();
-
-        ArrayAdapter<String> religionListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, listReligion);
-        religionListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        religion.setAdapter(religionListAdapter);
-
-        ArrayAdapter<String> socialCategoryListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, listSocialCategory);
-        socialCategoryListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        socialCategory.setAdapter(socialCategoryListAdapter);
-
-        ArrayAdapter<String> occupationListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, listOccupation);
-        occupationListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        occupation.setAdapter(occupationListAdapter);
-
-        confirm.setOnClickListener(new View.OnClickListener() {
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -185,7 +174,7 @@ public class CreateBaselineInformation extends AppCompatActivity
             }
         });
 
-        /*village.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        village.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position==0) {
@@ -304,7 +293,7 @@ public class CreateBaselineInformation extends AppCompatActivity
 
             }
         });
-*/
+
         Intent receive = getIntent();
         bundle = receive.getExtras();
         user = dbHandler.getUserDetail();
@@ -326,7 +315,7 @@ public class CreateBaselineInformation extends AppCompatActivity
         nav_email.setText(user.getEmail());
     }
 
-    /*public void showVillage(String s) {
+    public void showVillage(String s) {
         Log.d("AysncTask", "onPostExecute(" + s + ")");
         // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
         try {
@@ -428,7 +417,7 @@ public class CreateBaselineInformation extends AppCompatActivity
         ArrayAdapter<String> occupationListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameOccupation);
         occupationListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         occupation.setAdapter(occupationListAdapter);
-    }*/
+    }
 
     public String testingRestAPI(String urls) {
         StringBuilder result = new StringBuilder();
@@ -506,10 +495,10 @@ public class CreateBaselineInformation extends AppCompatActivity
         @Override
         protected void onPostExecute(String s) {
 
-            /*showVillage(s);
+            showVillage(s);
             showReligion(s);
             showSocialCategory(s);
-            showOccupation(s);*/
+            showOccupation(s);
 
             progressDialog.dismiss();
         }

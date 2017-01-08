@@ -41,11 +41,198 @@
                 android:layout_height="50dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:ems="10"
-                android:id="@+id/familyName"
-                android:textColor="#cf0d2a"
+                android:textSize="35dp"
+                android:id="@+id/familyInformation"
+                android:textColor="#1205c4"
+                android:text="Family Information"
                 android:layout_marginTop="70dp"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"  />
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/name"
+                android:textColor="#020202"
+                android:layout_below="@+id/familyInformation"
+                android:text="Name" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/dob"
+                android:textColor="#020202"
+                android:layout_below="@+id/name"
+                android:text="Date of Birth" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/gender"
+                android:textColor="#020202"
+                android:layout_below="@+id/dob"
+                android:text="Gender" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/quota"
+                android:textColor="#020202"
+                android:layout_below="@+id/gender"
+                android:text="Quota" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/aadhaarCard"
+                android:textColor="#020202"
+                android:layout_below="@+id/quota"
+                android:text="Aadhaar Card" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/voterId"
+                android:textColor="#020202"
+                android:layout_below="@+id/aadhaarCard"
+                android:text="Voter ID" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/familyHeadName"
+                android:textColor="#020202"
+                android:layout_below="@+id/voterId"
+                android:text="Name of The Head of Family" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/personalSalary"
+                android:textColor="#020202"
+                android:layout_below="@+id/familyHeadName"
+                android:text="Personal Salary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:ems="10"
+                android:textSize="35dp"
+                android:id="@+id/personalInformation"
+                android:textColor="#1205c4"
+                android:text="Personal Information"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/personalSalary"
+                android:layout_alignStart="@+id/familyInformation"
+                android:layout_marginStart="35dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/occupation"
+                android:textColor="#020202"
+                android:layout_below="@+id/personalInformation"
+                android:text="Occupation" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/disabilities"
+                android:textColor="#020202"
+                android:layout_below="@+id/occupation"
+                android:text="Disabilities" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/relationship"
+                android:textColor="#020202"
+                android:layout_below="@+id/disabilities"
+                android:text="Relationship" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/education"
+                android:textColor="#020202"
+                android:layout_below="@+id/relationship"
+                android:text="Education" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:id="@+id/educationStatus"
+                android:textSize="20dp"
+                android:textColor="#020202"
+                android:layout_below="@+id/education"
+                android:text="Education Status" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/migrationReason"
+                android:textColor="#020202"
+                android:layout_below="@+id/educationStatus"
+                android:text="Migration Reason" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/maritalStatus"
+                android:textColor="#020202"
+                android:layout_below="@+id/migrationReason"
+                android:text="Marital Status" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/religion"
+                android:textColor="#020202"
+                android:layout_below="@+id/maritalStatus"
+                android:text="Religion" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="20dp"
+                android:id="@+id/centralScheme"
+                android:textColor="#020202"
+                android:layout_below="@+id/religion"
+                android:text="Central Scheme" />
+
+
 
         </RelativeLayout>
     </ScrollView>
