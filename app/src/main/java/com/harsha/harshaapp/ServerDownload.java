@@ -419,6 +419,7 @@ public class ServerDownload extends AppCompatActivity
                 asset.setAssetCode(jsonArrayObject.getString("assetCode"));
                 asset.setAssetId(jsonArrayObject.getInt("assetId"));
                 assetArray.add(asset);
+                dbHandler.insertAsset(asset);
             }
 
             JSONArray jsonDisabilitiesArray = jsonObject.getJSONArray("DisabilitiesBean");
@@ -430,6 +431,7 @@ public class ServerDownload extends AppCompatActivity
                 disability.setDisabilitiesCode(jsonArrayObject.getString("disabilityCode"));
                 disability.setDisabilitiesId(jsonArrayObject.getInt("disabilityId"));
                 disabilitieArray.add(disability);
+                dbHandler.insertDisabilities(disability);
             }
 
             JSONArray jsonEducationArray = jsonObject.getJSONArray("EducationBean");
@@ -441,6 +443,7 @@ public class ServerDownload extends AppCompatActivity
                 education.setEducationCode(jsonArrayObject.getString("educationCode"));
                 education.setEducationId(jsonArrayObject.getInt("educationId"));
                 educationArray.add(education);
+                dbHandler.insertEducation(education);
             }
 
             JSONArray jsonEducationStatusArray = jsonObject.getJSONArray("EducationStatusBean");
@@ -452,6 +455,7 @@ public class ServerDownload extends AppCompatActivity
                 educationStatus.setEducationStatusCode(jsonArrayObject.getString("educationStatusCode"));
                 educationStatus.setEducationStatusId(jsonArrayObject.getInt("educationStatusId"));
                 educationStatusArray.add(educationStatus);
+                dbHandler.insertEducationStatus(educationStatus);
             }
 
             JSONArray jsonMaritalStatusArray = jsonObject.getJSONArray("MartialStatusBean");
@@ -463,6 +467,7 @@ public class ServerDownload extends AppCompatActivity
                 maritalStatus.setgMaritalStatusCode(jsonArrayObject.getString("maritalStatusCode"));
                 maritalStatus.setMaritalStatusId(jsonArrayObject.getInt("maritalStatusId"));
                 maritalStatuseArray.add(maritalStatus);
+                dbHandler.insertMaritalStatus(maritalStatus);
             }
 
             JSONArray jsonOccupationArray = jsonObject.getJSONArray("OccupationBean");
@@ -474,6 +479,7 @@ public class ServerDownload extends AppCompatActivity
                 occupation.setOccupationCode(jsonArrayObject.getString("occupationCode"));
                 occupation.setOccupationId(jsonArrayObject.getInt("occupationId"));
                 occupationArray.add(occupation);
+                dbHandler.insertOccupation(occupation);
             }
 
             JSONArray jsonRelationshipArray = jsonObject.getJSONArray("RelationshipBean");
@@ -485,6 +491,7 @@ public class ServerDownload extends AppCompatActivity
                 relationship.setRelationshipCode(jsonArrayObject.getString("relationshipCode"));
                 relationship.setRelationshipId(jsonArrayObject.getInt("relationshipId"));
                 relationshipArray.add(relationship);
+                dbHandler.insertRelationship(relationship);
             }
 
             JSONArray jsonReligionArray = jsonObject.getJSONArray("ReligionBean");
@@ -496,6 +503,7 @@ public class ServerDownload extends AppCompatActivity
                 religion.setReligionCode(jsonArrayObject.getString("religionCode"));
                 religion.setReligionId(jsonArrayObject.getInt("religionId"));
                 religionArray.add(religion);
+                dbHandler.insertReligionInformation(religion);
             }
 
             JSONArray jsonSchemeArray = jsonObject.getJSONArray("SchemeBean");
@@ -506,6 +514,7 @@ public class ServerDownload extends AppCompatActivity
                 scheme.setSchemeName(jsonArrayObject.getString("schemeName"));
                 scheme.setSchemeId(jsonArrayObject.getInt("schemeCode"));
                 schemeArray.add(scheme);
+                dbHandler.insertScheme(scheme);
             }
 
             JSONArray jsonSocialCategoryArray = jsonObject.getJSONArray("SocialCategoryBean");
@@ -517,6 +526,7 @@ public class ServerDownload extends AppCompatActivity
                 socialCategory.setSocialCategoryCode(jsonArrayObject.getString("socialCategoryCode"));
                 socialCategory.setSocialCategoryId(jsonArrayObject.getInt("socialCategoryId"));
                 socialCategoryArray.add(socialCategory);
+                dbHandler.insertSocialCategory(socialCategory);
             }
 
             dbHandler.insertState(finalState);
