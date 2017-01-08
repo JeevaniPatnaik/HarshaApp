@@ -38,6 +38,18 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="35dp"
+                android:id="@+id/familyInformation"
+                android:textColor="#1205c4"
+                android:layout_marginTop="70dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="Family Information" />
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -45,9 +57,8 @@
                 android:hint="Name"
                 android:ems="10"
                 android:id="@+id/name"
-                android:layout_marginTop="70dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"  />
+                android:layout_below="@+id/familyInformation"
+                android:layout_alignStart="@+id/familyInformation"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -151,13 +162,95 @@
                 android:layout_alignEnd="@+id/familyHeadName"
                 android:hint="Personal Salary" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textSize="35dp"
+                android:id="@+id/personalInformation"
+                android:textColor="#1205c4"
+                android:layout_below="@+id/personalSalary"
+                android:text="Personal Information" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/occupation"
+                android:ems="10"
+                android:layout_below="@+id/personalInformation"
+                android:layout_alignParentStart="true" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/disabilities"
+                android:ems="10"
+                android:layout_below="@+id/occupation"
+                android:layout_alignParentStart="true" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/relationship"
+                android:ems="10"
+                android:layout_below="@+id/disabilities"
+                android:layout_alignParentStart="true" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/education"
+                android:ems="10"
+                android:layout_below="@+id/relationship"
+                android:layout_alignParentStart="true" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/educationStatus"
+                android:ems="10"
+                android:layout_below="@+id/education"
+                android:layout_alignParentStart="true" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/migrationReason"
+                android:ems="10"
+                android:layout_below="@+id/educationStatus"
+                android:layout_alignParentStart="true" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/maritalStatus"
+                android:ems="10"
+                android:layout_below="@+id/educationStatus"
+                android:layout_alignParentStart="true" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/religion"
+                android:ems="10"
+                android:layout_below="@+id/maritalStatus"
+                android:layout_alignParentStart="true" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/centralScheme"
+                android:ems="10"
+                android:layout_below="@+id/religion"
+                android:layout_alignParentStart="true" />
+
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ADD"
                 android:id="@+id/add"
-                android:layout_below="@+id/personalSalary"
+                android:layout_below="@+id/centralScheme"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="37dp"
                 android:background="#a854d4"/>

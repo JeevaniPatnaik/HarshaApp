@@ -28,12 +28,34 @@ public class FamilyInformation extends AppCompatActivity
 
     TextView nav_username,nav_email;
 
+    TextView familyInformation, personalInformation,name,dob,aadhaarCard,voterId,familyHeadName,personalSalary, gender, quota, occupation, disabilities, relationship, education, educationStatus, migrationReason, maritalStatus, religion, centralScheme;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_information);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        familyInformation = (TextView) findViewById(R.id.familyInformation);
+        personalInformation = (TextView) findViewById(R.id.personalInformation);
+        name = (TextView) findViewById(R.id.name);
+        dob = (TextView) findViewById(R.id.date);
+        aadhaarCard = (TextView) findViewById(R.id.aadhaarCard);
+        voterId = (TextView) findViewById(R.id.voterId);
+        familyHeadName = (TextView) findViewById(R.id.familyHeadName);
+        personalSalary = (TextView) findViewById(R.id.personalSalary);
+        gender = (TextView) findViewById(R.id.gender);
+        quota = (TextView) findViewById(R.id.quota);
+        occupation = (TextView) findViewById(R.id.occupation);
+        disabilities = (TextView) findViewById(R.id.disabilities);
+        relationship = (TextView) findViewById(R.id.relationship);
+        education = (TextView) findViewById(R.id.education);
+        educationStatus = (TextView) findViewById(R.id.educationStatus);
+        migrationReason = (TextView) findViewById(R.id.migrationReason);
+        maritalStatus = (TextView) findViewById(R.id.maritalStatus);
+        religion = (TextView) findViewById(R.id.religion);
+        centralScheme = (TextView) findViewById(R.id.centralScheme);
 
         Intent receive = getIntent();
         bundle = receive.getExtras();
