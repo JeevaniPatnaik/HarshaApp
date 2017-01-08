@@ -27,7 +27,7 @@ public class MyProfile extends AppCompatActivity
 
     TextView nav_username,nav_email;
 
-    TextView profileName,firstName,lastName,email,phone,addresses;
+    TextView userName,fullName,email,phone,addresses,lastActivity, statusCode;
     //ImageView photo;
 
     @Override
@@ -36,13 +36,15 @@ public class MyProfile extends AppCompatActivity
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        profileName = (TextView) findViewById(R.id.profileName);
-        firstName = (TextView) findViewById(R.id.firstName);
-        lastName = (TextView) findViewById(R.id.lastName);
+        userName = (TextView) findViewById(R.id.username);
+        fullName = (TextView) findViewById(R.id.fullName);
         email = (TextView) findViewById(R.id.email);
         phone = (TextView) findViewById(R.id.phone);
         addresses = (TextView) findViewById(R.id.addresses);
+        lastActivity = (TextView) findViewById(R.id.lastActivity);
+        //statusCode = (TextView) findViewById(R.id.statusCode);
 
         /*Typeface face1= Typeface.createFromAsset(getAssets(), "fonts/AlexBrush-Regular.ttf");
         profileName.setTypeface(face1);
@@ -57,12 +59,13 @@ public class MyProfile extends AppCompatActivity
         bundle = receive.getExtras();
         user = dbHandler.getUserDetail();
 
-        profileName.setText(user.getUserName()+"'s Profile");
-        firstName.setText(user.getFirstName());
-        lastName.setText(user.getLastName());
+        userName.setText(user.getUserName());
+        fullName.setText(user.getFirstName()+" "+user.getLastName());
         email.setText(user.getEmail());
         phone.setText(user.getPhone());
         addresses.setText(user.getAddress());
+        lastActivity.setText(user.getLastActivity());
+        //statusCode.setText(user.getStatusCode());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
