@@ -355,6 +355,7 @@ public class ServerDownload extends AppCompatActivity
         try {
             /*String msg = "---- Select Block ----";
             nameBlock.add(msg);*/
+            //nameBlock.add(msg);
             JSONArray jsonArray = new JSONArray(s);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
