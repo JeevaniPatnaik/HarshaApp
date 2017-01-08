@@ -7,12 +7,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.harsha.harshaapp.bean.Asset;
 import com.harsha.harshaapp.bean.BaselineInfo;
 import com.harsha.harshaapp.bean.Block;
+import com.harsha.harshaapp.bean.Disabilities;
 import com.harsha.harshaapp.bean.District;
+import com.harsha.harshaapp.bean.Education;
+import com.harsha.harshaapp.bean.EducationStatus;
+import com.harsha.harshaapp.bean.MaritalStatus;
 import com.harsha.harshaapp.bean.MemberInfo;
 import com.harsha.harshaapp.bean.Occupation;
+import com.harsha.harshaapp.bean.Relationship;
 import com.harsha.harshaapp.bean.Religion;
+import com.harsha.harshaapp.bean.Scheme;
 import com.harsha.harshaapp.bean.SocialCategory;
 import com.harsha.harshaapp.bean.State;
 import com.harsha.harshaapp.bean.User;
@@ -56,6 +63,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String RELATIONSHIP = "relationship";
     public static final String DISABILITIES = "disabilities";
     public static final String MARITAL_STATUS = "maritalStatus";
+    public static final String ASSET = "asset";
 
     // Attributes of USER Table
     public static final String USER_ID = "userId";
@@ -396,6 +404,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_SCHEME);
         Log.d(TAG, "SCHEME TABLE CREATED");
+
+        db.execSQL(CREATE_DISABILITIES);
+        Log.d(TAG, "DISABILITIES TABLE CREATED");
     }
 
     @Override
@@ -754,6 +765,97 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    //inser Into Asset
+    public void insertAsset(Asset asset){
+
+        ContentValues values = new ContentValues();
+
+        values.put(ASSET_ID, asset.getAssetId());
+        values.put(ASSET_CODE, asset.getAssetCode());
+        values.put(ASSET_NAME, asset.getAssetName());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(ASSET, null, values);
+        Log.d(TAG, "Row Inserted in TABLE_ASSET");
+        db.close();
+    }
+
+    //inser Into Disability
+    public void insertDisabilities(Disabilities disability){
+
+        ContentValues values = new ContentValues();
+
+        values.put(DISTRICT_ID, disability.getDisabilitiesId());
+        values.put(DISABILTIES_CODE, disability.getDisbilitiesCode());
+        values.put(DISABILTIES_NAME, disability.getDisabilitiesName());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(DISABILITIES, null, values);
+        Log.d(TAG, "Row Inserted in TABLE_DISABILITIES");
+        db.close();
+    }
+
+    //inser Into Education
+    public void insertEducation(Education education){
+
+        ContentValues values = new ContentValues();
+
+        values.put(EDUCATION_ID, education.getEducationId());
+        values.put(EDUCATION_CODE, education.getEducationCode());
+        values.put(EDUCATION_NAME, education.getEducationName());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(EDUCATION, null, values);
+        Log.d(TAG, "Row Inserted in TABLE_EDUCATION");
+        db.close();
+    }
+
+    //inser Into EducationStatus
+    public void insertEducationStatus(EducationStatus educationstatus){
+
+        ContentValues values = new ContentValues();
+
+        values.put(EDUCATION_STATUS_ID, educationstatus.getEducationStatusId());
+        values.put(EDUCATION_STATUS_CODE, educationstatus.getEducationStatusCode());
+        values.put(EDUCATION_STATUS_NAME, educationstatus.getGetEducationStatusName());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(EDUCATION_STATUS, null, values);
+        Log.d(TAG, "Row Inserted in TABLE_EDUCATION_STATUS");
+        db.close();
+    }
+
+    //inser Into MaritalStatus
+    public void insertMaritalStatus(MaritalStatus maritalStatus){
+
+        ContentValues values = new ContentValues();
+
+        values.put(MARITAL_STATUS_ID, maritalStatus.getMaritalStatusId());
+        values.put(MARITAL_STATUS_CODE, maritalStatus.getgMaritalStatusCode());
+        values.put(MARTIAL_STATUS_NAME, maritalStatus.getMaritalStatusName());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(MARITAL_STATUS, null, values);
+        Log.d(TAG, "Row Inserted in MARITAL_STATUS");
+        db.close();
+    }
+
+    //inser Into MaritalStatus
+    public void insertRelationship(Relationship relationship){
+
+        ContentValues values = new ContentValues();
+
+        values.put(RELATIONSHIP_ID, relationship.getRelationshipId());
+        values.put(RELATIONSHIP_Code, relationship.getRelationshipCode());
+        values.put(RELATIONSHIP_NAME, relationship.getGetRelationshipName());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(RELATIONSHIP, null, values);
+        Log.d(TAG, "Row Inserted in RELATIONSHIP");
+        db.close();
+    }
+
+
     //delete from VILLAGE Table
     public void deleteVillage(Village village){
 
@@ -776,6 +878,21 @@ public class DBHandler extends SQLiteOpenHelper {
         Log.d(TAG, "Row Inserted in RELIGION");
         db.close();
     }
+
+    //insert into scheme Table
+    public void insertScheme(Scheme scheme){
+
+        ContentValues values = new ContentValues();
+
+        values.put(SCHEME_ID, scheme.getSchemeId());
+        values.put(SCHEME_NAME, scheme.getSchemeName());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(SCHEME, null, values);
+        Log.d(TAG, "Row Inserted in SCHEME");
+        db.close();
+    }
+
 
     //delete from RELIGION Table
     public void deleteReligionInformation(Religion religion){
