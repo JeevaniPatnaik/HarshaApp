@@ -339,6 +339,7 @@ public class ServerDownload extends AppCompatActivity
                 district.setStateId(jsonObject.getInt("stateId"));
                 districtArray.add(district);
                 //stateNames[i] = state.getStateName();
+                //stateNames[i] = state.getStateName();
                 nameDistrict.add(district.getDistrictName());
             }
         } catch (JSONException e) {
