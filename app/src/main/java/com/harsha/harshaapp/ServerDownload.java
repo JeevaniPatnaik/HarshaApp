@@ -80,7 +80,7 @@ public class ServerDownload extends AppCompatActivity
     ArrayList<Relationship> relationshipArray = new ArrayList<>();
     ArrayList<Disabilities> disabilitieArray = new ArrayList<>();
     ArrayList<Education> educationArray = new ArrayList<>();
-    ArrayList<EducationStatus> educationStatuseArray = new ArrayList<>();
+    //ArrayList<EducationStatus> educationStatuseArray = new ArrayList<>();
     ArrayList<Scheme> schemeArray = new ArrayList<>();
     ArrayList<MaritalStatus> maritalStatuseArray = new ArrayList<>();
 
