@@ -21,10 +21,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.harsha.harshaapp.bean.Asset;
 import com.harsha.harshaapp.bean.Block;
+import com.harsha.harshaapp.bean.Disabilities;
 import com.harsha.harshaapp.bean.District;
+import com.harsha.harshaapp.bean.Education;
+import com.harsha.harshaapp.bean.EducationStatus;
+import com.harsha.harshaapp.bean.MaritalStatus;
+import com.harsha.harshaapp.bean.Occupation;
+import com.harsha.harshaapp.bean.Relationship;
+import com.harsha.harshaapp.bean.Religion;
+import com.harsha.harshaapp.bean.Scheme;
 import com.harsha.harshaapp.bean.State;
 import com.harsha.harshaapp.bean.User;
+import com.harsha.harshaapp.bean.Village;
 import com.harsha.harshaapp.database.DBHandler;
 
 import org.json.JSONArray;
@@ -62,15 +72,29 @@ public class ServerDownload extends AppCompatActivity
     ArrayList<State> stateArray = new ArrayList<State>();
     ArrayList<District> districtArray = new ArrayList<District>();
     ArrayList<Block> blockArray = new ArrayList<Block>();
+    ArrayList<Village> villageArray = new ArrayList<>();
+    ArrayList<Asset> assetArray = new ArrayList<>();
+    ArrayList<Disabilities> disabilitiesArray = new ArrayList<>();
+    ArrayList<Occupation> occupationArray = new ArrayList<>();
+    ArrayList<Religion> religionArray = new ArrayList<>();
+    ArrayList<Relationship> relationshipArray = new ArrayList<>();
+    ArrayList<Disabilities> disabilitieArray = new ArrayList<>();
+    ArrayList<Education> educationArray = new ArrayList<>();
+    ArrayList<EducationStatus> educationStatuseArray = new ArrayList<>();
+    ArrayList<Scheme> schemeArray = new ArrayList<>();
+    ArrayList<MaritalStatus> maritalStatuseArray = new ArrayList<>();
 
     String URL0 = "https://harsha-guptas.rhcloud.com/api/state/getallstate";
     String URL2 = "https://harsha-guptas.rhcloud.com/api/district/getbystateid";
     String URL3 = "https://harsha-guptas.rhcloud.com/api/block/getbydistrictid";
+    String URL4 = "https://harsha-guptas.rhcloud.com/api/village/getbyblockid";
+    String URL5 = "http://harsha-guptas.rhcloud.com/api/download/data";
     String URL1 = "";
 
     ArrayList<String> nameState = new ArrayList<String>();
     ArrayList<String> nameDistrict = new ArrayList<String>();
     ArrayList<String> nameBlock = new ArrayList<String>();
+
 
     Spinner stateName,districtName,blockName;
     Button dataDownload;
@@ -102,7 +126,11 @@ public class ServerDownload extends AppCompatActivity
         dataDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new GetAllStateAsyncTask(ServerDownload.this).execute(URL1);
+                flag = 5;
+                URL1 = URL5;
+                GetAllStateAsyncTask obj =  new GetAllStateAsyncTask(ServerDownload.this);
+                obj.execute(URL1);
+
             }
         });
 
@@ -176,6 +204,39 @@ public class ServerDownload extends AppCompatActivity
             }
         });
 
+        blockName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    //long pos = parent.getItemIdAtPosition(position);
+                    // Showing selected spinner item
+                    int i=0;
+                    while(i<blockArray.size()) {
+                        Block dt = blockArray.get(i);
+                        if(dt.getBlockName().equals(item)) {
+                            finalBlock = dt;
+                            break;
+                        }
+                        i++;
+                    }
+                    flag=4;
+                    //resetSpinner2();
+                    URL1 = URL4 + "?blockId="+finalBlock.getBlockId();
+                    GetAllStateAsyncTask obj = new GetAllStateAsyncTask(ServerDownload.this);
+                    obj.execute(URL1);
+                    Toast.makeText(parent.getContext(), "Selected: " + item + " " + (position) , Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         /*blockName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -305,7 +366,7 @@ public class ServerDownload extends AppCompatActivity
                 blockArray.add(block);
                 //stateNames[i] = state.getStateName();
                 nameBlock.add(block.getBlockName());
-                Toast.makeText(this,"nameBlock="+nameBlock.get(i),Toast.LENGTH_LONG).show();
+               // Toast.makeText(this,"nameBlock="+nameBlock.get(i),Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -313,6 +374,85 @@ public class ServerDownload extends AppCompatActivity
         ArrayAdapter<String> blockListAdapter = new ArrayAdapter<String>(ServerDownload.this, android.R.layout.simple_spinner_item, nameBlock);
         blockListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         blockName.setAdapter(blockListAdapter);
+    }
+    public void showVillage(String s) {
+        Log.d("AysncTask", "onPostExecute(" + s + ")");
+        // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
+        try {
+            /*String msg = "---- Select Block ----";
+            nameBlock.add(msg);*/
+            JSONArray jsonArray = new JSONArray(s);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Village village = new Village();
+                village.setVillageName(jsonObject.getString("villageName"));
+                village.setVillageId(jsonObject.getInt("villageId"));
+                village.setVillageCode(jsonObject.getString("villageCode"));
+                village.setBlockId(jsonObject.getInt("blockId"));
+                villageArray.add(village);
+                //stateNames[i] = state.getStateName();
+                //Toast.makeText(this,"nameBlock="+nameBlock.get(i),Toast.LENGTH_LONG).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showData(String s) {
+        Log.d("AysncTask", "onPostExecute(" + s + ")");
+        // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
+        try {
+            /*String msg = "---- Select Block ----";
+            nameBlock.add(msg);*/
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonAssetArray = jsonObject.getJSONArray("AssetBean");
+
+            for (int i = 0; i < jsonAssetArray.length(); i++) {
+
+                JSONObject jsonArrayObject = jsonAssetArray.getJSONObject(i);
+                Asset asset = new Asset();
+                asset.setAssetName(jsonArrayObject.getString("assetName"));
+                asset.setAssetCode(jsonArrayObject.getString("assetCode"));
+                asset.setAssetId(jsonArrayObject.getInt("assetId"));
+                assetArray.add(asset);
+            }
+
+            JSONArray jsonDisabilitiesArray = jsonObject.getJSONArray("DisabilitiesBean");
+            for (int i = 0; i < jsonDisabilitiesArray.length(); i++) {
+
+                JSONObject jsonArrayObject = jsonAssetArray.getJSONObject(i);
+                Disabilities disability = new Disabilities();
+                disability.setDisabilitiesName(jsonArrayObject.getString("disabilityName"));
+                disability.setDisabilitiesCode(jsonArrayObject.getString("disabilityCode"));
+                disability.setDisabilitiesId(jsonArrayObject.getInt("disabilityId"));
+                disabilitieArray.add(disability);
+            }
+
+            JSONArray jsonEducationArray = jsonObject.getJSONArray("EducationBean");
+            for (int i = 0; i < jsonEducationArray.length(); i++) {
+
+                JSONObject jsonArrayObject = jsonAssetArray.getJSONObject(i);
+                Education education = new Education();
+                education.setEducationName(jsonArrayObject.getString("educationName"));
+                education.setEducationCode(jsonArrayObject.getString("educationCode"));
+                education.setEducationId(jsonArrayObject.getInt("educationId"));
+                educationArray.add(education);
+            }
+
+            JSONArray jsonEdArray = jsonObject.getJSONArray("EducationStatusBean");
+            for (int i = 0; i < jsonEducationArray.length(); i++) {
+
+                JSONObject jsonArrayObject = jsonAssetArray.getJSONObject(i);
+                Education education = new Education();
+                education.setEducationName(jsonArrayObject.getString("educationName"));
+                education.setEducationCode(jsonArrayObject.getString("educationCode"));
+                education.setEducationId(jsonArrayObject.getInt("educationId"));
+                educationArray.add(education);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public String testingRestAPI(String urls) {
@@ -399,6 +539,12 @@ public class ServerDownload extends AppCompatActivity
             }
             else if(flag==3) {
                 showBlock(s);
+            }
+            else if(flag==4){
+                showVillage(s);
+            }
+            else if(flag==5){
+                showData(s);
             }
             progressDialog.dismiss();
         }
