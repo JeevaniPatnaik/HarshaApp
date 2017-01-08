@@ -461,7 +461,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public void updateUser(User user){
 
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("UPDATE"+ TABLE_USER + "SET " + USER_PASSWORD + "=" + user.getPassword() + " WHERE "+ USER_ID+"="+user.getUserId()+ ";");
+        db.execSQL("UPDATE "+ TABLE_USER + " SET " + USER_PASSWORD + "='" + user.getPassword() + "' WHERE "+ USER_ID+"="+user.getUserId()+ ";");
         Log.d(TAG, "Row Updated in TABLE_USER");
 
     }
@@ -670,19 +670,27 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //fetch from religion table
-    public ArrayList<String> getAllReligion(){
+    public ArrayList<Religion> getAllReligion(){
 
-        ArrayList<String> religionList = new ArrayList<String>();
+        ArrayList<Religion> religionList = new ArrayList<Religion>();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
         String qry = "SELECT * FROM "+RELIGION;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
-                String religionName = cursor.getString(cursor.getColumnIndex("religionName"));
+
+                /*String religionName = cursor.getString(cursor.getColumnIndex("religionName"));
                 String religionCode = cursor.getString(cursor.getColumnIndex("religionCode"));
                 religionList.add(religionCode);
-                religionList.add(religionName);
+                religionList.add(religionName);*/
+
+                Religion religion = new Religion();
+                religion.setReligionId(cursor.getInt(cursor.getColumnIndex(RELIGION_ID)));
+                religion.setReligionCode(cursor.getString(cursor.getColumnIndex(RELIGION_CODE)));
+                religion.setReligionName(cursor.getString(cursor.getColumnIndex(RELIGION_NAME)));
+                religionList.add(religion);
+
             }
         }
         return religionList;
@@ -712,19 +720,22 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //fetch from social category table
-    public ArrayList<String> getAllSocialCategory(){
+    public ArrayList<SocialCategory> getAllSocialCategory(){
 
-        ArrayList<String> socialCategoryList = new ArrayList<String>();
+        ArrayList<SocialCategory> socialCategoryList = new ArrayList<SocialCategory>();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
         String qry = "SELECT * FROM "+SOCIAL_CATEGORY;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
-                String socialCategoryName = cursor.getString(cursor.getColumnIndex("socialCategoryName"));
-                String socialCategoryCode = cursor.getString(cursor.getColumnIndex("socialCategoryCode"));
-                socialCategoryList.add(socialCategoryCode);
-                socialCategoryList.add(socialCategoryName);
+
+                SocialCategory socialCategory = new SocialCategory();
+                socialCategory.setSocialCategoryId(cursor.getInt(cursor.getColumnIndex(SOCIAL_CATEGORY_ID)));
+                socialCategory.setSocialCategoryName(cursor.getString(cursor.getColumnIndex(SOCIAL_CATEGORY_NAME)));
+                socialCategory.setSocialCategoryCode(cursor.getString(cursor.getColumnIndex(SOCIAL_CATEGORY_CODE)));
+                socialCategoryList.add(socialCategory);
+
             }
         }
         return socialCategoryList;
@@ -754,19 +765,22 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //fetch from occupation table
-    public ArrayList<String> getAllOccupation(){
+    public ArrayList<Occupation> getAllOccupation(){
 
-        ArrayList<String> occupationList = new ArrayList<String>();
+        ArrayList<Occupation> occupationList = new ArrayList<Occupation>();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
         String qry = "SELECT * FROM "+OCCUPATION;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
-                String occupationName = cursor.getString(cursor.getColumnIndex("occupationName"));
-                String occupationCode = cursor.getString(cursor.getColumnIndex("occupationCode"));
-                occupationList.add(occupationCode);
-                occupationList.add(occupationName);
+
+                Occupation occupation = new Occupation();
+                occupation.setOccupationId(cursor.getInt(cursor.getColumnIndex(OCCUPATION_ID)));
+                occupation.setOccupationName(cursor.getString(cursor.getColumnIndex(OCCUPATION_NAME)));
+                occupation.setOccupationCode(cursor.getString(cursor.getColumnIndex(OCCUPATION_CODE)));
+                occupationList.add(occupation);
+
             }
         }
         return occupationList;
