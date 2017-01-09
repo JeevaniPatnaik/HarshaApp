@@ -236,7 +236,7 @@ public class CreateBaselineInformation extends AppCompatActivity
                         baselineInfo.setOccupationId(jsonObject.getInt("occupationId"));
                         baselineInfo.setContactNo(jsonObject.getInt("contactNo"));
                         baselineInfo.setFamilyMemberNumber(jsonObject.getInt("familyMemberNumber"));
-                        baselineInfo.setIncome(jsonObject.getString("income"));
+                       // baselineInfo.setIncome(jsonObject.getString("income"));
 
                         stateName.setText(state.getStateName());
                         districtName.setText(district.getDistrictName());
