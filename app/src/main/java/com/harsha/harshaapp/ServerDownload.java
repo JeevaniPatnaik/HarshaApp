@@ -29,6 +29,7 @@ import com.harsha.harshaapp.bean.Education;
 import com.harsha.harshaapp.bean.EducationStatus;
 import com.harsha.harshaapp.bean.MaritalStatus;
 import com.harsha.harshaapp.bean.Occupation;
+import com.harsha.harshaapp.bean.Project;
 import com.harsha.harshaapp.bean.Relationship;
 import com.harsha.harshaapp.bean.Religion;
 import com.harsha.harshaapp.bean.Scheme;
@@ -75,7 +76,6 @@ public class ServerDownload extends AppCompatActivity
     ArrayList<Block> blockArray = new ArrayList<Block>();
     ArrayList<Village> villageArray = new ArrayList<>();
     ArrayList<Asset> assetArray = new ArrayList<>();
-    ArrayList<Disabilities> disabilitiesArray = new ArrayList<>();
     ArrayList<Occupation> occupationArray = new ArrayList<>();
     ArrayList<Religion> religionArray = new ArrayList<>();
     ArrayList<Relationship> relationshipArray = new ArrayList<>();
@@ -85,12 +85,14 @@ public class ServerDownload extends AppCompatActivity
     ArrayList<Scheme> schemeArray = new ArrayList<>();
     ArrayList<MaritalStatus> maritalStatuseArray = new ArrayList<>();
     ArrayList<SocialCategory> socialCategoryArray = new ArrayList<>();
+    ArrayList<Project> projectArray = new ArrayList<>();
 
     String URL0 = "https://harsha-guptas.rhcloud.com/api/state/getallstate";
     String URL2 = "https://harsha-guptas.rhcloud.com/api/district/getbystateid";
     String URL3 = "https://harsha-guptas.rhcloud.com/api/block/getbydistrictid";
     String URL4 = "https://harsha-guptas.rhcloud.com/api/village/getbyblockid";
     String URL5 = "https://harsha-guptas.rhcloud.com/api/download/data";
+    String URL6 = "https://harsha-guptas.rhcloud.com/api/project/getallproject";
     String URL1 = "";
 
     ArrayList<String> nameState = new ArrayList<String>();
@@ -132,6 +134,11 @@ public class ServerDownload extends AppCompatActivity
                 URL1 = URL5;
                 GetAllStateAsyncTask obj =  new GetAllStateAsyncTask(ServerDownload.this);
                 obj.execute(URL1);
+                Log.d("Data Download", "Message="+URL1);
+                flag = 6;
+                URL1 = URL6;
+                GetAllStateAsyncTask obj1 =  new GetAllStateAsyncTask(ServerDownload.this);
+                obj1.execute(URL1);
                 Log.d("Data Download", "Message="+URL1);
             }
         });
@@ -358,7 +365,6 @@ public class ServerDownload extends AppCompatActivity
                 blockArray.add(block);
                 //stateNames[i] = state.getStateName();
                 nameBlock.add(block.getBlockName());
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -528,6 +534,7 @@ public class ServerDownload extends AppCompatActivity
                 Log.d("socialCategory:","Object="+socialCategory+" Name="+socialCategory.getSocialCategoryName());
             }
 
+
             dbHandler.insertState(finalState);
             dbHandler.insertDistrict(finalDistrict);
             dbHandler.insertBLOCK(finalBlock);
@@ -542,6 +549,32 @@ public class ServerDownload extends AppCompatActivity
             e.printStackTrace();
         }
     }
+    public void showProject(String s) {
+        Log.d("AysncTask", "onPostExecute(" + s + ")");
+        // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
+        try {
+            /*String msg = "---- Select Block ----";
+            nameBlock.add(msg);*/
+           // JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonProjectArray = new JSONArray(s);
+
+            for (int i = 0; i < jsonProjectArray.length(); i++) {
+
+                JSONObject jsonArrayObject = jsonProjectArray.getJSONObject(i);
+                Project project = new Project();
+                project.setProjectName(jsonArrayObject.getString("projectName"));
+                project.setProjectId(jsonArrayObject.getInt("projectId"));
+                project.setDonorName(jsonArrayObject.getString("donerName"));
+                projectArray.add(project);
+                dbHandler.insertProject(project);
+                Log.d("project:","Object="+project+" Name="+project.getProjectName());
+            }
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+
 
     public String testingRestAPI(String urls) {
         StringBuilder result = new StringBuilder();
@@ -633,6 +666,9 @@ public class ServerDownload extends AppCompatActivity
             }
             else if(flag==5){
                 showData(s);
+            }
+            else if(flag==6){
+                showProject(s);
             }
             progressDialog.dismiss();
         }

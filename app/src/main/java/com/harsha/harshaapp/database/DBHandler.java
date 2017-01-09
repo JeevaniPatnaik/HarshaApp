@@ -17,6 +17,7 @@ import com.harsha.harshaapp.bean.EducationStatus;
 import com.harsha.harshaapp.bean.MaritalStatus;
 import com.harsha.harshaapp.bean.MemberInfo;
 import com.harsha.harshaapp.bean.Occupation;
+import com.harsha.harshaapp.bean.Project;
 import com.harsha.harshaapp.bean.Relationship;
 import com.harsha.harshaapp.bean.Religion;
 import com.harsha.harshaapp.bean.Scheme;
@@ -150,6 +151,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // Attributes of PROJECT Table
     public static final String PROJECT_ID = "projectId";
     public static final String PROJECT_NAME = "projectName";
+    public static final String DONOR_NAME = "donorName";
 
     // Attributes of BASELINE_MEMBER Table
     public static final String BASELINE_MEMBER_ID = "baselineMemberId";
@@ -283,7 +285,8 @@ public class DBHandler extends SQLiteOpenHelper {
     // Create Table for PROJECT
     public static final String CREATE_PROJECT = "CREATE TABLE " + TABLE_PROJECT + " (" +
             PROJECT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            PROJECT_NAME + " TEXT NOT NULL " +
+            PROJECT_NAME + " TEXT NOT NULL, " +
+            DONOR_NAME + " TEXT NOT NULL " +
             ");";
 
     // Create Table for BASELINE_MEMBER
@@ -832,7 +835,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_VILLAGE, null, values);
-        Log.d(TAG, "Row Inserted in TABLE_DISTRICT");
+        Log.d(TAG, "Row Inserted in TABLE_VILLAGE");
         db.close();
     }
 
@@ -878,6 +881,21 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.insert(EDUCATION, null, values);
         Log.d(TAG, "Row Inserted in TABLE_EDUCATION");
+        db.close();
+    }
+
+    //inser Into Project
+    public void insertProject(Project project){
+
+        ContentValues values = new ContentValues();
+
+        values.put(PROJECT_ID, project.getProjectId());
+        values.put(PROJECT_NAME, project.getProjectName());
+        values.put(DONOR_NAME, project.getDonorName());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_PROJECT, null, values);
+        Log.d(TAG, "Row Inserted in TABLE_PROJECT");
         db.close();
     }
 
