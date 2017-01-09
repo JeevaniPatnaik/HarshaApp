@@ -391,11 +391,11 @@ public class ServerDownload extends AppCompatActivity
     }
 
     public void showData(String s) {
-        Log.d("AysncTask", "onPostExecute(" + s + ")");
+        /*Log.d("AysncTask", "onPostExecute(" + s + ")");
         // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
         try {
-            /*String msg = "---- Select Block ----";
-            nameBlock.add(msg);*/
+            *//*String msg = "---- Select Block ----";
+            nameBlock.add(msg);*//*
             JSONObject jsonObject = new JSONObject(s);
             JSONArray jsonAssetArray = jsonObject.getJSONArray("AssetBean");
 
@@ -554,7 +554,7 @@ public class ServerDownload extends AppCompatActivity
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 
@@ -647,7 +647,175 @@ public class ServerDownload extends AppCompatActivity
                 showVillage(s);
             }
             else if(flag==5){
-                showData(s);
+                //showData(s);
+
+
+                Log.d("AysncTask", "onPostExecute(" + s + ")");
+                // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
+                try {
+            /*String msg = "---- Select Block ----";
+            nameBlock.add(msg);*/
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONArray jsonAssetArray = jsonObject.getJSONArray("AssetBean");
+
+                    for (int i = 0; i < jsonAssetArray.length(); i++) {
+
+                        JSONObject jsonArrayObject = jsonAssetArray.getJSONObject(i);
+                        Asset asset = new Asset();
+                        asset.setAssetName(jsonArrayObject.getString("assetName"));
+                        asset.setAssetCode(jsonArrayObject.getString("assetCode"));
+                        asset.setAssetId(jsonArrayObject.getInt("assetId"));
+                        assetArray.add(asset);
+                        dbHandler.insertAsset(asset);
+                        Log.d("Asset:","Object="+asset+" Asset-Name="+asset.getAssetName());
+                    }
+
+                    JSONArray jsonDisabilitiesArray = jsonObject.getJSONArray("DisabilitiesBean");
+                    for (int i = 0; i < jsonDisabilitiesArray.length(); i++) {
+
+                        JSONObject jsonArrayObject = jsonDisabilitiesArray.getJSONObject(i);
+                        Disabilities disability = new Disabilities();
+                        disability.setDisabilitiesName(jsonArrayObject.getString("disabilityName"));
+                        disability.setDisabilitiesCode(jsonArrayObject.getString("disabilityCode"));
+                        disability.setDisabilitiesId(jsonArrayObject.getInt("disabilityId"));
+                        disabilitieArray.add(disability);
+                        dbHandler.insertDisabilities(disability);
+                        Log.d("disability:","Object="+disability+" Name="+disability.getDisabilitiesName());
+                    }
+
+                    JSONArray jsonEducationArray = jsonObject.getJSONArray("EducationBean");
+                    for (int i = 0; i < jsonEducationArray.length(); i++) {
+
+                        JSONObject jsonArrayObject = jsonEducationArray.getJSONObject(i);
+                        Education education = new Education();
+                        education.setEducationName(jsonArrayObject.getString("educationName"));
+                        education.setEducationCode(jsonArrayObject.getString("educationCode"));
+                        education.setEducationId(jsonArrayObject.getInt("educationId"));
+                        educationArray.add(education);
+                        dbHandler.insertEducation(education);
+                        Log.d("education:","Object="+education+" Name="+education.getEducationName());
+
+                    }
+
+                    JSONArray jsonEducationStatusArray = jsonObject.getJSONArray("EducationStatusBean");
+                    for (int i = 0; i < jsonEducationStatusArray.length(); i++) {
+
+                        JSONObject jsonArrayObject = jsonEducationStatusArray.getJSONObject(i);
+                        EducationStatus educationStatus = new EducationStatus();
+                        educationStatus.setEducationStatusName(jsonArrayObject.getString("educationStatusName"));
+                        educationStatus.setEducationStatusCode(jsonArrayObject.getString("educationStatusCode"));
+                        educationStatus.setEducationStatusId(jsonArrayObject.getInt("educationStatusId"));
+                        educationStatusArray.add(educationStatus);
+                        dbHandler.insertEducationStatus(educationStatus);
+                        Log.d("educaionStatus:","Object="+educationStatus+" Name="+educationStatus.getEducationStatusName());
+                    }
+
+                    JSONArray jsonMaritalStatusArray = jsonObject.getJSONArray("MaritalStatusBean");
+                    for (int i = 0; i < jsonMaritalStatusArray.length(); i++) {
+
+                        JSONObject jsonArrayObject = jsonMaritalStatusArray.getJSONObject(i);
+                        MaritalStatus maritalStatus = new MaritalStatus();
+                        maritalStatus.setMaritalStatusName(jsonArrayObject.getString("maritalStatusName"));
+                        maritalStatus.setgMaritalStatusCode(jsonArrayObject.getString("maritalStatusCode"));
+                        maritalStatus.setMaritalStatusId(jsonArrayObject.getInt("maritalStatusId"));
+                        maritalStatuseArray.add(maritalStatus);
+                        dbHandler.insertMaritalStatus(maritalStatus);
+                        Log.d("marutalStatus:","Object="+maritalStatus+" Name="+maritalStatus.getMaritalStatusName());
+                    }
+
+                    JSONArray jsonOccupationArray = jsonObject.getJSONArray("OccupationBean");
+                    for (int i = 0; i < jsonOccupationArray.length(); i++) {
+
+                        JSONObject jsonArrayObject = jsonOccupationArray.getJSONObject(i);
+                        Occupation occupation = new Occupation();
+                        occupation.setOccupationName(jsonArrayObject.getString("occupationName"));
+                        occupation.setOccupationCode(jsonArrayObject.getString("occupationCode"));
+                        occupation.setOccupationId(jsonArrayObject.getInt("occupationId"));
+                        occupationArray.add(occupation);
+                        dbHandler.insertOccupation(occupation);
+                        Log.d("occupation:","Object="+occupation+" Name="+occupation.getOccupationName());
+                    }
+
+                    JSONArray jsonRelationshipArray = jsonObject.getJSONArray("RelationshipBean");
+                    for (int i = 0; i < jsonRelationshipArray.length(); i++) {
+
+                        JSONObject jsonArrayObject = jsonRelationshipArray.getJSONObject(i);
+                        Relationship relationship = new Relationship();
+                        relationship.setGetRelationshipName(jsonArrayObject.getString("relationshipName"));
+                        relationship.setRelationshipCode(jsonArrayObject.getString("relationshipCode"));
+                        relationship.setRelationshipId(jsonArrayObject.getInt("relationshipId"));
+                        relationshipArray.add(relationship);
+                        dbHandler.insertRelationship(relationship);
+                        Log.d("relationship:","Object="+relationship+" Name="+relationship.getGetRelationshipName());
+                    }
+
+                    JSONArray jsonReligionArray = jsonObject.getJSONArray("ReligionBean");
+                    for (int i = 0; i < jsonReligionArray.length(); i++) {
+
+                        JSONObject jsonArrayObject = jsonReligionArray.getJSONObject(i);
+                        Religion religion = new Religion();
+                        religion.setReligionName(jsonArrayObject.getString("religionName"));
+                        religion.setReligionCode(jsonArrayObject.getString("religionCode"));
+                        religion.setReligionId(jsonArrayObject.getInt("religionId"));
+                        religionArray.add(religion);
+                        dbHandler.insertReligionInformation(religion);
+                        Log.d("religion:","Object="+religion+" Name="+religion.getReligionName());
+                    }
+
+                    JSONArray jsonSchemeArray = jsonObject.getJSONArray("SchemeBean");
+                    for (int i = 0; i < jsonSchemeArray.length(); i++) {
+
+                        JSONObject jsonArrayObject = jsonSchemeArray.getJSONObject(i);
+                        Scheme scheme = new Scheme();
+                        scheme.setSchemeName(jsonArrayObject.getString("schemeName"));
+                        scheme.setSchemeId(jsonArrayObject.getInt("schemeId"));
+                        schemeArray.add(scheme);
+                        dbHandler.insertScheme(scheme);
+                        Log.d("scheme:","Object="+scheme+" Name="+scheme.getSchemeName());
+                    }
+
+                    JSONArray jsonSocialCategoryArray = jsonObject.getJSONArray("SocialCategoryBean");
+                    for (int i = 0; i < jsonSocialCategoryArray.length(); i++) {
+
+                        JSONObject jsonArrayObject = jsonSocialCategoryArray.getJSONObject(i);
+                        SocialCategory socialCategory = new SocialCategory();
+                        socialCategory.setSocialCategoryName(jsonArrayObject.getString("socialCategoryName"));
+                        socialCategory.setSocialCategoryCode(jsonArrayObject.getString("socialCategoryCode"));
+                        socialCategory.setSocialCategoryId(jsonArrayObject.getInt("socialCategoryId"));
+                        socialCategoryArray.add(socialCategory);
+                        dbHandler.insertSocialCategory(socialCategory);
+                        Log.d("socialCategory:","Object="+socialCategory+" Name="+socialCategory.getSocialCategoryName());
+                    }
+
+                    JSONArray jsonProjectArray = jsonObject.getJSONArray("ProjectBean");
+
+                    for (int i = 0; i < jsonProjectArray.length(); i++) {
+
+                        JSONObject jsonArrayObject = jsonProjectArray.getJSONObject(i);
+                        Project project = new Project();
+                        project.setProjectName(jsonArrayObject.getString("projectName"));
+                        project.setProjectId(jsonArrayObject.getInt("projectId"));
+                        project.setDonorName(jsonArrayObject.getString("donerName"));
+                        projectArray.add(project);
+                        dbHandler.insertProject(project);
+                        Log.d("project:","Object="+project+" Name="+project.getProjectName());
+                    }
+
+                    dbHandler.insertState(finalState);
+                    dbHandler.insertDistrict(finalDistrict);
+                    dbHandler.insertBLOCK(finalBlock);
+                    //dbHandler.insertVillage(villageArray);
+                    for(int i=0; i<villageArray.size(); i++) {
+                        Village vill = villageArray.get(i);
+                        dbHandler.insertVillage(vill);
+                        Log.d("village:","Object="+vill+" Name="+vill.getVillageName());
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
             }
             progressDialog.dismiss();
         }

@@ -16,7 +16,7 @@ public class BaselineInfo {
     private int socialCategoryId;
     private int religionId;
     private int occupationId;
-    private int contactNo;
+    private String contactNo;
     private int familyMemberNumber;
     private String income;
 
@@ -24,11 +24,11 @@ public class BaselineInfo {
         return baselineId;
     }
 
-    public int getContactNo() {
+    public String getContactNo() {
         return contactNo;
     }
 
-    public void setContactNo(int contactNo) {
+    public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
 
