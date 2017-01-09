@@ -894,7 +894,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<Disabilities> disabilityList = new ArrayList<Disabilities>();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+DISABILITIES+ " ORDER BY "+ DISABILTIES_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
@@ -936,7 +936,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<Education> educationList = new ArrayList<Education>();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+EDUCATION+ " ORDER BY "+ EDUCATION_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
@@ -993,7 +993,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<EducationStatus> educationStatusList = new ArrayList<EducationStatus>();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+EDUCATION_STATUS+ " ORDER BY "+ EDUCATION_STATUS_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
@@ -1007,7 +1007,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 EducationStatus educationStatus = new EducationStatus();
                 educationStatus.setEducationStatusId(cursor.getInt(cursor.getColumnIndex(EDUCATION_STATUS_ID)));
                 educationStatus.setEducationStatusCode(cursor.getString(cursor.getColumnIndex(EDUCATION_STATUS_CODE)));
-                educationStatus.setEducationStatusName(cursor.getString(cursor.getColumnIndex(EDUCATION_STATUS_CODE)));
+                educationStatus.setEducationStatusName(cursor.getString(cursor.getColumnIndex(EDUCATION_STATUS_NAME)));
                 educationStatusList.add(educationStatus);
 
             }
@@ -1035,7 +1035,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<MaritalStatus> maritalStatusList = new ArrayList<MaritalStatus>();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+MARITAL_STATUS+ " ORDER BY "+ MARTIAL_STATUS_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
@@ -1077,7 +1077,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<Relationship> relationshipList = new ArrayList<Relationship>();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+RELATIONSHIP+ " ORDER BY "+ RELATIONSHIP_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
@@ -1119,7 +1119,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<MigrationReason> migrationReasonList = new ArrayList<MigrationReason>();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+MIGRATION_REASON+ " ORDER BY "+ MIGRATION_REASON_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
@@ -1206,7 +1206,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<Scheme> schemeList = new ArrayList<Scheme>();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+SCHEME+ " ORDER BY "+ SCHEME_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
