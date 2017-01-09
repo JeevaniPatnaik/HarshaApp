@@ -16,6 +16,7 @@ import com.harsha.harshaapp.bean.Education;
 import com.harsha.harshaapp.bean.EducationStatus;
 import com.harsha.harshaapp.bean.MaritalStatus;
 import com.harsha.harshaapp.bean.MemberInfo;
+import com.harsha.harshaapp.bean.MigrationReason;
 import com.harsha.harshaapp.bean.Occupation;
 import com.harsha.harshaapp.bean.Relationship;
 import com.harsha.harshaapp.bean.Religion;
@@ -64,6 +65,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String DISABILITIES = "disabilities";
     public static final String MARITAL_STATUS = "maritalStatus";
     public static final String ASSET = "asset";
+    public static final String MIGRATION_REASON = "migrationReason";
 
     // Attributes of USER Table
     public static final String USER_ID = "userId";
@@ -185,6 +187,11 @@ public class DBHandler extends SQLiteOpenHelper {
     //Attributes of SCHEME
     public static final String SCHEME_ID = "schemeId";
     public static final String SCHEME_NAME = "schemeName";
+
+    //Attributes of MIGRATION_REASON
+    public static final String MIGRATION_REASON_ID = "migrationReasonId";
+    public static final String MIGRATION_REASON_CODE = "migrationReasonCode";
+    public static final String MIGRATION_REASON_NAME = "migrationReasonName";
 
     // create table for ASSET
     public static final String CREATE_ASSET = "CREATE TABLE " + ASSET + " (" +
@@ -349,6 +356,13 @@ public class DBHandler extends SQLiteOpenHelper {
             MARTIAL_STATUS_NAME + " TEXT NOT NULL " +
             ");";
 
+    // create table for MIGRATION_REASON
+    public static final String CREATE_MIGRATION_REASON = "CREATE TABLE " + MIGRATION_REASON + " (" +
+            MIGRATION_REASON_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            MIGRATION_REASON_CODE + " TEXT NOT NULL, " +
+            MIGRATION_REASON_NAME + " TEXT NOT NULL " +
+            ");";
+
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
@@ -417,6 +431,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_ASSET);
         Log.d(TAG, "ASSET TABLE CREATED");
+
+        db.execSQL(CREATE_MIGRATION_REASON);
+        Log.d(TAG, "MIGRATION_REASON TABLE CREATED");
     }
 
     @Override
@@ -481,6 +498,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF EXIST " + ASSET);
         Log.d(TAG, "ASSET TABLE DELETED");
+
+        db.execSQL("DROP TABLE IF EXIST " + MIGRATION_REASON);
+        Log.d(TAG, "MIGRATION_REASON TABLE DELETED");
 
         onCreate(db);
 
@@ -661,7 +681,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(MEMBER_NAME, memberInfo.getMemberName());
         values.put(DOB, memberInfo.getDob());
         values.put(GENDER, memberInfo.getGender());
-        values.put(QUOTA, memberInfo.getQuota());
+        values.put(QUOTA, memberInfo.getSocialCategory());
         values.put(AADHAAR_CARD_ID, memberInfo.getAadhaarCardId());
         values.put(VOTER_ID, memberInfo.getVoterId());
         values.put(FAMILY_HEAD, memberInfo.getFamilyHead());
@@ -682,7 +702,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.execSQL("UPDATE"+ TABLE_MEMBER + "SET" + UNIQUE_ID + "=\"" + memberInfo.getUniqueId() + "\"" +
                 MEMBER_NAME + "=\"" + memberInfo.getMemberName() + "\" " +DOB + "=\"" + memberInfo.getDob() +"\" " +
-                ""+GENDER + "=\"" + memberInfo.getGender()+ "\""+QUOTA + "=\"" + memberInfo.getQuota()+ "\"" +
+                ""+GENDER + "=\"" + memberInfo.getGender()+ "\""+QUOTA + "=\"" + memberInfo.getSocialCategory()+ "\"" +
                 ""+AADHAAR_CARD_ID + "=\"" + memberInfo.getAadhaarCardId() +"\""+VOTER_ID + "=\"" + memberInfo.getVoterId() +"\"" +
                 ""+FAMILY_HEAD + "=\"" + memberInfo.getFamilyHead() +""+PERSONAL_SALARY + "=\"" + memberInfo.getPersonalSalary() +";");
         Log.d(TAG, "Row Deleted in TABLE_USER");
@@ -866,7 +886,34 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    //inser Into Education
+    //fetch from disability table
+    public ArrayList<Disabilities> getAllDisability(){
+
+        ArrayList<Disabilities> disabilityList = new ArrayList<Disabilities>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+DISABILITIES+ " ORDER BY "+ DISABILTIES_NAME + " ASC" ;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                /*String religionName = cursor.getString(cursor.getColumnIndex("religionName"));
+                String religionCode = cursor.getString(cursor.getColumnIndex("religionCode"));
+                religionList.add(religionCode);
+                religionList.add(religionName);*/
+
+                Disabilities disabilities = new Disabilities();
+                disabilities.setDisabilitiesId(cursor.getInt(cursor.getColumnIndex(DISABILTIES_ID)));
+                disabilities.setDisabilitiesCode(cursor.getString(cursor.getColumnIndex(DISABILTIES_CODE)));
+                disabilities.setDisabilitiesName(cursor.getString(cursor.getColumnIndex(DISABILTIES_NAME)));
+                disabilityList.add(disabilities);
+
+            }
+        }
+        return disabilityList;
+    }
+
+    //insert Into Education
     public void insertEducation(Education education){
 
         ContentValues values = new ContentValues();
@@ -879,6 +926,33 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(EDUCATION, null, values);
         Log.d(TAG, "Row Inserted in TABLE_EDUCATION");
         db.close();
+    }
+
+    //fetch from education table
+    public ArrayList<Education> getAllEducation(){
+
+        ArrayList<Education> educationList = new ArrayList<Education>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+EDUCATION+ " ORDER BY "+ EDUCATION_NAME + " ASC" ;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                /*String religionName = cursor.getString(cursor.getColumnIndex("religionName"));
+                String religionCode = cursor.getString(cursor.getColumnIndex("religionCode"));
+                religionList.add(religionCode);
+                religionList.add(religionName);*/
+
+                Education education = new Education();
+                education.setEducationId(cursor.getInt(cursor.getColumnIndex(EDUCATION_ID)));
+                education.setEducationCode(cursor.getString(cursor.getColumnIndex(EDUCATION_CODE)));
+                education.setEducationName(cursor.getString(cursor.getColumnIndex(EDUCATION_NAME)));
+                educationList.add(education);
+
+            }
+        }
+        return educationList;
     }
 
     //inser Into EducationStatus
@@ -896,6 +970,33 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    //fetch from education status table
+    public ArrayList<EducationStatus> getAllEducationStatus(){
+
+        ArrayList<EducationStatus> educationStatusList = new ArrayList<EducationStatus>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+EDUCATION_STATUS+ " ORDER BY "+ EDUCATION_STATUS_NAME + " ASC" ;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                /*String religionName = cursor.getString(cursor.getColumnIndex("religionName"));
+                String religionCode = cursor.getString(cursor.getColumnIndex("religionCode"));
+                religionList.add(religionCode);
+                religionList.add(religionName);*/
+
+                EducationStatus educationStatus = new EducationStatus();
+                educationStatus.setEducationStatusId(cursor.getInt(cursor.getColumnIndex(EDUCATION_STATUS_ID)));
+                educationStatus.setEducationStatusCode(cursor.getString(cursor.getColumnIndex(EDUCATION_STATUS_CODE)));
+                educationStatus.setEducationStatusName(cursor.getString(cursor.getColumnIndex(EDUCATION_STATUS_CODE)));
+                educationStatusList.add(educationStatus);
+
+            }
+        }
+        return educationStatusList;
+    }
+
     //inser Into MaritalStatus
     public void insertMaritalStatus(MaritalStatus maritalStatus){
 
@@ -911,19 +1012,115 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    //inser Into MaritalStatus
+    //fetch from marital status table
+    public ArrayList<MaritalStatus> getAllMaritalStatus(){
+
+        ArrayList<MaritalStatus> maritalStatusList = new ArrayList<MaritalStatus>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+MARITAL_STATUS+ " ORDER BY "+ MARTIAL_STATUS_NAME + " ASC" ;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                /*String religionName = cursor.getString(cursor.getColumnIndex("religionName"));
+                String religionCode = cursor.getString(cursor.getColumnIndex("religionCode"));
+                religionList.add(religionCode);
+                religionList.add(religionName);*/
+
+                MaritalStatus maritalStatus = new MaritalStatus();
+                maritalStatus.setMaritalStatusId(cursor.getInt(cursor.getColumnIndex(MARITAL_STATUS_ID)));
+                maritalStatus.setgMaritalStatusCode(cursor.getString(cursor.getColumnIndex(MIGRATION_REASON_CODE)));
+                maritalStatus.setMaritalStatusName(cursor.getString(cursor.getColumnIndex(MIGRATION_REASON_NAME)));
+                maritalStatusList.add(maritalStatus);
+
+            }
+        }
+        return maritalStatusList;
+    }
+
+    //inser Into relationship
     public void insertRelationship(Relationship relationship){
 
         ContentValues values = new ContentValues();
 
         values.put(RELATIONSHIP_ID, relationship.getRelationshipId());
         values.put(RELATIONSHIP_Code, relationship.getRelationshipCode());
-        values.put(RELATIONSHIP_NAME, relationship.getGetRelationshipName());
+        values.put(RELATIONSHIP_NAME, relationship.getRelationshipName());
 
         SQLiteDatabase db = getWritableDatabase();
         db.insert(RELATIONSHIP, null, values);
         Log.d(TAG, "Row Inserted in RELATIONSHIP");
         db.close();
+    }
+
+    //fetch from relationship table
+    public ArrayList<Relationship> getAllRelationship(){
+
+        ArrayList<Relationship> relationshipList = new ArrayList<Relationship>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+RELATIONSHIP+ " ORDER BY "+ RELATIONSHIP_NAME + " ASC" ;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                /*String religionName = cursor.getString(cursor.getColumnIndex("religionName"));
+                String religionCode = cursor.getString(cursor.getColumnIndex("religionCode"));
+                religionList.add(religionCode);
+                religionList.add(religionName);*/
+
+                Relationship relationship = new Relationship();
+                relationship.setRelationshipId(cursor.getInt(cursor.getColumnIndex(RELATIONSHIP_ID)));
+                relationship.setRelationshipCode(cursor.getString(cursor.getColumnIndex(RELATIONSHIP_Code)));
+                relationship.setRelationshipName(cursor.getString(cursor.getColumnIndex(RELATIONSHIP_NAME)));
+                relationshipList.add(relationship);
+
+            }
+        }
+        return relationshipList;
+    }
+
+    //insert Into MigrationReason
+    public void insertMigrationReason(MigrationReason migrationReason){
+
+        ContentValues values = new ContentValues();
+
+        values.put(MIGRATION_REASON_ID, migrationReason.getMigrationReasonId());
+        values.put(MIGRATION_REASON_CODE, migrationReason.getMigrationReasonCode());
+        values.put(MIGRATION_REASON_NAME, migrationReason.getMigrationReasonName());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(MIGRATION_REASON, null, values);
+        Log.d(TAG, "Row Inserted in TABLE_MIGRATION_REASON");
+        db.close();
+    }
+
+    //fetch from migration reason table
+    public ArrayList<MigrationReason> getAllMigrationReason(){
+
+        ArrayList<MigrationReason> migrationReasonList = new ArrayList<MigrationReason>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+MIGRATION_REASON+ " ORDER BY "+ MIGRATION_REASON_NAME + " ASC" ;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                /*String religionName = cursor.getString(cursor.getColumnIndex("religionName"));
+                String religionCode = cursor.getString(cursor.getColumnIndex("religionCode"));
+                religionList.add(religionCode);
+                religionList.add(religionName);*/
+
+                MigrationReason migrationReason = new MigrationReason();
+                migrationReason.setMigrationReasonId(cursor.getInt(cursor.getColumnIndex(MIGRATION_REASON_ID)));
+                migrationReason.setMigrationReasonCode(cursor.getString(cursor.getColumnIndex(MIGRATION_REASON_CODE)));
+                migrationReason.setMigrationReasonName(cursor.getString(cursor.getColumnIndex(MIGRATION_REASON_NAME)));
+                migrationReasonList.add(migrationReason);
+
+            }
+        }
+        return migrationReasonList;
     }
 
 
@@ -984,6 +1181,32 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(SCHEME, null, values);
         Log.d(TAG, "Row Inserted in SCHEME");
         db.close();
+    }
+
+    //fetch from scheme table
+    public ArrayList<Scheme> getAllScheme(){
+
+        ArrayList<Scheme> schemeList = new ArrayList<Scheme>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+SCHEME+ " ORDER BY "+ SCHEME_NAME + " ASC" ;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                /*String religionName = cursor.getString(cursor.getColumnIndex("religionName"));
+                String religionCode = cursor.getString(cursor.getColumnIndex("religionCode"));
+                religionList.add(religionCode);
+                religionList.add(religionName);*/
+
+                Scheme scheme = new Scheme();
+                scheme.setSchemeId(cursor.getInt(cursor.getColumnIndex(SCHEME_ID)));
+                scheme.setSchemeName(cursor.getString(cursor.getColumnIndex(SCHEME_NAME)));
+                schemeList.add(scheme);
+
+            }
+        }
+        return schemeList;
     }
 
 

@@ -9,7 +9,7 @@ public class MemberInfo {
     private String memberName;
     private String dob;
     private String gender;
-    private String quota;
+    private String socialCategory;
     private int aadhaarCardId;
     private int voterId;
     private String familyHead;
@@ -55,12 +55,12 @@ public class MemberInfo {
         this.gender = gender;
     }
 
-    public String getQuota() {
-        return quota;
+    public String getSocialCategory() {
+        return socialCategory;
     }
 
-    public void setQuota(String quota) {
-        this.quota = quota;
+    public void setSocialCategory(String socialCategory) {
+        this.socialCategory = socialCategory;
     }
 
     public int getAadhaarCardId() {
