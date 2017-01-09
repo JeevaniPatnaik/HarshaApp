@@ -190,14 +190,14 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String CREATE_DISABILITIES = "CREATE TABLE " + DISABILITIES + " (" +
             DISABILTIES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             DISABILTIES_CODE + " TEXT NOT NULL, " +
-            DISABILTIES_NAME + " TEXT NOT NULL, " +
+            DISABILTIES_NAME + " TEXT NOT NULL " +
             ");";
 
     // create table for RELATIONSHIP
     public static final String CREATE_RELATIONSHIP = "CREATE TABLE " + RELATIONSHIP + " (" +
             RELATIONSHIP_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             RELATIONSHIP_Code + " TEXT NOT NULL, " +
-            RELATIONSHIP_NAME + " TEXT NOT NULL, " +
+            RELATIONSHIP_NAME + " TEXT NOT NULL" +
             ");";
 
     // Create Table for USER
@@ -332,7 +332,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // create table for SCHEME
     public static final String CREATE_SCHEME = "CREATE TABLE " + SCHEME+ " (" +
             SCHEME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            SCHEME_NAME + " TEXT NOT NULL, " +
+            SCHEME_NAME + " TEXT NOT NULL " +
             ");";
 
     // create table for MARITAL_STATUS
