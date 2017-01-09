@@ -886,7 +886,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     //inser Into Project
     public void insertProject(Project project){
-
+// Testing
         ContentValues values = new ContentValues();
 
         values.put(PROJECT_ID, project.getProjectId());
