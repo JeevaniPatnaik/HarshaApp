@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +23,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.harsha.harshaapp.bean.BaselineInfo;
 import com.harsha.harshaapp.bean.Disabilities;
 import com.harsha.harshaapp.bean.Education;
 import com.harsha.harshaapp.bean.EducationStatus;
@@ -100,6 +102,8 @@ public class AddMemberInformation extends AppCompatActivity
     String result = "";
     int flag = 1;
 
+    BaselineInfo baselineInfo = new BaselineInfo();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,11 +129,45 @@ public class AddMemberInformation extends AppCompatActivity
         relationship = (Spinner) findViewById(R.id.relationship);
         education = (Spinner) findViewById(R.id.education);
         educationStatus = (Spinner) findViewById(R.id.educationStatus);
-        migrationReason = (Spinner) findViewById(R.id.migrationReason);
+        //migrationReason = (Spinner) findViewById(R.id.migrationReason);
         maritalStatus = (Spinner) findViewById(R.id.maritalStatus);
         religion = (Spinner) findViewById(R.id.religion);
         centralScheme = (Spinner) findViewById(R.id.centralScheme);
         add = (Button) findViewById(R.id.add);
+
+        Intent receive = getIntent();
+        Bundle userBundle = receive.getExtras();
+        user = dbHandler.getUserDetail();
+
+        Log.d("userBundle:","stateId="+userBundle.getInt("stateId"));
+
+        baselineInfo.setDistrictId(userBundle.getInt("districtId"));
+        baselineInfo.setBaselineId(userBundle.getInt("blockId"));
+        baselineInfo.setVillageId(userBundle.getInt("villageId"));
+        baselineInfo.setSurveyUserId(userBundle.getInt("surveyUserId"));
+        baselineInfo.setSocialCategoryId(userBundle.getInt("socialCategoryId"));
+        baselineInfo.setReligionId(userBundle.getInt("religionId"));
+        baselineInfo.setOccupationId(userBundle.getInt("occupationId"));
+        baselineInfo.setContactNo(userBundle.getString("contactNo"));
+        baselineInfo.setFamilyMemberNumber(userBundle.getInt("familyMemberNumber"));
+        baselineInfo.setIncome(userBundle.getString("income"));
+        baselineInfo.setStateId(userBundle.getInt("stateId"));
+
+        Log.d("userBundle:","stateId="+baselineInfo.getStateId()
+                +"\ndistrictId="+baselineInfo.getDistrictId()
+                +"\nblockId="+baselineInfo.getBlockId()
+                +"\nvillageId="+baselineInfo.getVillageId()
+                +"\nsurveyUserId="+ baselineInfo.getSurveyUserId()
+                +"\nsocialCategoryId="+baselineInfo.getSocialCategoryId()
+                +"\nreligionId="+baselineInfo.getReligionId()
+                +"\noccupationId="+baselineInfo.getOccupationId()
+                +"\ncontactNo="+baselineInfo.getContactNo()
+                +"\nfamilyMemberNumber="+baselineInfo.getFamilyMemberNumber()
+                +"\nincome="+baselineInfo.getIncome());
+
+
+        AddMemberAsyncTask obj = new AddMemberAsyncTask(this);
+        obj.execute();
 
         socialCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -286,6 +324,7 @@ public class AddMemberInformation extends AppCompatActivity
 
             }
         });
+/*
 
         migrationReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -312,6 +351,7 @@ public class AddMemberInformation extends AppCompatActivity
 
             }
         });
+*/
 
         religion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -391,9 +431,6 @@ public class AddMemberInformation extends AppCompatActivity
             }
         });
 
-        AddMemberAsyncTask obj = new AddMemberAsyncTask(this);
-        obj.execute();
-
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -406,10 +443,6 @@ public class AddMemberInformation extends AppCompatActivity
 
             }
         });
-
-        Intent receive = getIntent();
-        bundle = receive.getExtras();
-        user = dbHandler.getUserDetail();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -445,16 +478,16 @@ public class AddMemberInformation extends AppCompatActivity
 
     public void spinnerList() {
         //Spinner
-        listSocialCategory = dbHandler.getAllSocialCategory();
         listOccupation = dbHandler.getAllOccupation();
         listDisability = dbHandler.getAllDisability();
         listRelationship = dbHandler.getAllRelationship();
         listEducation = dbHandler.getAllEducation();
         listEducationStatus = dbHandler.getAllEducationStatus();
-        listMigrationReason = dbHandler.getAllMigrationReason();
+        //listMigrationReason = dbHandler.getAllMigrationReason();
         listReligion = dbHandler.getAllReligion();
         listCentalScheme = dbHandler.getAllScheme();
         listMaritalStatus = dbHandler.getAllMaritalStatus();
+        listSocialCategory = dbHandler.getAllSocialCategory();
 
         String sc = "---- Select Social Category ----";
         String oc = "---- Select Occupation ----";
@@ -473,7 +506,7 @@ public class AddMemberInformation extends AppCompatActivity
         nameRelationship.add(re);
         nameEducation.add(ed);
         nameEducationStatus.add(es);
-        nameMigrationReason.add(mr);
+        //nameMigrationReason.add(mr);
         nameReligion.add(rl);
         nameCentralScheme.add(cs);
         nameMaritalStatus.add(ms);
@@ -513,12 +546,14 @@ public class AddMemberInformation extends AppCompatActivity
             String name = edst.getEducationStatusName() + "-" + edst.getEducationStatusCode();
             nameEducationStatus.add(name);
         }
+/*
 
         for(int i=0; i<listMigrationReason.size(); i++) {
             MigrationReason migr = listMigrationReason.get(i);
             String name = migr.getMigrationReasonName() + "-" + migr.getMigrationReasonCode();
             nameMigrationReason.add(name);
         }
+*/
 
         for(int i=0; i<listReligion.size(); i++) {
             Religion rell = listReligion.get(i);
@@ -561,10 +596,12 @@ public class AddMemberInformation extends AppCompatActivity
         ArrayAdapter<String> educationStatusListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameEducationStatus);
         educationStatusListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         educationStatus.setAdapter(educationStatusListAdapter);
+/*
 
         ArrayAdapter<String> migrationReasonListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameMigrationReason);
         migrationReasonListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         migrationReason.setAdapter(migrationReasonListAdapter);
+*/
 
         ArrayAdapter<String> religionListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameReligion);
         religionListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

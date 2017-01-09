@@ -810,12 +810,19 @@ public class ServerDownload extends AppCompatActivity
                         Log.d("village:","Object="+vill+" Name="+vill.getVillageName());
                     }
 
+
+                    Intent intent1 = new Intent(ServerDownload.this,Home.class);
+                    //intent1.putExtras(userBundle);
+                    startActivity(intent1);
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
 
             }
+
             progressDialog.dismiss();
         }
     }
