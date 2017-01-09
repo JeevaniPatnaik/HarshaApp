@@ -90,7 +90,7 @@ public class ServerDownload extends AppCompatActivity
     String URL2 = "https://harsha-guptas.rhcloud.com/api/district/getbystateid";
     String URL3 = "https://harsha-guptas.rhcloud.com/api/block/getbydistrictid";
     String URL4 = "https://harsha-guptas.rhcloud.com/api/village/getbyblockid";
-    String URL5 = "http://harsha-guptas.rhcloud.com/api/download/data";
+    String URL5 = "https://harsha-guptas.rhcloud.com/api/download/data";
     String URL1 = "";
 
     ArrayList<String> nameState = new ArrayList<String>();
