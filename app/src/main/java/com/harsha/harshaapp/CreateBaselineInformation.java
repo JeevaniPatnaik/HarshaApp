@@ -73,7 +73,7 @@ public class CreateBaselineInformation extends AppCompatActivity
 
     TextView nav_username,nav_email;
 
-    EditText familyHeadName,contactNo,income,noOfFamilyMember;
+    EditText contactNo,income,noOfFamilyMember;
     TextView stateName,districtName,blockName;
     Spinner village,religion,occupation,socialCategory;
     Button next;
@@ -88,7 +88,6 @@ public class CreateBaselineInformation extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        familyHeadName = (EditText) findViewById(R.id.familyHeadName);
         contactNo = (EditText) findViewById(R.id.contactNo);
         income = (EditText) findViewById(R.id.income);
         stateName = (TextView) findViewById(R.id.stateName);
@@ -438,7 +437,6 @@ public class CreateBaselineInformation extends AppCompatActivity
                             userBundle.putString("income", baselineInfo.getIncome());
 
                         } else {
-                            familyHeadName.setText("");
                             stateName.setText(state.getStateName());
                             districtName.setText(district.getDistrictName());
                             blockName.setText(block.getBlockName());
