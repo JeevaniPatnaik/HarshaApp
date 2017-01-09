@@ -263,9 +263,9 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String CREATE_BASELINE_INFORMATION = "CREATE TABLE " + TABLE_BASELINE_INFORMATION + " (" +
             BASELINE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             FAMILY_HEAD_ID + " INTEGER NOT NULL, " +
-            CONTACT_NO + " INTEGER NOT NULL, " +
+            CONTACT_NO + " TEXT NOT NULL, " +
             FAMILY_MEMBER_NUMBER + " INTEGER NOT NULL, " +
-            INCOME + " INTEGER NOT NULL " +
+            INCOME + " TEXT NOT NULL " +
             ");";
 
     // Create Table for MEMBER
