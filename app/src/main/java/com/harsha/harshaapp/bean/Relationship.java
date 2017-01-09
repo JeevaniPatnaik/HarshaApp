@@ -8,7 +8,7 @@ public class Relationship {
 
     private int relationshipId;
     private String relationshipCode;
-    private String getRelationshipName;
+    private String relationshipName;
 
     public int getRelationshipId() {
         return relationshipId;
@@ -26,11 +26,11 @@ public class Relationship {
         this.relationshipCode = relationshipCode;
     }
 
-    public String getGetRelationshipName() {
-        return getRelationshipName;
+    public String getRelationshipName() {
+        return relationshipName;
     }
 
-    public void setGetRelationshipName(String getRelationshipName) {
-        this.getRelationshipName = getRelationshipName;
+    public void setRelationshipName(String relationshipName) {
+        this.relationshipName = relationshipName;
     }
 }

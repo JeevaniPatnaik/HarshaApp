@@ -8,7 +8,7 @@ public class MaritalStatus {
 
     private int maritalStatusId;
     private String maritalStatusName;
-    private String MaritalStatusCode;
+    private String maritalStatusCode;
 
     public int getMaritalStatusId() {
         return maritalStatusId;
@@ -26,20 +26,20 @@ public class MaritalStatus {
         this.maritalStatusName = maritalStatusName;
     }
 
-    public String getgMaritalStatusCode() {
-        return MaritalStatusCode;
+    public String getMaritalStatusCode() {
+        return maritalStatusCode;
     }
 
-    public void setgMaritalStatusCode(String gMaritalStatusCode) {
-        this.MaritalStatusCode = gMaritalStatusCode;
+    public void setMaritalStatusCode(String maritalStatusCode) {
+        this.maritalStatusCode = maritalStatusCode;
     }
 
     public MaritalStatus() {
     }
 
-    public MaritalStatus(int maritalStatusId, String maritalStatusName, String gMaritalStatusCode) {
+    public MaritalStatus(int maritalStatusId, String maritalStatusName, String maritalStatusCode) {
         this.maritalStatusId = maritalStatusId;
         this.maritalStatusName = maritalStatusName;
-        this.MaritalStatusCode = gMaritalStatusCode;
+        this.maritalStatusCode = maritalStatusCode;
     }
 }

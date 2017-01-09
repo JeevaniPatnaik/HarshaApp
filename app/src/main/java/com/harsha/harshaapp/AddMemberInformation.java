@@ -1,6 +1,9 @@
 package com.harsha.harshaapp;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,24 +22,46 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.harsha.harshaapp.bean.Disabilities;
+import com.harsha.harshaapp.bean.Education;
+import com.harsha.harshaapp.bean.EducationStatus;
+import com.harsha.harshaapp.bean.MaritalStatus;
 import com.harsha.harshaapp.bean.MemberInfo;
+import com.harsha.harshaapp.bean.MigrationReason;
+import com.harsha.harshaapp.bean.Occupation;
+import com.harsha.harshaapp.bean.Relationship;
+import com.harsha.harshaapp.bean.Religion;
+import com.harsha.harshaapp.bean.Scheme;
+import com.harsha.harshaapp.bean.SocialCategory;
 import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.database.DBHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jeevani on 12/7/2016.
  */
-
 public class AddMemberInformation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    String URL1 = "http://10.1.1.117:8085/harsha/member/add";
-    String URL2 = "";
-    String result="";
 
     DBHandler dbHandler = new DBHandler(AddMemberInformation.this, null, null, 1);
     Bundle bundle;
     User user = new User();
+    SocialCategory socialCategoryBean = new SocialCategory();
+    Occupation occupationBean = new Occupation();
+    Disabilities disabilitiesBean = new Disabilities();
+    Relationship relationshipBean = new Relationship();
+    Education educationBean = new Education();
+    EducationStatus educationStatusBean = new EducationStatus();
+    MigrationReason migrationReasonBean = new MigrationReason();
+    Religion religionBean = new Religion();
+    Scheme schemeBean = new Scheme();
+    MaritalStatus maritalStatusBean = new MaritalStatus();
 
     TextView nav_username,nav_email;
 
@@ -43,10 +69,36 @@ public class AddMemberInformation extends AppCompatActivity
     EditText name,dob,aadhaarCard,voterId,familyHeadName,personalSalary;
     RadioGroup gender;
     RadioButton male,female,other;
-    Spinner quota, occupation, disabilities, relationship, education, educationStatus, migrationReason, religion, centralScheme, maritalStatus;
+    Spinner socialCategory, occupation, disabilities, relationship, education, educationStatus, migrationReason, religion, centralScheme, maritalStatus;
     Button add;
-    boolean flag = false;
+
     MemberInfo memberInfo = new MemberInfo();
+
+    ArrayList<String> nameSocialCategory = new ArrayList<String>();
+    ArrayList<String> nameOccupation = new ArrayList<String>();
+    ArrayList<String> nameDisability = new ArrayList<String>();
+    ArrayList<String> nameRelationship = new ArrayList<String>();
+    ArrayList<String> nameEducation = new ArrayList<String>();
+    ArrayList<String> nameEducationStatus = new ArrayList<String>();
+    ArrayList<String> nameMigrationReason = new ArrayList<String>();
+    ArrayList<String> nameReligion = new ArrayList<String>();
+    ArrayList<String> nameCentralScheme = new ArrayList<String>();
+    ArrayList<String> nameMaritalStatus = new ArrayList<String>();
+
+
+    ArrayList<SocialCategory> listSocialCategory;
+    ArrayList<Occupation> listOccupation;
+    ArrayList<Disabilities> listDisability;
+    ArrayList<Relationship> listRelationship;
+    ArrayList<Education> listEducation;
+    ArrayList<EducationStatus> listEducationStatus;
+    ArrayList<MigrationReason> listMigrationReason;
+    ArrayList<Religion> listReligion;
+    ArrayList<Scheme> listCentalScheme;
+    ArrayList<MaritalStatus> listMaritalStatus;
+
+    String result = "";
+    int flag = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +119,7 @@ public class AddMemberInformation extends AppCompatActivity
         male = (RadioButton) findViewById(R.id.male);
         female = (RadioButton) findViewById(R.id.female);
         other = (RadioButton) findViewById(R.id.other);
-        quota = (Spinner) findViewById(R.id.quota);
+        socialCategory = (Spinner) findViewById(R.id.socialCategory);
         occupation = (Spinner) findViewById(R.id.occupation);
         disabilities = (Spinner) findViewById(R.id.disabilities);
         relationship = (Spinner) findViewById(R.id.relationship);
@@ -79,29 +131,278 @@ public class AddMemberInformation extends AppCompatActivity
         centralScheme = (Spinner) findViewById(R.id.centralScheme);
         add = (Button) findViewById(R.id.add);
 
-        ArrayAdapter<CharSequence> quotaListAdapter = ArrayAdapter
-                .createFromResource(this, R.array.quota_list,
-                        android.R.layout.simple_spinner_item);
-        quotaListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        quota.setAdapter(quotaListAdapter);
-
-        /*quota.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        socialCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                memberInfo.setQuota((String) parent.getItemAtPosition(position));
-                flag = true;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listSocialCategory.size(); i++) {
+                        SocialCategory sc = listSocialCategory.get(i);
+                        if(item.equalsIgnoreCase(sc.getSocialCategoryName() + "-" + sc.getSocialCategoryCode())) {
+                            socialCategoryBean = sc;
+                            break;
+                        }
+                    }
+                }
+
             }
-        });*/
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        occupation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listOccupation.size(); i++) {
+                        Occupation oc = listOccupation.get(i);
+                        if(item.equalsIgnoreCase(oc.getOccupationName() + "-" + oc.getOccupationCode())) {
+                            occupationBean = oc;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        disabilities.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listDisability.size(); i++) {
+                        Disabilities disb = listDisability.get(i);
+                        if(item.equalsIgnoreCase(disb.getDisabilitiesName() + "-" + disb.getDisbilitiesCode())) {
+                            disabilitiesBean = disb;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        relationship.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listRelationship.size(); i++) {
+                        Relationship rls = listRelationship.get(i);
+                        if(item.equalsIgnoreCase(rls.getRelationshipName() + "-" + rls.getRelationshipCode())) {
+                            relationshipBean = rls;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        education.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listEducation.size(); i++) {
+                        Education edu = listEducation.get(i);
+                        if(item.equalsIgnoreCase(edu.getEducationName() + "-" + edu.getEducationCode())) {
+                            educationBean = edu;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        educationStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listEducationStatus.size(); i++) {
+                        EducationStatus educ = listEducationStatus.get(i);
+                        if(item.equalsIgnoreCase(educ.getEducationStatusName() + "-" + educ.getEducationStatusCode())) {
+                            educationStatusBean = educ;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        migrationReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listMigrationReason.size(); i++) {
+                        MigrationReason mig = listMigrationReason.get(i);
+                        if(item.equalsIgnoreCase(mig.getMigrationReasonName() + "-" + mig.getMigrationReasonCode())) {
+                            migrationReasonBean = mig;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        religion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listReligion.size(); i++) {
+                        Religion rl = listReligion.get(i);
+                        if(item.equalsIgnoreCase(rl.getReligionName() + "-" + rl.getReligionCode())) {
+                            religionBean = rl;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        centralScheme.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listCentalScheme.size(); i++) {
+                        Scheme sch = listCentalScheme.get(i);
+                        if(item.equalsIgnoreCase(sch.getSchemeName() + "-" + sch.getSchemeId())) {
+                            schemeBean = sch;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        maritalStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listMaritalStatus.size(); i++) {
+                        MaritalStatus mar = listMaritalStatus.get(i);
+                        if(item.equalsIgnoreCase(mar.getMaritalStatusName() + "-" + mar.getMaritalStatusCode())) {
+                            maritalStatusBean = mar;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        AddMemberAsyncTask obj = new AddMemberAsyncTask(this);
+        obj.execute();
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-               /* URL2 = URL1 + "?memberName=" + name.getText().toString()+"&dob=" + dob.getText().toString()
-                        +"&gender=" + gender.getId()+"&aadhaarCardId=" + aadhaarCard.getText().toString()
-                        +"&voterId=" + voterId.getText().toString()+"&familyHead=" + familyHeadName.getText().toString()
-                        +"&personalSalary=" + personalSalary.getText().toString();
-                new AddMemberAsyncTask().execute(URL2);*/
+                flag=2;
+
+                Intent intent = new Intent(AddMemberInformation.this,BaselineInformation.class);
+                //intent.putExtra(bundle);
+                startActivity(intent);
 
             }
         });
@@ -135,6 +436,200 @@ public class AddMemberInformation extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    public void readData() {
+
+    }
+
+    public void spinnerList() {
+        //Spinner
+        listSocialCategory = dbHandler.getAllSocialCategory();
+        listOccupation = dbHandler.getAllOccupation();
+        listDisability = dbHandler.getAllDisability();
+        listRelationship = dbHandler.getAllRelationship();
+        listEducation = dbHandler.getAllEducation();
+        listEducationStatus = dbHandler.getAllEducationStatus();
+        listMigrationReason = dbHandler.getAllMigrationReason();
+        listReligion = dbHandler.getAllReligion();
+        listCentalScheme = dbHandler.getAllScheme();
+        listMaritalStatus = dbHandler.getAllMaritalStatus();
+
+        String sc = "---- Select Social Category ----";
+        String oc = "---- Select Occupation ----";
+        String ds = "---- Select Disability ----";
+        String re = "---- Select Relationship ----";
+        String ed = "---- Select Education ----";
+        String es = "---- Select Education Status ----";
+        String mr = "---- Select Migration Reason ----";
+        String rl = "---- Select Religion ----";
+        String cs = "---- Select Central Scheme ----";
+        String ms = "---- Select Marital Status ----";
+
+        nameSocialCategory.add(sc);
+        nameOccupation.add(oc);
+        nameDisability.add(ds);
+        nameRelationship.add(re);
+        nameEducation.add(ed);
+        nameEducationStatus.add(es);
+        nameMigrationReason.add(mr);
+        nameReligion.add(rl);
+        nameCentralScheme.add(cs);
+        nameMaritalStatus.add(ms);
+
+        for(int i=0; i<listSocialCategory.size(); i++) {
+            SocialCategory socl = listSocialCategory.get(i);
+            String name = socl.getSocialCategoryName() + "-" + socl.getSocialCategoryCode();
+            nameSocialCategory.add(name);
+        }
+
+        for(int i=0; i<listOccupation.size(); i++) {
+            Occupation occp = listOccupation.get(i);
+            String name = occp.getOccupationName() + "-" + occp.getOccupationCode();
+            nameOccupation.add(name);
+        }
+
+        for(int i=0; i<listDisability.size(); i++) {
+            Disabilities dis = listDisability.get(i);
+            String name = dis.getDisabilitiesName() + "-" + dis.getDisbilitiesCode();
+            nameDisability.add(name);
+        }
+
+        for(int i=0; i<listRelationship.size(); i++) {
+            Relationship rels = listRelationship.get(i);
+            String name = rels.getRelationshipName() + "-" + rels.getRelationshipCode();
+            nameRelationship.add(name);
+        }
+
+        for(int i=0; i<listEducation.size(); i++) {
+            Education educ = listEducation.get(i);
+            String name = educ.getEducationName() + "-" + educ.getEducationCode();
+            nameEducation.add(name);
+        }
+
+        for(int i=0; i<listEducationStatus.size(); i++) {
+            EducationStatus edst = listEducationStatus.get(i);
+            String name = edst.getEducationStatusName() + "-" + edst.getEducationStatusCode();
+            nameEducationStatus.add(name);
+        }
+
+        for(int i=0; i<listMigrationReason.size(); i++) {
+            MigrationReason migr = listMigrationReason.get(i);
+            String name = migr.getMigrationReasonName() + "-" + migr.getMigrationReasonCode();
+            nameMigrationReason.add(name);
+        }
+
+        for(int i=0; i<listReligion.size(); i++) {
+            Religion rell = listReligion.get(i);
+            String name = rell.getReligionName() + "-" + rell.getReligionCode();
+            nameReligion.add(name);
+        }
+
+        for(int i=0; i<listCentalScheme.size(); i++) {
+            Scheme csc = listCentalScheme.get(i);
+            String name = csc.getSchemeName() + "-" + csc.getSchemeId();
+            nameCentralScheme.add(name);
+        }
+
+        for(int i=0; i<listMaritalStatus.size(); i++) {
+            MaritalStatus mst = listMaritalStatus.get(i);
+            String name = mst.getMaritalStatusName() + "-" + mst.getMaritalStatusCode();
+            nameMaritalStatus.add(name);
+        }
+
+        ArrayAdapter<String> socialCategoryListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameSocialCategory);
+        socialCategoryListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        socialCategory.setAdapter(socialCategoryListAdapter);
+
+        ArrayAdapter<String> occupationListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameOccupation);
+        occupationListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        occupation.setAdapter(occupationListAdapter);
+
+        ArrayAdapter<String> disabilitiesListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameDisability);
+        disabilitiesListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        disabilities.setAdapter(disabilitiesListAdapter);
+
+        ArrayAdapter<String> relationshipListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameRelationship);
+        relationshipListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        relationship.setAdapter(relationshipListAdapter);
+
+        ArrayAdapter<String> educationListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameEducation);
+        educationListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        education.setAdapter(educationListAdapter);
+
+        ArrayAdapter<String> educationStatusListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameEducationStatus);
+        educationStatusListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        educationStatus.setAdapter(educationStatusListAdapter);
+
+        ArrayAdapter<String> migrationReasonListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameMigrationReason);
+        migrationReasonListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        migrationReason.setAdapter(migrationReasonListAdapter);
+
+        ArrayAdapter<String> religionListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameReligion);
+        religionListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        religion.setAdapter(religionListAdapter);
+
+        ArrayAdapter<String> centralSchemeListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameCentralScheme);
+        centralSchemeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        centralScheme.setAdapter(centralSchemeListAdapter);
+
+        ArrayAdapter<String> maritalStatusListAdapter = new ArrayAdapter<String>(AddMemberInformation.this, android.R.layout.simple_spinner_item, nameMaritalStatus);
+        maritalStatusListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        maritalStatus.setAdapter(maritalStatusListAdapter);
+    }
+
+    class AddMemberAsyncTask extends AsyncTask<String, String, String> {
+
+        Context mContext;
+        ProgressDialog progressDialog;
+
+        public AddMemberAsyncTask(Context mContext) {
+            this.mContext = mContext;
+            progressDialog = new ProgressDialog(mContext);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setTitle(R.string.app_name);
+            progressDialog.setMessage("Loading, Please Wait...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                if (flag==1) {
+                    spinnerList();
+                }
+                else if (flag==2) {
+                    readData();
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            if(flag==2) {
+                try {
+                    JSONArray jsonArray = new JSONArray(s);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if (flag==1) {
+                progressDialog.dismiss();
+            }
         }
     }
 
@@ -195,65 +690,5 @@ public class AddMemberInformation extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-   /* class AddMemberAsyncTask extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                URL url=new URL(params[0]);
-                HttpURLConnection con=(HttpURLConnection) url.openConnection();
-                con.setRequestMethod("POST");
-                con.connect();
-
-                BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String value=bufferedReader.readLine();
-                System.out.println("Result is: "+value);
-                result=value;
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            Toast.makeText(AddMemberInformation.this,"The result is "+s,Toast.LENGTH_LONG).show();
-            try {
-                JSONArray jsonArray = new JSONArray(s);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                    memberInfo.setMemberName(name.getText().toString());
-                    memberInfo.setDob(dob.getText().toString());
-                    memberInfo.setGender(gender.toString());
-                    memberInfo.setQuota(quota.toString());
-                    memberInfo.setAadhaarCardId(aadhaarCard.getId());
-                    memberInfo.setVoterId(voterId.getId());
-                    memberInfo.setFamilyHead(familyHeadName.getText().toString());
-                    memberInfo.setPersonalSalary(personalSalary.getText().toString());
-
-                    dbHandler.insertMemberInformation(memberInfo);
-
-                    Intent loginIntent = new Intent(getApplicationContext(), Home.class);
-                    // Add Bundle to intent
-                    loginIntent.putExtras(bundle);
-                    // Start the next Activity
-                    startActivity(loginIntent);
-                    // Finish the current Activity
-                    finish();
-
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
 
 }
