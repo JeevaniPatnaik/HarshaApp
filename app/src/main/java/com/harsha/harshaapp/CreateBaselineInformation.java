@@ -427,6 +427,11 @@ public class CreateBaselineInformation extends AppCompatActivity
                 +"\nincome="+baselineInfo.getIncome());
 
                 Toast.makeText(CreateBaselineInformation.this, "Baseline Information is added successfully in Bundle", Toast.LENGTH_LONG).show();
+
+                Intent intent1 = new Intent(CreateBaselineInformation.this,AddMemberInformation.class);
+                intent1.putExtras(userBundle);
+                startActivity(intent1);
+
             }
             progressDialog.dismiss();
         }
