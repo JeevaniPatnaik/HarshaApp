@@ -1,5 +1,7 @@
 package com.harsha.harshaapp;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,10 +45,10 @@ public class CreateBaselineInformation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    /*ArrayList<String> nameVillage = new ArrayList<String>();
+    ArrayList<String> nameVillage = new ArrayList<String>();
     ArrayList<String> nameReligion = new ArrayList<String>();
     ArrayList<String> nameSocialCategory = new ArrayList<String>();
-    ArrayList<String> nameOccupation = new ArrayList<String>();*/
+    ArrayList<String> nameOccupation = new ArrayList<String>();
 
     DBHandler dbHandler = new DBHandler(CreateBaselineInformation.this, null, null, 1);
     Bundle bundle;
@@ -62,6 +65,7 @@ public class CreateBaselineInformation extends AppCompatActivity
     /*ArrayList<State> listState;
     ArrayList<District> listDistrict;
     ArrayList<Block> listBlock;*/
+
     ArrayList<Religion> listReligion;
     ArrayList<SocialCategory> listSocialCategory;
     ArrayList<Occupation> listOccupation;
@@ -75,6 +79,7 @@ public class CreateBaselineInformation extends AppCompatActivity
     Button next;
 
     String result = "";
+    int flag = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +100,112 @@ public class CreateBaselineInformation extends AppCompatActivity
         socialCategory = (Spinner) findViewById(R.id.socialCategory);
         noOfFamilyMember = (EditText) findViewById(R.id.noOfFamilyMember);
         next = (Button) findViewById(R.id.next);
+
+        village.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listVillage.size(); i++) {
+                        Village vll = listVillage.get(i);
+                        if(item.equalsIgnoreCase(vll.getVillageName() + "-" + vll.getVillageCode())) {
+                            villageList = vll;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        religion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listReligion.size(); i++) {
+                        Religion rl = listReligion.get(i);
+                        if(item.equalsIgnoreCase(rl.getReligionName() + "-" + rl.getReligionCode())) {
+                            religionList = rl;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        occupation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listOccupation.size(); i++) {
+                        Occupation oc = listOccupation.get(i);
+                        if(item.equalsIgnoreCase(oc.getOccupationName() + "-" + oc.getOccupationCode())) {
+                            occupationList = oc;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        socialCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listSocialCategory.size(); i++) {
+                        SocialCategory sc = listSocialCategory.get(i);
+                        if(item.equalsIgnoreCase(sc.getSocialCategoryName() + "-" + sc.getSocialCategoryCode())) {
+                            socialCategoryList = sc;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        AddBaselineAsyncTask obj = new AddBaselineAsyncTask(this);
+        obj.execute();
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,8 +237,9 @@ public class CreateBaselineInformation extends AppCompatActivity
                     Toast.makeText(CreateBaselineInformation.this, Integer.parseInt(noOfFamilyMember.getText().toString()) +"must be numeric",
                             Toast.LENGTH_LONG).show();
                 }*/
-                AddBaselineAsyncTask obj = new AddBaselineAsyncTask();
-                obj.execute();
+
+                flag=2;
+
                 Intent intent = new Intent(CreateBaselineInformation.this,AddMemberInformation.class);
                 //intent.putExtra(bundle);
                 startActivity(intent);
@@ -166,41 +278,111 @@ public class CreateBaselineInformation extends AppCompatActivity
         }
     }
 
-    public void spinnerList() {
-        //Textview
-        /*listState = dbHandler.getAllState();
-        listDistrict = dbHandler.getAllDistrict();
-        listBlock = dbHandler.getAllBlock();*/
+    public void readData() {
 
+        baselineInfo.setStateId(state.getStateId());
+        baselineInfo.setDistrictId(district.getDistrictId());
+        baselineInfo.setBlockId(block.getBlockId());
+        /*baselineInfo.setVillageId(villageList.getVillageId());
+        baselineInfo.setReligionId(religionList.getReligionId());
+        baselineInfo.setOccupationId(occupationList.getOccupationId());
+        baselineInfo.setSocialCategoryId(socialCategoryList.getSocialCategoryId());*/
+
+    }
+
+    public void spinnerList() {
         //Spinner
         listVillage = dbHandler.getAllVillage();
         listReligion = dbHandler.getAllReligion();
         listOccupation = dbHandler.getAllOccupation();
         listSocialCategory = dbHandler.getAllSocialCategory();
 
-        ArrayAdapter<Village> villageListAdapter = new ArrayAdapter<Village>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, listVillage);
+        //TextView
+        state = dbHandler.getLastState();
+        district = dbHandler.getLastDistrict();
+        block = dbHandler.getLastBlock();
+
+        stateName.setText(state.getStateName() + "-" + state.getStateCode());
+        districtName.setText(district.getDistrictName()+ "-"+district.getDistrictCode());
+        blockName.setText(block.getBlockName()+"-"+block.getBlockCode());
+
+        String vl = "---- Select Village ----";
+        String oc = "---- Select Occupation ----";
+        String rl = "---- Select Religion ----";
+        String sc = "---- Select Social Category ----";
+
+        nameVillage.add(vl);
+        nameOccupation.add(oc);
+        nameReligion.add(rl);
+        nameSocialCategory.add(sc);
+
+        for(int i=0; i<listVillage.size(); i++) {
+            Village vill = listVillage.get(i);
+            String name = vill.getVillageName() + "-" + vill.getVillageCode();
+            nameVillage.add(name);
+        }
+
+        for(int i=0; i<listReligion.size(); i++) {
+            Religion rell = listReligion.get(i);
+            String name = rell.getReligionName() + "-" + rell.getReligionCode();
+            nameReligion.add(name);
+        }
+
+        for(int i=0; i<listOccupation.size(); i++) {
+            Occupation occp = listOccupation.get(i);
+            String name = occp.getOccupationName() + "-" + occp.getOccupationCode();
+            nameOccupation.add(name);
+        }
+
+        for(int i=0; i<listSocialCategory.size(); i++) {
+            SocialCategory socl = listSocialCategory.get(i);
+            String name = socl.getSocialCategoryName() + "-" + socl.getSocialCategoryCode();
+            nameSocialCategory.add(name);
+        }
+
+        ArrayAdapter<String> villageListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameVillage);
         villageListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         village.setAdapter(villageListAdapter);
 
-        ArrayAdapter<Religion> religionListAdapter = new ArrayAdapter<Religion>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, listReligion);
+        ArrayAdapter<String> religionListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameReligion);
         religionListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         religion.setAdapter(religionListAdapter);
 
-        ArrayAdapter<Occupation> occupationListAdapter = new ArrayAdapter<Occupation>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, listOccupation);
+        ArrayAdapter<String> occupationListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameOccupation);
         occupationListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         occupation.setAdapter(occupationListAdapter);
 
-        ArrayAdapter<SocialCategory> socialCategoryListAdapter = new ArrayAdapter<SocialCategory>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, listSocialCategory);
+        ArrayAdapter<String> socialCategoryListAdapter = new ArrayAdapter<String>(CreateBaselineInformation.this, android.R.layout.simple_spinner_item, nameSocialCategory);
         socialCategoryListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         socialCategory.setAdapter(socialCategoryListAdapter);
     }
 
     class AddBaselineAsyncTask extends AsyncTask<String, String, String> {
 
+        Context mContext;
+        ProgressDialog progressDialog;
+
+        public AddBaselineAsyncTask(Context mContext) {
+            this.mContext = mContext;
+            progressDialog = new ProgressDialog(mContext);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setTitle(R.string.app_name);
+            progressDialog.setMessage("Loading, Please Wait...");
+            progressDialog.show();
+        }
+
         @Override
         protected String doInBackground(String... params) {
             try {
-                spinnerList();
+               if (flag==1) {
+                   spinnerList();
+               }
+                else if (flag==2) {
+                    readData();
+               }
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -209,72 +391,72 @@ public class CreateBaselineInformation extends AppCompatActivity
         }
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
         protected void onPostExecute(String s) {
 
-            try {
-                JSONArray jsonArray = new JSONArray(s);
-                for (int i = 0; i < jsonArray.length(); i++) {
+            if(flag==2) {
+                try {
+                    JSONArray jsonArray = new JSONArray(s);
+                    for (int i = 0; i < jsonArray.length(); i++) {
 
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    baselineInfo.setBaselineId(jsonObject.getInt("baselineId"));
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        baselineInfo.setBaselineId(jsonObject.getInt("baselineId"));
 
-                    if(baselineInfo.getBaselineId()>0) {
+                        if(baselineInfo.getBaselineId()>0) {
 
-                        baselineInfo.setFamilyHeadId(jsonObject.getInt("familyHeadId"));
-                        baselineInfo.setStateId(jsonObject.getInt("stateId"));
-                        baselineInfo.setDistrictId(jsonObject.getInt("districtId"));
-                        baselineInfo.setBlockId(jsonObject.getInt("blockId"));
-                        baselineInfo.setVillageId(jsonObject.getInt("villageId"));
-                        baselineInfo.setSurveyUserId(jsonObject.getInt("surveyUserId"));
-                        baselineInfo.setSocialCategoryId(jsonObject.getInt("socialCategoryId"));
-                        baselineInfo.setReligionId(jsonObject.getInt("religionId"));
-                        baselineInfo.setOccupationId(jsonObject.getInt("occupationId"));
-                        baselineInfo.setContactNo(jsonObject.getInt("contactNo"));
-                        baselineInfo.setFamilyMemberNumber(jsonObject.getInt("familyMemberNumber"));
-                       // baselineInfo.setIncome(jsonObject.getString("income"));
+                            baselineInfo.setFamilyHeadId(jsonObject.getInt("familyHeadId"));
+                            baselineInfo.setStateId(jsonObject.getInt("stateId"));
+                            baselineInfo.setDistrictId(jsonObject.getInt("districtId"));
+                            baselineInfo.setBlockId(jsonObject.getInt("blockId"));
+                            baselineInfo.setVillageId(jsonObject.getInt("villageId"));
+                            baselineInfo.setSurveyUserId(jsonObject.getInt("surveyUserId"));
+                            baselineInfo.setSocialCategoryId(jsonObject.getInt("socialCategoryId"));
+                            baselineInfo.setReligionId(jsonObject.getInt("religionId"));
+                            baselineInfo.setOccupationId(jsonObject.getInt("occupationId"));
+                            baselineInfo.setContactNo(jsonObject.getInt("contactNo"));
+                            baselineInfo.setFamilyMemberNumber(jsonObject.getInt("familyMemberNumber"));
+                            baselineInfo.setIncome(jsonObject.getString("income"));
 
-                        stateName.setText(state.getStateName());
-                        districtName.setText(district.getDistrictName());
-                        blockName.setText(block.getBlockName());
+                            stateName.setText(state.getStateName());
+                            districtName.setText(district.getDistrictName());
+                            blockName.setText(block.getBlockName());
 
-                        dbHandler.insertBaselineInformation(baselineInfo);
+                            dbHandler.insertBaselineInformation(baselineInfo);
 
-                        Bundle userBundle = new Bundle();
+                            Bundle userBundle = new Bundle();
 
-                        userBundle.putInt("familyHeadId", baselineInfo.getFamilyHeadId());
-                        userBundle.putInt("stateId", baselineInfo.getStateId());
-                        userBundle.putInt("districtId", baselineInfo.getDistrictId());
-                        userBundle.putInt("blockId", baselineInfo.getBlockId());
-                        userBundle.putInt("villageId", baselineInfo.getVillageId());
-                        userBundle.putInt("surveyUserId", baselineInfo.getSurveyUserId());
-                        userBundle.putInt("socialCategoryId", baselineInfo.getSocialCategoryId());
-                        userBundle.putInt("religionId", baselineInfo.getReligionId());
-                        userBundle.putInt("occupationId", baselineInfo.getOccupationId());
-                        userBundle.putInt("contactNo", baselineInfo.getContactNo());
-                        userBundle.putInt("familyMemberNumber", baselineInfo.getFamilyMemberNumber());
-                        userBundle.putString("income", baselineInfo.getIncome());
+                            userBundle.putInt("familyHeadId", baselineInfo.getFamilyHeadId());
+                            userBundle.putInt("stateId", baselineInfo.getStateId());
+                            userBundle.putInt("districtId", baselineInfo.getDistrictId());
+                            userBundle.putInt("blockId", baselineInfo.getBlockId());
+                            userBundle.putInt("villageId", baselineInfo.getVillageId());
+                            userBundle.putInt("surveyUserId", baselineInfo.getSurveyUserId());
+                            userBundle.putInt("socialCategoryId", baselineInfo.getSocialCategoryId());
+                            userBundle.putInt("religionId", baselineInfo.getReligionId());
+                            userBundle.putInt("occupationId", baselineInfo.getOccupationId());
+                            userBundle.putInt("contactNo", baselineInfo.getContactNo());
+                            userBundle.putInt("familyMemberNumber", baselineInfo.getFamilyMemberNumber());
+                            userBundle.putString("income", baselineInfo.getIncome());
 
-                    } else {
-                        familyHeadName.setText("");
-                        stateName.setText(state.getStateName());
-                        districtName.setText(district.getDistrictName());
-                        blockName.setText(block.getBlockName());
-                        contactNo.setText("");
-                        income.setText("");
-                        noOfFamilyMember.setText("");
-                        stateName.setText("");
-                        districtName.setText("");
-                        blockName.setText("");
-                        Toast.makeText(CreateBaselineInformation.this, "Baseline Information is not added successfully", Toast.LENGTH_LONG).show();
+                        } else {
+                            familyHeadName.setText("");
+                            stateName.setText(state.getStateName());
+                            districtName.setText(district.getDistrictName());
+                            blockName.setText(block.getBlockName());
+                            contactNo.setText("");
+                            income.setText("");
+                            noOfFamilyMember.setText("");
+                            stateName.setText("");
+                            districtName.setText("");
+                            blockName.setText("");
+                            Toast.makeText(CreateBaselineInformation.this, "Baseline Information is not added successfully", Toast.LENGTH_LONG).show();
+                        }
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            }
+            else if (flag==1) {
+                progressDialog.dismiss();
             }
         }
     }

@@ -713,25 +713,22 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //fetch data from state
-    public ArrayList<State> getAllState(){
+    public State getLastState(){
 
-        ArrayList<State> stateList = new ArrayList<State>();
+        State state = new State();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
-        String qry = "SELECT * FROM "+TABLE_STATE;
+        String qry = "SELECT * FROM "+TABLE_STATE+ " ORDER BY " + STATE_ID + " DESC LIMIT 1";
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
-
-                State state = new State ();
                 state.setStateId(cursor.getInt(cursor.getColumnIndex(STATE_ID)));
                 state.setStateName(cursor.getString(cursor.getColumnIndex(STATE_NAME)));
                 state.setStateCode(cursor.getString(cursor.getColumnIndex(STATE_CODE)));
-                stateList.add(state);
 
             }
         }
-        return stateList;
+        return state;
     }
 
 
@@ -760,25 +757,22 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //fetch data from district
-    public ArrayList<District> getAllDistrict(){
+    public District getLastDistrict(){
 
-        ArrayList<District> districtList = new ArrayList<District>();
+        District district = new District();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
-        String qry = "SELECT * FROM "+TABLE_DISTRICT;
+        String qry = "SELECT * FROM "+TABLE_DISTRICT+ " ORDER BY " + DISTRICT_ID + " DESC LIMIT 1";
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
-
-                District district = new District();
-                district.setDistrictId(cursor.getInt(cursor.getColumnIndex(BLOCK_ID)));
-                district.setDistrictName(cursor.getString(cursor.getColumnIndex(BLOCK_NAME)));
-                district.setDistrictCode(cursor.getString(cursor.getColumnIndex(BLOCK_CODE)));
-                districtList.add(district);
+                district.setDistrictId(cursor.getInt(cursor.getColumnIndex(DISTRICT_ID)));
+                district.setDistrictName(cursor.getString(cursor.getColumnIndex(DISTRICT_NAME)));
+                district.setDistrictCode(cursor.getString(cursor.getColumnIndex(DISTRICT_CODE)));
 
             }
         }
-        return districtList;
+        return district;
     }
 
     //insert into BLOCK Table
@@ -806,25 +800,23 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //fetch data from block
-    public ArrayList<Block> getAllBlock(){
+    public Block getLastBlock(){
 
-        ArrayList<Block> blockList = new ArrayList<Block>();
+        Block block = new Block();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
-        String qry = "SELECT * FROM "+TABLE_BLOCK;
+        String qry = "SELECT * FROM "+TABLE_BLOCK + " ORDER BY " + BLOCK_ID + " DESC LIMIT 1";
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
 
-                Block block = new Block();
                 block.setBlockId(cursor.getInt(cursor.getColumnIndex(BLOCK_ID)));
                 block.setBlockName(cursor.getString(cursor.getColumnIndex(BLOCK_NAME)));
                 block.setBlockCode(cursor.getString(cursor.getColumnIndex(BLOCK_CODE)));
-                blockList.add(block);
 
             }
         }
-        return blockList;
+        return block;
     }
 
 
@@ -949,7 +941,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ArrayList<Village> villageList = new ArrayList<Village>();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
-        String qry = "SELECT * FROM "+TABLE_VILLAGE;
+        String qry = "SELECT * FROM "+TABLE_VILLAGE + " ORDER BY "+ VILLAGE_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
@@ -1010,7 +1002,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ArrayList<Religion> religionList = new ArrayList<Religion>();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
-        String qry = "SELECT * FROM "+RELIGION;
+        String qry = "SELECT * FROM "+RELIGION+ " ORDER BY "+ RELIGION_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
@@ -1060,7 +1052,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ArrayList<SocialCategory> socialCategoryList = new ArrayList<SocialCategory>();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
-        String qry = "SELECT * FROM "+SOCIAL_CATEGORY;
+        String qry = "SELECT * FROM "+SOCIAL_CATEGORY+ " ORDER BY "+ SOCIAL_CATEGORY_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
@@ -1105,7 +1097,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ArrayList<Occupation> occupationList = new ArrayList<Occupation>();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
-        String qry = "SELECT * FROM "+OCCUPATION;
+        String qry = "SELECT * FROM "+OCCUPATION+ " ORDER BY "+ OCCUPATION_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
