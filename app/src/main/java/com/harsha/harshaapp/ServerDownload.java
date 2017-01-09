@@ -54,7 +54,6 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
-
 /**
  * Created by Jeevani on 1/4/2017.
  */
