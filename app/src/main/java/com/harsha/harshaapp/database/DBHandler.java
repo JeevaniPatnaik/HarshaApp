@@ -105,7 +105,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     // Attributes of DISTRICT Table
     public static final String DISTRICT_ID = "districtId";
-    public static final String DISTRICT_CODE = "districtId";
+    public static final String DISTRICT_CODE = "districtCode";
     public static final String DISTRICT_NAME = "districtName";
 
     // Attributes of BLOCK Table
@@ -186,6 +186,13 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String SCHEME_ID = "schemeId";
     public static final String SCHEME_NAME = "schemeName";
 
+    // create table for ASSET
+    public static final String CREATE_ASSET = "CREATE TABLE " + ASSET + " (" +
+            ASSET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            ASSET_CODE + " TEXT NOT NULL, " +
+            ASSET_NAME + " TEXT NOT NULL " +
+            ");";
+
     // create table for DIABILITIES
     public static final String CREATE_DISABILITIES = "CREATE TABLE " + DISABILITIES + " (" +
             DISABILTIES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -221,14 +228,14 @@ public class DBHandler extends SQLiteOpenHelper {
     // Create Table for STATE
     public static final String CREATE_STATE = "CREATE TABLE " + TABLE_STATE + " (" +
             STATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            STATE_CODE + "TEXT NOT NULL, " +
+            STATE_CODE + " TEXT NOT NULL, " +
             STATE_NAME + " TEXT NOT NULL " +
             ");";
 
     // Create Table for DISTRICT
     public static final String CREATE_DISTRICT = "CREATE TABLE " + TABLE_DISTRICT + " (" +
             DISTRICT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            DISTRICT_CODE + "TEXT NOT NULL, " +
+            DISTRICT_CODE + " TEXT NOT NULL, " +
             DISTRICT_NAME + " TEXT NOT NULL, " +
             STATE_ID + " INTEGER NOT NULL " +
             ");";
@@ -407,6 +414,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_DISABILITIES);
         Log.d(TAG, "DISABILITIES TABLE CREATED");
+
+        db.execSQL(CREATE_ASSET);
+        Log.d(TAG, "ASSET TABLE CREATED");
     }
 
     @Override
@@ -468,6 +478,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF EXIST " + SCHEME);
         Log.d(TAG, "SCHEME TABLE DELETED");
+
+        db.execSQL("DROP TABLE IF EXIST " + ASSET);
+        Log.d(TAG, "ASSET TABLE DELETED");
 
         onCreate(db);
 
@@ -736,7 +749,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(DISTRICT_ID, block.getDistrictId());
 
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_DISTRICT, null, values);
+        db.insert(TABLE_BLOCK, null, values);
         Log.d(TAG, "Row Inserted in TABLE_BLOCK");
         db.close();
     }
@@ -754,13 +767,13 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put(DISTRICT_ID, village.getVillageId());
-        values.put(DISTRICT_CODE, village.getVillageCode());
-        values.put(DISTRICT_NAME, village.getVillageName());
+        values.put(VILLAGE_ID, village.getVillageId());
+        values.put(VILLAGE_CODE, village.getVillageCode());
+        values.put(VILLAGE_NAME, village.getVillageName());
         values.put(BLOCK_ID, village.getBlockId());
 
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_DISTRICT, null, values);
+        db.insert(TABLE_VILLAGE, null, values);
         Log.d(TAG, "Row Inserted in TABLE_DISTRICT");
         db.close();
     }
@@ -785,7 +798,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put(DISTRICT_ID, disability.getDisabilitiesId());
+        values.put(DISABILTIES_ID, disability.getDisabilitiesId());
         values.put(DISABILTIES_CODE, disability.getDisbilitiesCode());
         values.put(DISABILTIES_NAME, disability.getDisabilitiesName());
 
@@ -817,7 +830,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         values.put(EDUCATION_STATUS_ID, educationstatus.getEducationStatusId());
         values.put(EDUCATION_STATUS_CODE, educationstatus.getEducationStatusCode());
-        values.put(EDUCATION_STATUS_NAME, educationstatus.getGetEducationStatusName());
+        values.put(EDUCATION_STATUS_NAME, educationstatus.getEducationStatusName());
 
         SQLiteDatabase db = getWritableDatabase();
         db.insert(EDUCATION_STATUS, null, values);

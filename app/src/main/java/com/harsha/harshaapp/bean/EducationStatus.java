@@ -8,7 +8,7 @@ public class EducationStatus {
 
     private int educationStatusId;
     private String educationStatusCode;
-    private String getEducationStatusName;
+    private String educationStatusName;
 
     public int getEducationStatusId() {
         return educationStatusId;
@@ -26,11 +26,11 @@ public class EducationStatus {
         this.educationStatusCode = educationStatusCode;
     }
 
-    public String getGetEducationStatusName() {
-        return getEducationStatusName;
+    public String getEducationStatusName() {
+        return educationStatusName;
     }
 
-    public void setGetEducationStatusName(String getEducationStatusName) {
-        this.getEducationStatusName = getEducationStatusName;
+    public void setEducationStatusName(String educationStatusName) {
+        this.educationStatusName = educationStatusName;
     }
 }
