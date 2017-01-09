@@ -816,6 +816,11 @@ public class ServerDownload extends AppCompatActivity
 
 
             }
+
+            Intent intent1 = new Intent(ServerDownload.this,Home.class);
+            //intent1.putExtras(userBundle);
+            startActivity(intent1);
+
             progressDialog.dismiss();
         }
     }
