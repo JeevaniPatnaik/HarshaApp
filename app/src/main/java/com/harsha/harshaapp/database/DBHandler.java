@@ -720,7 +720,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         State state = new State();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+TABLE_STATE+ " ORDER BY " + STATE_ID + " DESC LIMIT 1";
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
@@ -764,7 +764,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         District district = new District();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+TABLE_DISTRICT+ " ORDER BY " + DISTRICT_ID + " DESC LIMIT 1";
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
@@ -807,7 +807,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Block block = new Block();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+TABLE_BLOCK + " ORDER BY " + BLOCK_ID + " DESC LIMIT 1";
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
@@ -958,7 +958,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<Village> villageList = new ArrayList<Village>();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+TABLE_VILLAGE + " ORDER BY "+ VILLAGE_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
@@ -1019,7 +1019,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<Religion> religionList = new ArrayList<Religion>();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+RELIGION+ " ORDER BY "+ RELIGION_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
@@ -1069,7 +1069,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<SocialCategory> socialCategoryList = new ArrayList<SocialCategory>();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+SOCIAL_CATEGORY+ " ORDER BY "+ SOCIAL_CATEGORY_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
@@ -1114,7 +1114,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<Occupation> occupationList = new ArrayList<Occupation>();
         SQLiteDatabase db = this.getReadableDatabase();
-        db.beginTransaction();
+        //db.beginTransaction();
         String qry = "SELECT * FROM "+OCCUPATION+ " ORDER BY "+ OCCUPATION_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
