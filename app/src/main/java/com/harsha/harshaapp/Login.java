@@ -74,7 +74,7 @@ public class Login extends AppCompatActivity {
                                 shortcutIntent.setAction(Intent.ACTION_MAIN);
                                 Intent intent = new Intent();
                                 intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-                                intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, R.string.app_name);
+                                intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "Harsha Trust");
                                 intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
                                         Intent.ShortcutIconResource.fromContext(getApplicationContext(),
                                                 R.mipmap.ic_launcher));
