@@ -29,6 +29,7 @@ import com.harsha.harshaapp.bean.Education;
 import com.harsha.harshaapp.bean.EducationStatus;
 import com.harsha.harshaapp.bean.MaritalStatus;
 import com.harsha.harshaapp.bean.Occupation;
+import com.harsha.harshaapp.bean.Project;
 import com.harsha.harshaapp.bean.Relationship;
 import com.harsha.harshaapp.bean.Religion;
 import com.harsha.harshaapp.bean.Scheme;
@@ -75,7 +76,6 @@ public class ServerDownload extends AppCompatActivity
     ArrayList<Block> blockArray = new ArrayList<Block>();
     ArrayList<Village> villageArray = new ArrayList<>();
     ArrayList<Asset> assetArray = new ArrayList<>();
-    ArrayList<Disabilities> disabilitiesArray = new ArrayList<>();
     ArrayList<Occupation> occupationArray = new ArrayList<>();
     ArrayList<Religion> religionArray = new ArrayList<>();
     ArrayList<Relationship> relationshipArray = new ArrayList<>();
@@ -85,6 +85,7 @@ public class ServerDownload extends AppCompatActivity
     ArrayList<Scheme> schemeArray = new ArrayList<>();
     ArrayList<MaritalStatus> maritalStatuseArray = new ArrayList<>();
     ArrayList<SocialCategory> socialCategoryArray = new ArrayList<>();
+    ArrayList<Project> projectArray = new ArrayList<>();
 
     String URL0 = "https://harsha-guptas.rhcloud.com/api/state/getallstate";
     String URL2 = "https://harsha-guptas.rhcloud.com/api/district/getbystateid";
@@ -358,7 +359,6 @@ public class ServerDownload extends AppCompatActivity
                 blockArray.add(block);
                 //stateNames[i] = state.getStateName();
                 nameBlock.add(block.getBlockName());
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -528,6 +528,20 @@ public class ServerDownload extends AppCompatActivity
                 Log.d("socialCategory:","Object="+socialCategory+" Name="+socialCategory.getSocialCategoryName());
             }
 
+            JSONArray jsonProjectArray = jsonObject.getJSONArray("ProjectBean");
+
+            for (int i = 0; i < jsonProjectArray.length(); i++) {
+
+                JSONObject jsonArrayObject = jsonProjectArray.getJSONObject(i);
+                Project project = new Project();
+                project.setProjectName(jsonArrayObject.getString("projectName"));
+                project.setProjectId(jsonArrayObject.getInt("projectId"));
+                project.setDonorName(jsonArrayObject.getString("donerName"));
+                projectArray.add(project);
+                dbHandler.insertProject(project);
+                Log.d("project:","Object="+project+" Name="+project.getProjectName());
+            }
+
             dbHandler.insertState(finalState);
             dbHandler.insertDistrict(finalDistrict);
             dbHandler.insertBLOCK(finalBlock);
@@ -542,6 +556,7 @@ public class ServerDownload extends AppCompatActivity
             e.printStackTrace();
         }
     }
+
 
     public String testingRestAPI(String urls) {
         StringBuilder result = new StringBuilder();
