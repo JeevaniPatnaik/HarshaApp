@@ -13,6 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.harsha.harshaapp.bean.Disabilities;
+import com.harsha.harshaapp.bean.Occupation;
+import com.harsha.harshaapp.bean.Relationship;
 import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.database.DBHandler;
 
@@ -25,6 +28,11 @@ public class FamilyInformation extends AppCompatActivity
     DBHandler dbHandler = new DBHandler(FamilyInformation.this, null, null, 1);
     Bundle bundle;
     User user = new User();
+
+    Occupation occupationBean = new Occupation();
+    Disabilities disabilitiesBean = new Disabilities();
+    Relationship relationshipBean = new Relationship();
+
 
     TextView nav_username,nav_email;
 
@@ -60,6 +68,9 @@ public class FamilyInformation extends AppCompatActivity
         Intent receive = getIntent();
         bundle = receive.getExtras();
         user = dbHandler.getUserDetail();
+
+        occupation.setText(occupationBean.getOccupationName());
+        disabilities.setText(disabilitiesBean.getDisabilitiesName());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

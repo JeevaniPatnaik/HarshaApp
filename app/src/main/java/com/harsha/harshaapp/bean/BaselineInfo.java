@@ -17,7 +17,7 @@ public class BaselineInfo {
     private int religionId;
     private int occupationId;
     private int contactNo;
-    private String familyMemberNumber;
+    private int familyMemberNumber;
     private String income;
 
     public int getBaselineId() {
@@ -44,11 +44,11 @@ public class BaselineInfo {
         this.familyHeadId = familyHeadId;
     }
 
-    public String getFamilyMemberNumber() {
+    public int getFamilyMemberNumber() {
         return familyMemberNumber;
     }
 
-    public void setFamilyMemberNumber(String familyMemberNumber) {
+    public void setFamilyMemberNumber(int familyMemberNumber) {
         this.familyMemberNumber = familyMemberNumber;
     }
 

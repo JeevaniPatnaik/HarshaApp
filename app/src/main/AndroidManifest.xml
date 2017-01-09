@@ -175,7 +175,7 @@
         <activity
             android:name=".Home"
             android:label="Home"
-            android:noHistory="false"
+            android:noHistory="true"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Login"
             android:theme="@style/Theme.DesignDemo">
@@ -379,7 +379,7 @@
         <activity
             android:name=".ServerUpload"
             android:label="Server Data Upload"
-            android:noHistory="true"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Home"
             android:theme="@style/Theme.DesignDemo">
