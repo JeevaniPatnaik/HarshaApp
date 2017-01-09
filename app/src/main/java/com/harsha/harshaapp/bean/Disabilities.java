@@ -19,7 +19,7 @@ public class Disabilities {
     }
 
     public String getDisbilitiesCode() {
-        return getDisbilitiesCode();
+        return disabilitiesCode;
     }
 
     public void setDisabilitiesCode(String disabilitiesCode) {

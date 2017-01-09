@@ -132,7 +132,7 @@ public class ServerDownload extends AppCompatActivity
                 URL1 = URL5;
                 GetAllStateAsyncTask obj =  new GetAllStateAsyncTask(ServerDownload.this);
                 obj.execute(URL1);
-
+                Log.d("Data Download", "Message="+URL1);
             }
         });
 
@@ -239,19 +239,7 @@ public class ServerDownload extends AppCompatActivity
 
             }
         });
-        /*blockName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                    Toast.makeText(parent.getContext(), "Selected: " + item + " " + (position) , Toast.LENGTH_LONG).show();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-*/
 
         Intent receive = getIntent();
         bundle = receive.getExtras();
@@ -420,6 +408,7 @@ public class ServerDownload extends AppCompatActivity
                 asset.setAssetId(jsonArrayObject.getInt("assetId"));
                 assetArray.add(asset);
                 dbHandler.insertAsset(asset);
+                Log.d("Asset:","Object="+asset+" Asset-Name="+asset.getAssetName());
             }
 
             JSONArray jsonDisabilitiesArray = jsonObject.getJSONArray("DisabilitiesBean");
@@ -432,6 +421,7 @@ public class ServerDownload extends AppCompatActivity
                 disability.setDisabilitiesId(jsonArrayObject.getInt("disabilityId"));
                 disabilitieArray.add(disability);
                 dbHandler.insertDisabilities(disability);
+                Log.d("disability:","Object="+disability+" Name="+disability.getDisabilitiesName());
             }
 
             JSONArray jsonEducationArray = jsonObject.getJSONArray("EducationBean");
@@ -444,6 +434,8 @@ public class ServerDownload extends AppCompatActivity
                 education.setEducationId(jsonArrayObject.getInt("educationId"));
                 educationArray.add(education);
                 dbHandler.insertEducation(education);
+                Log.d("education:","Object="+education+" Name="+education.getEducationName());
+
             }
 
             JSONArray jsonEducationStatusArray = jsonObject.getJSONArray("EducationStatusBean");
@@ -451,14 +443,15 @@ public class ServerDownload extends AppCompatActivity
 
                 JSONObject jsonArrayObject = jsonEducationStatusArray.getJSONObject(i);
                 EducationStatus educationStatus = new EducationStatus();
-                educationStatus.setGetEducationStatusName(jsonArrayObject.getString("educationStatusName"));
+                educationStatus.setEducationStatusName(jsonArrayObject.getString("educationStatusName"));
                 educationStatus.setEducationStatusCode(jsonArrayObject.getString("educationStatusCode"));
                 educationStatus.setEducationStatusId(jsonArrayObject.getInt("educationStatusId"));
                 educationStatusArray.add(educationStatus);
                 dbHandler.insertEducationStatus(educationStatus);
+                Log.d("educaionStatus:","Object="+educationStatus+" Name="+educationStatus.getEducationStatusName());
             }
 
-            JSONArray jsonMaritalStatusArray = jsonObject.getJSONArray("MartialStatusBean");
+            JSONArray jsonMaritalStatusArray = jsonObject.getJSONArray("MaritalStatusBean");
             for (int i = 0; i < jsonMaritalStatusArray.length(); i++) {
 
                 JSONObject jsonArrayObject = jsonMaritalStatusArray.getJSONObject(i);
@@ -468,6 +461,7 @@ public class ServerDownload extends AppCompatActivity
                 maritalStatus.setMaritalStatusId(jsonArrayObject.getInt("maritalStatusId"));
                 maritalStatuseArray.add(maritalStatus);
                 dbHandler.insertMaritalStatus(maritalStatus);
+                Log.d("marutalStatus:","Object="+maritalStatus+" Name="+maritalStatus.getMaritalStatusName());
             }
 
             JSONArray jsonOccupationArray = jsonObject.getJSONArray("OccupationBean");
@@ -480,6 +474,7 @@ public class ServerDownload extends AppCompatActivity
                 occupation.setOccupationId(jsonArrayObject.getInt("occupationId"));
                 occupationArray.add(occupation);
                 dbHandler.insertOccupation(occupation);
+                Log.d("occupation:","Object="+occupation+" Name="+occupation.getOccupationName());
             }
 
             JSONArray jsonRelationshipArray = jsonObject.getJSONArray("RelationshipBean");
@@ -492,6 +487,7 @@ public class ServerDownload extends AppCompatActivity
                 relationship.setRelationshipId(jsonArrayObject.getInt("relationshipId"));
                 relationshipArray.add(relationship);
                 dbHandler.insertRelationship(relationship);
+                Log.d("relationship:","Object="+relationship+" Name="+relationship.getGetRelationshipName());
             }
 
             JSONArray jsonReligionArray = jsonObject.getJSONArray("ReligionBean");
@@ -504,6 +500,7 @@ public class ServerDownload extends AppCompatActivity
                 religion.setReligionId(jsonArrayObject.getInt("religionId"));
                 religionArray.add(religion);
                 dbHandler.insertReligionInformation(religion);
+                Log.d("religion:","Object="+religion+" Name="+religion.getReligionName());
             }
 
             JSONArray jsonSchemeArray = jsonObject.getJSONArray("SchemeBean");
@@ -512,9 +509,10 @@ public class ServerDownload extends AppCompatActivity
                 JSONObject jsonArrayObject = jsonSchemeArray.getJSONObject(i);
                 Scheme scheme = new Scheme();
                 scheme.setSchemeName(jsonArrayObject.getString("schemeName"));
-                scheme.setSchemeId(jsonArrayObject.getInt("schemeCode"));
+                scheme.setSchemeId(jsonArrayObject.getInt("schemeId"));
                 schemeArray.add(scheme);
                 dbHandler.insertScheme(scheme);
+                Log.d("scheme:","Object="+scheme+" Name="+scheme.getSchemeName());
             }
 
             JSONArray jsonSocialCategoryArray = jsonObject.getJSONArray("SocialCategoryBean");
@@ -527,12 +525,18 @@ public class ServerDownload extends AppCompatActivity
                 socialCategory.setSocialCategoryId(jsonArrayObject.getInt("socialCategoryId"));
                 socialCategoryArray.add(socialCategory);
                 dbHandler.insertSocialCategory(socialCategory);
+                Log.d("socialCategory:","Object="+socialCategory+" Name="+socialCategory.getSocialCategoryName());
             }
 
             dbHandler.insertState(finalState);
             dbHandler.insertDistrict(finalDistrict);
             dbHandler.insertBLOCK(finalBlock);
             //dbHandler.insertVillage(villageArray);
+            for(int i=0; i<villageArray.size(); i++) {
+                Village vill = villageArray.get(i);
+                dbHandler.insertVillage(vill);
+                Log.d("village:","Object="+vill+" Name="+vill.getVillageName());
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
