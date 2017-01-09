@@ -92,7 +92,6 @@ public class ServerDownload extends AppCompatActivity
     String URL3 = "https://harsha-guptas.rhcloud.com/api/block/getbydistrictid";
     String URL4 = "https://harsha-guptas.rhcloud.com/api/village/getbyblockid";
     String URL5 = "https://harsha-guptas.rhcloud.com/api/download/data";
-    String URL6 = "https://harsha-guptas.rhcloud.com/api/project/getallproject";
     String URL1 = "";
 
     ArrayList<String> nameState = new ArrayList<String>();
@@ -134,11 +133,6 @@ public class ServerDownload extends AppCompatActivity
                 URL1 = URL5;
                 GetAllStateAsyncTask obj =  new GetAllStateAsyncTask(ServerDownload.this);
                 obj.execute(URL1);
-                Log.d("Data Download", "Message="+URL1);
-                flag = 6;
-                URL1 = URL6;
-                GetAllStateAsyncTask obj1 =  new GetAllStateAsyncTask(ServerDownload.this);
-                obj1.execute(URL1);
                 Log.d("Data Download", "Message="+URL1);
             }
         });
@@ -534,29 +528,7 @@ public class ServerDownload extends AppCompatActivity
                 Log.d("socialCategory:","Object="+socialCategory+" Name="+socialCategory.getSocialCategoryName());
             }
 
-
-            dbHandler.insertState(finalState);
-            dbHandler.insertDistrict(finalDistrict);
-            dbHandler.insertBLOCK(finalBlock);
-            //dbHandler.insertVillage(villageArray);
-            for(int i=0; i<villageArray.size(); i++) {
-                Village vill = villageArray.get(i);
-                dbHandler.insertVillage(vill);
-                Log.d("village:","Object="+vill+" Name="+vill.getVillageName());
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-    public void showProject(String s) {
-        Log.d("AysncTask", "onPostExecute(" + s + ")");
-        // Toast.makeText(Login.this,"The result is "+s,Toast.LENGTH_LONG).show();
-        try {
-            /*String msg = "---- Select Block ----";
-            nameBlock.add(msg);*/
-           // JSONObject jsonObject = new JSONObject(s);
-            JSONArray jsonProjectArray = new JSONArray(s);
+            JSONArray jsonProjectArray = jsonObject.getJSONArray("ProjectBean");
 
             for (int i = 0; i < jsonProjectArray.length(); i++) {
 
@@ -569,8 +541,18 @@ public class ServerDownload extends AppCompatActivity
                 dbHandler.insertProject(project);
                 Log.d("project:","Object="+project+" Name="+project.getProjectName());
             }
-        }
-        catch (JSONException e){
+
+            dbHandler.insertState(finalState);
+            dbHandler.insertDistrict(finalDistrict);
+            dbHandler.insertBLOCK(finalBlock);
+            //dbHandler.insertVillage(villageArray);
+            for(int i=0; i<villageArray.size(); i++) {
+                Village vill = villageArray.get(i);
+                dbHandler.insertVillage(vill);
+                Log.d("village:","Object="+vill+" Name="+vill.getVillageName());
+            }
+
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
@@ -666,9 +648,6 @@ public class ServerDownload extends AppCompatActivity
             }
             else if(flag==5){
                 showData(s);
-            }
-            else if(flag==6){
-                showProject(s);
             }
             progressDialog.dismiss();
         }
