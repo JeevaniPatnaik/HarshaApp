@@ -457,7 +457,7 @@ public class ServerDownload extends AppCompatActivity
                 JSONObject jsonArrayObject = jsonMaritalStatusArray.getJSONObject(i);
                 MaritalStatus maritalStatus = new MaritalStatus();
                 maritalStatus.setMaritalStatusName(jsonArrayObject.getString("maritalStatusName"));
-                maritalStatus.setgMaritalStatusCode(jsonArrayObject.getString("maritalStatusCode"));
+                maritalStatus.setMaritalStatusCode(jsonArrayObject.getString("maritalStatusCode"));
                 maritalStatus.setMaritalStatusId(jsonArrayObject.getInt("maritalStatusId"));
                 maritalStatuseArray.add(maritalStatus);
                 dbHandler.insertMaritalStatus(maritalStatus);
@@ -482,12 +482,12 @@ public class ServerDownload extends AppCompatActivity
 
                 JSONObject jsonArrayObject = jsonRelationshipArray.getJSONObject(i);
                 Relationship relationship = new Relationship();
-                relationship.setGetRelationshipName(jsonArrayObject.getString("relationshipName"));
+                relationship.setRelationshipName(jsonArrayObject.getString("relationshipName"));
                 relationship.setRelationshipCode(jsonArrayObject.getString("relationshipCode"));
                 relationship.setRelationshipId(jsonArrayObject.getInt("relationshipId"));
                 relationshipArray.add(relationship);
                 dbHandler.insertRelationship(relationship);
-                Log.d("relationship:","Object="+relationship+" Name="+relationship.getGetRelationshipName());
+                Log.d("relationship:","Object="+relationship+" Name="+relationship.getRelationshipName());
             }
 
             JSONArray jsonReligionArray = jsonObject.getJSONArray("ReligionBean");
@@ -716,7 +716,7 @@ public class ServerDownload extends AppCompatActivity
                         JSONObject jsonArrayObject = jsonMaritalStatusArray.getJSONObject(i);
                         MaritalStatus maritalStatus = new MaritalStatus();
                         maritalStatus.setMaritalStatusName(jsonArrayObject.getString("maritalStatusName"));
-                        maritalStatus.setgMaritalStatusCode(jsonArrayObject.getString("maritalStatusCode"));
+                        maritalStatus.setMaritalStatusCode(jsonArrayObject.getString("maritalStatusCode"));
                         maritalStatus.setMaritalStatusId(jsonArrayObject.getInt("maritalStatusId"));
                         maritalStatuseArray.add(maritalStatus);
                         dbHandler.insertMaritalStatus(maritalStatus);
@@ -741,12 +741,12 @@ public class ServerDownload extends AppCompatActivity
 
                         JSONObject jsonArrayObject = jsonRelationshipArray.getJSONObject(i);
                         Relationship relationship = new Relationship();
-                        relationship.setGetRelationshipName(jsonArrayObject.getString("relationshipName"));
+                        relationship.setRelationshipName(jsonArrayObject.getString("relationshipName"));
                         relationship.setRelationshipCode(jsonArrayObject.getString("relationshipCode"));
                         relationship.setRelationshipId(jsonArrayObject.getInt("relationshipId"));
                         relationshipArray.add(relationship);
                         dbHandler.insertRelationship(relationship);
-                        Log.d("relationship:","Object="+relationship+" Name="+relationship.getGetRelationshipName());
+                        Log.d("relationship:","Object="+relationship+" Name="+relationship.getRelationshipName());
                     }
 
                     JSONArray jsonReligionArray = jsonObject.getJSONArray("ReligionBean");

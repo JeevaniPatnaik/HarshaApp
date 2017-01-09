@@ -18,6 +18,7 @@ import com.harsha.harshaapp.bean.MaritalStatus;
 import com.harsha.harshaapp.bean.MemberInfo;
 import com.harsha.harshaapp.bean.MigrationReason;
 import com.harsha.harshaapp.bean.Occupation;
+import com.harsha.harshaapp.bean.Project;
 import com.harsha.harshaapp.bean.Relationship;
 import com.harsha.harshaapp.bean.Religion;
 import com.harsha.harshaapp.bean.Scheme;
@@ -152,6 +153,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // Attributes of PROJECT Table
     public static final String PROJECT_ID = "projectId";
     public static final String PROJECT_NAME = "projectName";
+    public static final String DONOR_NAME = "donorName";
 
     // Attributes of BASELINE_MEMBER Table
     public static final String BASELINE_MEMBER_ID = "baselineMemberId";
@@ -290,7 +292,8 @@ public class DBHandler extends SQLiteOpenHelper {
     // Create Table for PROJECT
     public static final String CREATE_PROJECT = "CREATE TABLE " + TABLE_PROJECT + " (" +
             PROJECT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            PROJECT_NAME + " TEXT NOT NULL " +
+            PROJECT_NAME + " TEXT NOT NULL," +
+            DONOR_NAME + " TEXT NOT NULL " +
             ");";
 
     // Create Table for BASELINE_MEMBER
@@ -955,6 +958,21 @@ public class DBHandler extends SQLiteOpenHelper {
         return educationList;
     }
 
+    //inser Into Project
+    public void insertProject(Project project){
+
+        ContentValues values = new ContentValues();
+
+        values.put(PROJECT_ID, project.getProjectId());
+        values.put(PROJECT_NAME, project.getProjectName());
+        values.put(DONOR_NAME, project.getDonorName());
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_PROJECT, null, values);
+        Log.d(TAG, "Row Inserted in TABLE_PROJECT");
+        db.close();
+    }
+
     //inser Into EducationStatus
     public void insertEducationStatus(EducationStatus educationstatus){
 
@@ -1003,7 +1021,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(MARITAL_STATUS_ID, maritalStatus.getMaritalStatusId());
-        values.put(MARITAL_STATUS_CODE, maritalStatus.getgMaritalStatusCode());
+        values.put(MARITAL_STATUS_CODE, maritalStatus.getMaritalStatusCode());
         values.put(MARTIAL_STATUS_NAME, maritalStatus.getMaritalStatusName());
 
         SQLiteDatabase db = getWritableDatabase();
@@ -1030,8 +1048,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
                 MaritalStatus maritalStatus = new MaritalStatus();
                 maritalStatus.setMaritalStatusId(cursor.getInt(cursor.getColumnIndex(MARITAL_STATUS_ID)));
-                maritalStatus.setgMaritalStatusCode(cursor.getString(cursor.getColumnIndex(MIGRATION_REASON_CODE)));
-                maritalStatus.setMaritalStatusName(cursor.getString(cursor.getColumnIndex(MIGRATION_REASON_NAME)));
+                maritalStatus.setMaritalStatusCode(cursor.getString(cursor.getColumnIndex(MARITAL_STATUS_CODE)));
+                maritalStatus.setMaritalStatusName(cursor.getString(cursor.getColumnIndex(MARTIAL_STATUS_NAME)));
                 maritalStatusList.add(maritalStatus);
 
             }

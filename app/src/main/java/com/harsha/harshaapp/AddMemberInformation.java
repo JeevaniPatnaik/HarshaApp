@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,7 +45,6 @@ import java.util.ArrayList;
 /**
  * Created by Jeevani on 12/7/2016.
  */
-
 public class AddMemberInformation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -52,6 +52,16 @@ public class AddMemberInformation extends AppCompatActivity
     DBHandler dbHandler = new DBHandler(AddMemberInformation.this, null, null, 1);
     Bundle bundle;
     User user = new User();
+    SocialCategory socialCategoryBean = new SocialCategory();
+    Occupation occupationBean = new Occupation();
+    Disabilities disabilitiesBean = new Disabilities();
+    Relationship relationshipBean = new Relationship();
+    Education educationBean = new Education();
+    EducationStatus educationStatusBean = new EducationStatus();
+    MigrationReason migrationReasonBean = new MigrationReason();
+    Religion religionBean = new Religion();
+    Scheme schemeBean = new Scheme();
+    MaritalStatus maritalStatusBean = new MaritalStatus();
 
     TextView nav_username,nav_email;
 
@@ -121,6 +131,265 @@ public class AddMemberInformation extends AppCompatActivity
         centralScheme = (Spinner) findViewById(R.id.centralScheme);
         add = (Button) findViewById(R.id.add);
 
+        socialCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listSocialCategory.size(); i++) {
+                        SocialCategory sc = listSocialCategory.get(i);
+                        if(item.equalsIgnoreCase(sc.getSocialCategoryName() + "-" + sc.getSocialCategoryCode())) {
+                            socialCategoryBean = sc;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        occupation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listOccupation.size(); i++) {
+                        Occupation oc = listOccupation.get(i);
+                        if(item.equalsIgnoreCase(oc.getOccupationName() + "-" + oc.getOccupationCode())) {
+                            occupationBean = oc;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        disabilities.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listDisability.size(); i++) {
+                        Disabilities disb = listDisability.get(i);
+                        if(item.equalsIgnoreCase(disb.getDisabilitiesName() + "-" + disb.getDisbilitiesCode())) {
+                            disabilitiesBean = disb;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        relationship.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listRelationship.size(); i++) {
+                        Relationship rls = listRelationship.get(i);
+                        if(item.equalsIgnoreCase(rls.getRelationshipName() + "-" + rls.getRelationshipCode())) {
+                            relationshipBean = rls;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        education.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listEducation.size(); i++) {
+                        Education edu = listEducation.get(i);
+                        if(item.equalsIgnoreCase(edu.getEducationName() + "-" + edu.getEducationCode())) {
+                            educationBean = edu;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        educationStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listEducationStatus.size(); i++) {
+                        EducationStatus educ = listEducationStatus.get(i);
+                        if(item.equalsIgnoreCase(educ.getEducationStatusName() + "-" + educ.getEducationStatusCode())) {
+                            educationStatusBean = educ;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        migrationReason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listMigrationReason.size(); i++) {
+                        MigrationReason mig = listMigrationReason.get(i);
+                        if(item.equalsIgnoreCase(mig.getMigrationReasonName() + "-" + mig.getMigrationReasonCode())) {
+                            migrationReasonBean = mig;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        religion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listReligion.size(); i++) {
+                        Religion rl = listReligion.get(i);
+                        if(item.equalsIgnoreCase(rl.getReligionName() + "-" + rl.getReligionCode())) {
+                            religionBean = rl;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        centralScheme.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listCentalScheme.size(); i++) {
+                        Scheme sch = listCentalScheme.get(i);
+                        if(item.equalsIgnoreCase(sch.getSchemeName() + "-" + sch.getSchemeId())) {
+                            schemeBean = sch;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        maritalStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listMaritalStatus.size(); i++) {
+                        MaritalStatus mar = listMaritalStatus.get(i);
+                        if(item.equalsIgnoreCase(mar.getMaritalStatusName() + "-" + mar.getMaritalStatusCode())) {
+                            maritalStatusBean = mar;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         AddMemberAsyncTask obj = new AddMemberAsyncTask(this);
         obj.execute();
@@ -187,6 +456,27 @@ public class AddMemberInformation extends AppCompatActivity
         listCentalScheme = dbHandler.getAllScheme();
         listMaritalStatus = dbHandler.getAllMaritalStatus();
 
+        String sc = "---- Select Social Category ----";
+        String oc = "---- Select Occupation ----";
+        String ds = "---- Select Disability ----";
+        String re = "---- Select Relationship ----";
+        String ed = "---- Select Education ----";
+        String es = "---- Select Education Status ----";
+        String mr = "---- Select Migration Reason ----";
+        String rl = "---- Select Religion ----";
+        String cs = "---- Select Central Scheme ----";
+        String ms = "---- Select Marital Status ----";
+
+        nameSocialCategory.add(sc);
+        nameOccupation.add(oc);
+        nameDisability.add(ds);
+        nameRelationship.add(re);
+        nameEducation.add(ed);
+        nameEducationStatus.add(es);
+        nameMigrationReason.add(mr);
+        nameReligion.add(rl);
+        nameCentralScheme.add(cs);
+        nameMaritalStatus.add(ms);
 
         for(int i=0; i<listSocialCategory.size(); i++) {
             SocialCategory socl = listSocialCategory.get(i);
@@ -244,7 +534,7 @@ public class AddMemberInformation extends AppCompatActivity
 
         for(int i=0; i<listMaritalStatus.size(); i++) {
             MaritalStatus mst = listMaritalStatus.get(i);
-            String name = mst.getMaritalStatusName() + "-" + mst.getgMaritalStatusCode();
+            String name = mst.getMaritalStatusName() + "-" + mst.getMaritalStatusCode();
             nameMaritalStatus.add(name);
         }
 
