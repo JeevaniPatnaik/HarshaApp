@@ -612,8 +612,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        String currentDate = new SimpleDateFormat("dd-mm-yyyy").format(new Date());
-
         values.put(BASELINE_ID, baseInfo.getBaselineId());
         values.put(FAMILY_HEAD_ID, baseInfo.getFamilyHeadId());
         values.put(STATE_ID, baseInfo.getStateId());
@@ -714,6 +712,26 @@ public class DBHandler extends SQLiteOpenHelper {
         Log.d(TAG, "Row Deleted in TABLE_STATE");
     }
 
+    //fetch data from state
+    public State getLastState(){
+
+        State state = new State();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+TABLE_STATE+ " ORDER BY " + STATE_ID + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                state.setStateId(cursor.getInt(cursor.getColumnIndex(STATE_ID)));
+                state.setStateName(cursor.getString(cursor.getColumnIndex(STATE_NAME)));
+                state.setStateCode(cursor.getString(cursor.getColumnIndex(STATE_CODE)));
+
+            }
+        }
+        return state;
+    }
+
+
     //insert into DISTRICT Table
     public void insertDistrict(District district){
 
@@ -736,6 +754,25 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_DISTRICT + ";");
         Log.d(TAG, "Row Deleted in TABLE_DISTRICT");
+    }
+
+    //fetch data from district
+    public District getLastDistrict(){
+
+        District district = new District();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+TABLE_DISTRICT+ " ORDER BY " + DISTRICT_ID + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                district.setDistrictId(cursor.getInt(cursor.getColumnIndex(DISTRICT_ID)));
+                district.setDistrictName(cursor.getString(cursor.getColumnIndex(DISTRICT_NAME)));
+                district.setDistrictCode(cursor.getString(cursor.getColumnIndex(DISTRICT_CODE)));
+
+            }
+        }
+        return district;
     }
 
     //insert into BLOCK Table
@@ -761,6 +798,27 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + TABLE_BLOCK + ";");
         Log.d(TAG, "Row Deleted in TABLE_BLOCK");
     }
+
+    //fetch data from block
+    public Block getLastBlock(){
+
+        Block block = new Block();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+TABLE_BLOCK + " ORDER BY " + BLOCK_ID + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                block.setBlockId(cursor.getInt(cursor.getColumnIndex(BLOCK_ID)));
+                block.setBlockName(cursor.getString(cursor.getColumnIndex(BLOCK_NAME)));
+                block.setBlockCode(cursor.getString(cursor.getColumnIndex(BLOCK_CODE)));
+
+            }
+        }
+        return block;
+    }
+
 
     //insert into VILLAGE Table
     public void insertVillage(Village village){
@@ -877,6 +935,28 @@ public class DBHandler extends SQLiteOpenHelper {
         Log.d(TAG, "Row Deleted in TABLE_VILLAGE");
     }
 
+    //fetch data from village
+    public ArrayList<Village> getAllVillage(){
+
+        ArrayList<Village> villageList = new ArrayList<Village>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.beginTransaction();
+        String qry = "SELECT * FROM "+TABLE_VILLAGE + " ORDER BY "+ VILLAGE_NAME + " ASC" ;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                Village village = new Village();
+                village.setVillageId(cursor.getInt(cursor.getColumnIndex(VILLAGE_ID)));
+                village.setVillageName(cursor.getString(cursor.getColumnIndex(VILLAGE_NAME)));
+                village.setVillageCode(cursor.getString(cursor.getColumnIndex(VILLAGE_CODE)));
+                villageList.add(village);
+
+            }
+        }
+        return villageList;
+    }
+
     //insert into RELIGION Table
     public void insertReligionInformation(Religion religion){
 
@@ -922,7 +1002,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ArrayList<Religion> religionList = new ArrayList<Religion>();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
-        String qry = "SELECT * FROM "+RELIGION;
+        String qry = "SELECT * FROM "+RELIGION+ " ORDER BY "+ RELIGION_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
@@ -972,7 +1052,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ArrayList<SocialCategory> socialCategoryList = new ArrayList<SocialCategory>();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
-        String qry = "SELECT * FROM "+SOCIAL_CATEGORY;
+        String qry = "SELECT * FROM "+SOCIAL_CATEGORY+ " ORDER BY "+ SOCIAL_CATEGORY_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
@@ -1017,7 +1097,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ArrayList<Occupation> occupationList = new ArrayList<Occupation>();
         SQLiteDatabase db = this.getReadableDatabase();
         db.beginTransaction();
-        String qry = "SELECT * FROM "+OCCUPATION;
+        String qry = "SELECT * FROM "+OCCUPATION+ " ORDER BY "+ OCCUPATION_NAME + " ASC" ;
         Cursor cursor = db.rawQuery(qry,null);
         if(cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
