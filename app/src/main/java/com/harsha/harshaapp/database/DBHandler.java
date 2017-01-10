@@ -270,6 +270,14 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String CREATE_BASELINE_INFORMATION = "CREATE TABLE " + TABLE_BASELINE_INFORMATION + " (" +
             BASELINE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             FAMILY_HEAD_ID + " INTEGER NOT NULL, " +
+            STATE_ID + " INTEGER NOT NULL, " +
+            DISTRICT_ID + " INTEGER NOT NULL, " +
+            BLOCK_ID + " INTEGER NOT NULL, " +
+            VILLAGE_ID + " INTEGER NOT NULL, " +
+            SOCIAL_CATEGORY_ID + " INTEGER NOT NULL, " +
+            RELIGION_ID + " INTEGER NOT NULL, " +
+            OCCUPATION_ID + " INTEGER NOT NULL, " +
+            USER_ID + " INTEGER NOT NULL, " +
             CONTACT_NO + " TEXT NOT NULL, " +
             FAMILY_MEMBER_NUMBER + " INTEGER NOT NULL, " +
             INCOME + " TEXT NOT NULL " +
@@ -302,7 +310,7 @@ public class DBHandler extends SQLiteOpenHelper {
             ");";
 
     // Create Table for IMPACT_INFORMATION
-    public static final String CREATE_IMPACT_INNFORMATION = "CREATE TABLE " + TABLE_IMPACT_INFORMATION + " (" +
+    public static final String CREATE_IMPACT_INFORMATION = "CREATE TABLE " + TABLE_IMPACT_INFORMATION + " (" +
             IMPACT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             LAND + " TEXT NOT NULL, " +
             PLANT_NUMBER + " INTEGER NOT NULL, " +
@@ -402,7 +410,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_BASELINE_MEMBER);
         Log.d(TAG, "BASELINE_MEMBER TABLE CREATED");
 
-        db.execSQL(CREATE_IMPACT_INNFORMATION);
+        db.execSQL(CREATE_IMPACT_INFORMATION);
         Log.d(TAG, "IMPACT_INNFORMATION TABLE CREATED");
 
         db.execSQL(CREATE_OCCUPATION);

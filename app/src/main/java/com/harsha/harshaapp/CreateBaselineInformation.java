@@ -33,10 +33,6 @@ import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.bean.Village;
 import com.harsha.harshaapp.database.DBHandler;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 /**
@@ -293,6 +289,8 @@ public class CreateBaselineInformation extends AppCompatActivity
         baselineInfo.setSurveyUserId(user.getUserId());
         Log.d("income=","Income="+income.getText().toString()+"\ngetIncome="+baselineInfo.getIncome());
         Log.d("user=",user + "\nuserId="+user.getUserId()+"\nUsername="+user.getUserName());
+
+        dbHandler.insertBaselineInformation(baselineInfo);
     }
 
     public void spinnerList() {

@@ -293,7 +293,7 @@
 
         <activity
             android:name=".ImpactArea"
-            android:label="Impact Area"
+            android:label="Impact Data"
             android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.Home"
