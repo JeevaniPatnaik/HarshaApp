@@ -14,6 +14,7 @@ import com.harsha.harshaapp.bean.Disabilities;
 import com.harsha.harshaapp.bean.District;
 import com.harsha.harshaapp.bean.Education;
 import com.harsha.harshaapp.bean.EducationStatus;
+import com.harsha.harshaapp.bean.ImpactInfo;
 import com.harsha.harshaapp.bean.MaritalStatus;
 import com.harsha.harshaapp.bean.MemberInfo;
 import com.harsha.harshaapp.bean.MigrationReason;
@@ -27,9 +28,7 @@ import com.harsha.harshaapp.bean.State;
 import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.bean.Village;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Jeevani on 12/8/2016.
@@ -165,6 +164,8 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String PLANTING_YEAR = "plantingYear";
     public static final String HERR = "herr";
     public static final String IMPACT_INCOME = "memberIncome";
+    public static final String BENEFICIARY_NAME = "beneficiaryName";
+    public static final String HUSBAND_WIFE_NAME = "husbandWifeName";
 
     //Attributes of SOCIAL_CATEGORY
     public static final String SOCIAL_CATEGORY_ID = "socialCategoryId";
@@ -312,11 +313,19 @@ public class DBHandler extends SQLiteOpenHelper {
     // Create Table for IMPACT_INFORMATION
     public static final String CREATE_IMPACT_INFORMATION = "CREATE TABLE " + TABLE_IMPACT_INFORMATION + " (" +
             IMPACT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            FAMILY_HEAD_ID + " INTEGER NOT NULL, " +
             LAND + " TEXT NOT NULL, " +
+            BENEFICIARY_NAME + " TEXT NOT NULL, " +
+            HUSBAND_WIFE_NAME + " TEXT NOT NULL, " +
             PLANT_NUMBER + " INTEGER NOT NULL, " +
             PLANTING_YEAR + " INTEGER NOT NULL, " +
             HERR + " INTEGER NOT NULL, " +
-            IMPACT_INCOME + " INTEGER NOT NULL " +
+            IMPACT_INCOME + " INTEGER NOT NULL, " +
+            STATE_ID + " INTEGER NOT NULL, " +
+            DISTRICT_ID + " INTEGER NOT NULL, " +
+            VILLAGE_ID + " INTEGER NOT NULL, " +
+            PROJECT_ID + " INTEGER NOT NULL, " +
+            BASELINE_ID + " INTEGER NOT NULL " +
             ");";
 
     // create table for OCCUPATION
@@ -669,18 +678,62 @@ public class DBHandler extends SQLiteOpenHelper {
     public void updateBaselineInformation(BaselineInfo baseinfo){
 
         SQLiteDatabase db = getWritableDatabase();
-        String currentDate = new SimpleDateFormat("dd-mm-yyyy").format(new Date());
+        //String currentDate = new SimpleDateFormat("dd-mm-yyyy").format(new Date());
 
         db.execSQL("UPDATE"+ TABLE_BASELINE_INFORMATION + "SET" + STATE_ID + "=\"" + baseinfo.getStateId() + "\"" +
-                DISTRICT_ID + "=\"" + baseinfo.getDistrictId() + "\" " +DISTRICT_ID + "=\"" + baseinfo.getDistrictId() +"\" " +
-                ""+BLOCK_ID + "=\"" + baseinfo.getBlockId()+ "\""+VILLAGE_ID + "=\"" + baseinfo.getVillageId()+ "\"" +
-                ""+USER_ID + "=\"" + baseinfo.getSurveyUserId() +"\""+SOCIAL_CATEGORY_ID + "=\"" + baseinfo.getSocialCategoryId() +"\"" +
+                ""+DISTRICT_ID + "=\"" + baseinfo.getDistrictId() +"\" " + ""+BLOCK_ID + "=\"" + baseinfo.getBlockId()+ "\""+
+                ""+VILLAGE_ID + "=\"" + baseinfo.getVillageId() +"\""+SOCIAL_CATEGORY_ID + "=\"" + baseinfo.getSocialCategoryId() +"\"" +
                 ""+RELIGION_ID + "=\"" + baseinfo.getReligionId() +""+OCCUPATION_ID + "=\"" + baseinfo.getOccupationId() +"" +
-                ""+OCCUPATION_ID + "=\"" + baseinfo.getOccupationId() +""+CONTACT_NO + "=\"" + baseinfo.getContactNo() +"" +
-                ""+FAMILY_MEMBER_NUMBER + "=\"" + baseinfo.getFamilyMemberNumber()+""+INCOME + "=\"" + baseinfo.getIncome()+";");
-        Log.d(TAG, "Row Deleted in TABLE_USER");
+                ""+CONTACT_NO + "=\"" + baseinfo.getContactNo() +"" + ""+FAMILY_MEMBER_NUMBER + "=\"" + baseinfo.getFamilyMemberNumber()+
+                ""+INCOME + "=\"" + baseinfo.getIncome()+" WHERE "+USER_ID+ "=\"" + baseinfo.getSurveyUserId()+" ;");
+        Log.d(TAG, "Row Deleted in TABLE_Baseline");
 
     }
+
+    //INSERT ROW INTO TABLE_IMPACT_AREA
+    public void insertImpactData(ImpactInfo impactInfo){
+
+        ContentValues values = new ContentValues();
+
+        values.put(IMPACT_ID, impactInfo.getImpactId());
+        values.put(BASELINE_ID, impactInfo.getBaselineId());
+        values.put(FAMILY_HEAD_ID, impactInfo.getFamilyHeadId());
+        values.put(LAND, impactInfo.getLand());
+        values.put(PLANT_NUMBER, impactInfo.getNoOfPlants());
+        values.put(PLANTING_YEAR, impactInfo.getYearOfPlanting());
+        values.put(HERR, impactInfo.getHerr());
+        values.put(PROJECT_ID, impactInfo.getProjectId());
+        values.put(BENEFICIARY_NAME, impactInfo.getBeneficiaryName());
+        values.put(HUSBAND_WIFE_NAME, impactInfo.getHusbandWifeName());
+        values.put(STATE_ID, impactInfo.getStateId());
+        values.put(DISTRICT_ID, impactInfo.getDistrictId());
+        values.put(VILLAGE_ID, impactInfo.getVillageId());
+        values.put(IMPACT_INCOME, impactInfo.getImpactIncome());
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.insert(TABLE_IMPACT_INFORMATION, null, values);
+        Log.d(TAG, "Row Inserted in TABLE_IMPACT_INFORMATION");
+
+        db.close();
+    }
+
+    //UPDATE Row from TABLE_IMPACT_AREA
+    public void updateImpactData(ImpactInfo impactInfo){
+
+        SQLiteDatabase db = getWritableDatabase();
+        //String currentDate = new SimpleDateFormat("dd-mm-yyyy").format(new Date());
+
+        db.execSQL("UPDATE"+ TABLE_IMPACT_INFORMATION + "SET" + STATE_ID + "=\"" + impactInfo.getStateId() + "\"" +
+                DISTRICT_ID + "=\"" + impactInfo.getDistrictId() +"\" " +VILLAGE_ID + "=\"" + impactInfo.getVillageId()+ "\"" +
+                ""+PROJECT_ID + "=\"" + impactInfo.getProjectId() +"\""+FAMILY_HEAD_ID + "=\"" + impactInfo.getFamilyHeadId() +"\"" +
+                ""+BENEFICIARY_NAME + "=\"" + impactInfo.getBeneficiaryName() +""+HUSBAND_WIFE_NAME + "=\"" + impactInfo.getHusbandWifeName() +"" +
+                ""+LAND + "=\"" + impactInfo.getLand() +""+PLANTING_YEAR + "=\"" + impactInfo.getYearOfPlanting() +"" +PLANT_NUMBER + "=\"" + impactInfo.getNoOfPlants() +
+                ""+HERR + "=\"" + impactInfo.getHerr()+""+IMPACT_INCOME + "=\"" + impactInfo.getImpactIncome()+" WHERE "+BASELINE_ID+ "=\"" + impactInfo.getBaselineId()+" ;");
+        Log.d(TAG, "Row Deleted in TABLE_Impact_Information");
+
+    }
+
 
     //INSERT ROW INTO TABLE_MEMBER
     public void insertMemberInformation(MemberInfo memberInfo){
@@ -716,7 +769,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 ""+GENDER + "=\"" + memberInfo.getGender()+ "\""+QUOTA + "=\"" + memberInfo.getSocialCategory()+ "\"" +
                 ""+AADHAAR_CARD_ID + "=\"" + memberInfo.getAadhaarCardId() +"\""+VOTER_ID + "=\"" + memberInfo.getVoterId() +"\"" +
                 ""+FAMILY_HEAD + "=\"" + memberInfo.getFamilyHead() +""+PERSONAL_SALARY + "=\"" + memberInfo.getPersonalSalary() +";");
-        Log.d(TAG, "Row Deleted in TABLE_USER");
+        Log.d(TAG, "Row Deleted in TABLE_Member_Information");
 
     }
 

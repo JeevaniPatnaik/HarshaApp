@@ -31,8 +31,8 @@ public class ImpactArea extends AppCompatActivity
 
     TextView nav_username,nav_email;
 
-    EditText familyHeadName,beneficiaryName,husbandWife,land,herr,income;
-    Spinner state,district,village,project,plantsNo,plantingYear;
+    EditText beneficiaryName,husbandWife,land,herr,income;
+    Spinner state,district,village,project, familyHeadName,plantsNo,plantingYear;
     Button save;
 
     @Override
@@ -42,12 +42,12 @@ public class ImpactArea extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        familyHeadName = (EditText) findViewById(R.id.familyHeadName);
         beneficiaryName = (EditText) findViewById(R.id.beneficiaryName);
         husbandWife = (EditText) findViewById(R.id.husbandWife);
         land = (EditText) findViewById(R.id.land);
         herr = (EditText) findViewById(R.id.herr);
         income = (EditText) findViewById(R.id.income);
+        familyHeadName = (Spinner) findViewById(R.id.familyHeadName);
         plantsNo = (Spinner) findViewById(R.id.plantsNo);
         plantingYear = (Spinner) findViewById(R.id.plantingYear);
         state = (Spinner) findViewById(R.id.state);
