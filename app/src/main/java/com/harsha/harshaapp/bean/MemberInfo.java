@@ -9,11 +9,83 @@ public class MemberInfo {
     private String memberName;
     private String dob;
     private String gender;
-    private String socialCategory;
+    private int socialCategoryId;
     private int aadhaarCardId;
     private int voterId;
     private String familyHead;
     private String personalSalary;
+    private int occupationId;
+    private int disabilityId;
+    private int relationshipId;
+    private int educationId;
+    private int educationStatusId;
+    private int maritalStatusId;
+    private int religionId;
+    private int schemeId;
+
+    public int getOccupationId() {
+        return occupationId;
+    }
+
+    public void setOccupationId(int occupationId) {
+        this.occupationId = occupationId;
+    }
+
+    public int getDisabilityId() {
+        return disabilityId;
+    }
+
+    public void setDisabilityId(int disabilityId) {
+        this.disabilityId = disabilityId;
+    }
+
+    public int getRelationshipId() {
+        return relationshipId;
+    }
+
+    public void setRelationshipId(int relationshipId) {
+        this.relationshipId = relationshipId;
+    }
+
+    public int getEducationId() {
+        return educationId;
+    }
+
+    public void setEducationId(int educationId) {
+        this.educationId = educationId;
+    }
+
+    public int getEducationStatusId() {
+        return educationStatusId;
+    }
+
+    public void setEducationStatusId(int educationStatusId) {
+        this.educationStatusId = educationStatusId;
+    }
+
+    public int getMaritalStatusId() {
+        return maritalStatusId;
+    }
+
+    public void setMaritalStatusId(int maritalStatusId) {
+        this.maritalStatusId = maritalStatusId;
+    }
+
+    public int getReligionId() {
+        return religionId;
+    }
+
+    public void setReligionId(int religionId) {
+        this.religionId = religionId;
+    }
+
+    public int getSchemeId() {
+        return schemeId;
+    }
+
+    public void setSchemeId(int schemeId) {
+        this.schemeId = schemeId;
+    }
 
     public int getMemberId() {
         return memberId;
@@ -55,12 +127,12 @@ public class MemberInfo {
         this.gender = gender;
     }
 
-    public String getSocialCategory() {
-        return socialCategory;
+    public int getSocialCategoryId() {
+        return socialCategoryId;
     }
 
-    public void setSocialCategory(String socialCategory) {
-        this.socialCategory = socialCategory;
+    public void setSocialCategoryId(int socialCategoryId) {
+        this.socialCategoryId = socialCategoryId;
     }
 
     public int getAadhaarCardId() {

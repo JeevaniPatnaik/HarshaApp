@@ -33,6 +33,10 @@ import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.bean.Village;
 import com.harsha.harshaapp.database.DBHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -290,7 +294,7 @@ public class CreateBaselineInformation extends AppCompatActivity
         Log.d("income=","Income="+income.getText().toString()+"\ngetIncome="+baselineInfo.getIncome());
         Log.d("user=",user + "\nuserId="+user.getUserId()+"\nUsername="+user.getUserName());
 
-        dbHandler.insertBaselineInformation(baselineInfo);
+        //dbHandler.insertBaselineInformation(baselineInfo);
     }
 
     public void spinnerList() {
@@ -398,40 +402,70 @@ public class CreateBaselineInformation extends AppCompatActivity
 
             if(flag==2) {
 
-                Bundle userBundle = new Bundle();
+                try {
 
-                userBundle.putInt("stateId", baselineInfo.getStateId());
-                userBundle.putInt("districtId", baselineInfo.getDistrictId());
-                userBundle.putInt("blockId", baselineInfo.getBlockId());
-                userBundle.putInt("villageId", baselineInfo.getVillageId());
-                userBundle.putInt("surveyUserId", baselineInfo.getSurveyUserId());
-                userBundle.putInt("socialCategoryId", baselineInfo.getSocialCategoryId());
-                userBundle.putInt("religionId", baselineInfo.getReligionId());
-                userBundle.putInt("occupationId", baselineInfo.getOccupationId());
-                userBundle.putString("contactNo", baselineInfo.getContactNo());
-                userBundle.putInt("familyMemberNumber", baselineInfo.getFamilyMemberNumber());
-                userBundle.putString("income", baselineInfo.getIncome());
+                    JSONArray array = new JSONArray(s);
 
-                Log.d("userBundle:","stateId="+baselineInfo.getStateId()
-                +"\ndistrictId="+baselineInfo.getDistrictId()
-                +"\nblockId="+baselineInfo.getBlockId()
-                +"\nvillageId="+baselineInfo.getVillageId()
-                +"\nsurveyUserId="+ baselineInfo.getSurveyUserId()
-                +"\nsocialCategoryId="+baselineInfo.getSocialCategoryId()
-                +"\nreligionId="+baselineInfo.getReligionId()
-                +"\noccupationId="+baselineInfo.getOccupationId()
-                +"\ncontactNo="+baselineInfo.getContactNo()
-                +"\nfamilyMemberNumber="+baselineInfo.getFamilyMemberNumber()
-                +"\nincome="+baselineInfo.getIncome());
+                    if (array.length() > 0) {
 
-                Toast.makeText(CreateBaselineInformation.this, "Baseline Information is added successfully in Bundle", Toast.LENGTH_LONG).show();
+                        for (int i = 0; i < array.length(); i++) {
 
-                Intent intent1 = new Intent(CreateBaselineInformation.this,AddMemberInformation.class);
-                intent1.putExtras(userBundle);
-                startActivity(intent1);
+                            JSONObject object = array.getJSONObject(i);
 
+                            baselineInfo.setStateId(object.getInt("stateId"));
+                            baselineInfo.setDistrictId(object.getInt("districtId"));
+                            baselineInfo.setBlockId(object.getInt("blockId"));
+                            baselineInfo.setVillageId(object.getInt("villageId"));
+                            baselineInfo.setReligionId(object.getInt("religionId"));
+                            baselineInfo.setOccupationId(object.getInt("occupationId"));
+                            baselineInfo.setSocialCategoryId(object.getInt("socialCategoryId"));
+                            baselineInfo.setFamilyMemberNumber(object.getInt("noOfFamilyMember"));
+                            baselineInfo.setContactNo(object.getString("contactNo"));
+                            baselineInfo.setIncome(object.getString("income"));
+                            baselineInfo.setSurveyUserId(object.getInt("userId"));
+
+                            dbHandler.insertBaselineInformation(baselineInfo);
+
+                            Bundle userBundle = new Bundle();
+
+                            userBundle.putInt("stateId", baselineInfo.getStateId());
+                            userBundle.putInt("districtId", baselineInfo.getDistrictId());
+                            userBundle.putInt("blockId", baselineInfo.getBlockId());
+                            userBundle.putInt("villageId", baselineInfo.getVillageId());
+                            userBundle.putInt("surveyUserId", baselineInfo.getSurveyUserId());
+                            userBundle.putInt("socialCategoryId", baselineInfo.getSocialCategoryId());
+                            userBundle.putInt("religionId", baselineInfo.getReligionId());
+                            userBundle.putInt("occupationId", baselineInfo.getOccupationId());
+                            userBundle.putString("contactNo", baselineInfo.getContactNo());
+                            userBundle.putInt("familyMemberNumber", baselineInfo.getFamilyMemberNumber());
+                            userBundle.putString("income", baselineInfo.getIncome());
+
+                            Log.d("userBundle:", "stateId=" + baselineInfo.getStateId()
+                                    + "\ndistrictId=" + baselineInfo.getDistrictId()
+                                    + "\nblockId=" + baselineInfo.getBlockId()
+                                    + "\nvillageId=" + baselineInfo.getVillageId()
+                                    + "\nsurveyUserId=" + baselineInfo.getSurveyUserId()
+                                    + "\nsocialCategoryId=" + baselineInfo.getSocialCategoryId()
+                                    + "\nreligionId=" + baselineInfo.getReligionId()
+                                    + "\noccupationId=" + baselineInfo.getOccupationId()
+                                    + "\ncontactNo=" + baselineInfo.getContactNo()
+                                    + "\nfamilyMemberNumber=" + baselineInfo.getFamilyMemberNumber()
+                                    + "\nincome=" + baselineInfo.getIncome());
+
+                            Toast.makeText(CreateBaselineInformation.this, "Baseline Information is added successfully in Bundle", Toast.LENGTH_LONG).show();
+
+                            Intent intent1 = new Intent(CreateBaselineInformation.this, AddMemberInformation.class);
+                            intent1.putExtras(userBundle);
+                            startActivity(intent1);
+
+                        }
+                        progressDialog.dismiss();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-            progressDialog.dismiss();
         }
     }
 

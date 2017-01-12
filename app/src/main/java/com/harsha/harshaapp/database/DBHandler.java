@@ -690,6 +690,55 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
+    //fetch from baseline informationtable
+    public ArrayList<BaselineInfo> getAllBaselineInformation(){
+
+        ArrayList<BaselineInfo> baselineInformationList = new ArrayList<BaselineInfo>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        //db.beginTransaction();
+        String qry = "SELECT * FROM "+TABLE_BASELINE_INFORMATION+ " ORDER BY "+ BASELINE_ID + " ASC" ;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                /*String religionName = cursor.getString(cursor.getColumnIndex("religionName"));
+                String religionCode = cursor.getString(cursor.getColumnIndex("religionCode"));
+                religionList.add(religionCode);
+                religionList.add(religionName);*/
+
+                BaselineInfo baselineInfo = new BaselineInfo();
+                baselineInfo.setBaselineId(cursor.getInt(cursor.getColumnIndex(BASELINE_ID)));
+                baselineInfo.setFamilyHeadId(cursor.getInt(cursor.getColumnIndex(FAMILY_HEAD_ID)));
+                baselineInfo.setStateId(cursor.getInt(cursor.getColumnIndex(STATE_ID)));
+                baselineInfo.setDistrictId(cursor.getInt(cursor.getColumnIndex(DISTRICT_ID)));
+                baselineInfo.setBlockId(cursor.getInt(cursor.getColumnIndex(BLOCK_ID)));
+                baselineInfo.setVillageId(cursor.getInt(cursor.getColumnIndex(VILLAGE_ID)));
+                baselineInfo.setSurveyUserId(cursor.getInt(cursor.getColumnIndex(USER_ID)));
+                baselineInfo.setSocialCategoryId(cursor.getInt(cursor.getColumnIndex(SOCIAL_CATEGORY_ID)));
+                baselineInfo.setReligionId(cursor.getInt(cursor.getColumnIndex(RELIGION_ID)));
+                baselineInfo.setOccupationId(cursor.getInt(cursor.getColumnIndex(OCCUPATION_ID)));
+                baselineInfo.setContactNo(cursor.getString(cursor.getColumnIndex(CONTACT_NO)));
+                baselineInfo.setFamilyMemberNumber(cursor.getInt(cursor.getColumnIndex(FAMILY_MEMBER_NUMBER)));
+                baselineInfo.setIncome(cursor.getString(cursor.getColumnIndex(INCOME)));
+
+                baselineInformationList.add(baselineInfo);
+                Log.d("Fetch Data:", "stateId=" + baselineInfo.getStateId()
+                        + "\ndistrictId=" + baselineInfo.getDistrictId()
+                        + "\nblockId=" + baselineInfo.getBlockId()
+                        + "\nvillageId=" + baselineInfo.getVillageId()
+                        + "\nsurveyUserId=" + baselineInfo.getSurveyUserId()
+                        + "\nsocialCategoryId=" + baselineInfo.getSocialCategoryId()
+                        + "\nreligionId=" + baselineInfo.getReligionId()
+                        + "\noccupationId=" + baselineInfo.getOccupationId()
+                        + "\ncontactNo=" + baselineInfo.getContactNo()
+                        + "\nfamilyMemberNumber=" + baselineInfo.getFamilyMemberNumber()
+                        + "\nincome=" + baselineInfo.getIncome());
+
+            }
+        }
+        return baselineInformationList;
+    }
+
     //INSERT ROW INTO TABLE_IMPACT_AREA
     public void insertImpactData(ImpactInfo impactInfo){
 
@@ -745,7 +794,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(MEMBER_NAME, memberInfo.getMemberName());
         values.put(DOB, memberInfo.getDob());
         values.put(GENDER, memberInfo.getGender());
-        values.put(QUOTA, memberInfo.getSocialCategory());
+        values.put(QUOTA, memberInfo.getSocialCategoryId());
         values.put(AADHAAR_CARD_ID, memberInfo.getAadhaarCardId());
         values.put(VOTER_ID, memberInfo.getVoterId());
         values.put(FAMILY_HEAD, memberInfo.getFamilyHead());
@@ -766,7 +815,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.execSQL("UPDATE"+ TABLE_MEMBER + "SET" + UNIQUE_ID + "=\"" + memberInfo.getUniqueId() + "\"" +
                 MEMBER_NAME + "=\"" + memberInfo.getMemberName() + "\" " +DOB + "=\"" + memberInfo.getDob() +"\" " +
-                ""+GENDER + "=\"" + memberInfo.getGender()+ "\""+QUOTA + "=\"" + memberInfo.getSocialCategory()+ "\"" +
+                ""+GENDER + "=\"" + memberInfo.getGender()+ "\""+QUOTA + "=\"" + memberInfo.getSocialCategoryId()+ "\"" +
                 ""+AADHAAR_CARD_ID + "=\"" + memberInfo.getAadhaarCardId() +"\""+VOTER_ID + "=\"" + memberInfo.getVoterId() +"\"" +
                 ""+FAMILY_HEAD + "=\"" + memberInfo.getFamilyHead() +""+PERSONAL_SALARY + "=\"" + memberInfo.getPersonalSalary() +";");
         Log.d(TAG, "Row Deleted in TABLE_Member_Information");

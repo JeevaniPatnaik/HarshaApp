@@ -474,6 +474,26 @@ public class AddMemberInformation extends AppCompatActivity
 
     public void readData() {
 
+        memberInfo.setFamilyHead(name.getText().toString());
+        memberInfo.setDob(dob.getText().toString());
+        memberInfo.setGender(gender.toString());
+        memberInfo.setSocialCategoryId(socialCategoryBean.getSocialCategoryId());
+        memberInfo.setAadhaarCardId(Integer.parseInt(aadhaarCard.getText().toString()));
+        memberInfo.setVoterId(Integer.parseInt(voterId.getText().toString()));
+        memberInfo.setPersonalSalary(personalSalary.getText().toString());
+        memberInfo.setOccupationId(occupationBean.getOccupationId());
+        memberInfo.setDisabilityId(disabilitiesBean.getDisabilitiesId());
+        memberInfo.setRelationshipId(relationshipBean.getRelationshipId());
+        memberInfo.setEducationId(educationBean.getEducationId());
+        memberInfo.setEducationStatusId(educationStatusBean.getEducationStatusId());
+        memberInfo.setMaritalStatusId(maritalStatusBean.getMaritalStatusId());
+        memberInfo.setReligionId(religionBean.getReligionId());
+        memberInfo.setSchemeId(schemeBean.getSchemeId());
+
+        Log.d("user=",user + "\nuserId="+user.getUserId()+"\nUsername="+user.getUserName());
+
+        dbHandler.insertMemberInformation(memberInfo);
+
     }
 
     public void spinnerList() {
