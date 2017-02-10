@@ -679,6 +679,8 @@ public class AddMemberInformation extends AppCompatActivity
                 baselineInfo.setFamilyHeadId(memberId);
                 dbHandler.insertBaselineInformation(baselineInfo);
                 dbHandler.getAllBaselineInformation();
+                int baselineId = dbHandler.getLastBaselineId();
+                dbHandler.updateMemberUniqueId(memberId,baselineId);
 
                 Intent intent = new Intent(AddMemberInformation.this,BaselineInformation.class);
                 //intent.putExtra(bundle);

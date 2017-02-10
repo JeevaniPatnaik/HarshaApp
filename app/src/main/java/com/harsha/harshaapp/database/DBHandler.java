@@ -294,7 +294,7 @@ public class DBHandler extends SQLiteOpenHelper {
             QUOTA + " TEXT NOT NULL, " +
             AADHAAR_CARD_ID + " INTEGER NOT NULL, " +
             VOTER_ID + " TEXT NOT NULL, " +
-            FAMILY_HEAD + " TEXT NOT NULL, " +
+            FAMILY_HEAD + " TEXT, " +
             PERSONAL_SALARY + " INTEGER NOT NULL, " +
             OCCUPATION_ID + " INTEGER NOT NULL, " +
             DISABILTIES_ID + " INTEGER NOT NULL, " +
