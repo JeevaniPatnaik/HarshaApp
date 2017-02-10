@@ -11,7 +11,7 @@ public class MemberInfo {
     private String gender;
     private int socialCategoryId;
     private int aadhaarCardId;
-    private int voterId;
+    private String voterId;
     private String familyHead;
     private String personalSalary;
     private int occupationId;
@@ -143,11 +143,11 @@ public class MemberInfo {
         this.aadhaarCardId = aadhaarCardId;
     }
 
-    public int getVoterId() {
+    public String getVoterId() {
         return voterId;
     }
 
-    public void setVoterId(int voterId) {
+    public void setVoterId(String voterId) {
         this.voterId = voterId;
     }
 

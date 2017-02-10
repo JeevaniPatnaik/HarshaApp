@@ -287,15 +287,23 @@ public class DBHandler extends SQLiteOpenHelper {
     // Create Table for MEMBER
     public static final String CREATE_MEMBER = "CREATE TABLE " + TABLE_MEMBER + " (" +
             MEMBER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            UNIQUE_ID + " INTEGER NOT NULL, " +
+            UNIQUE_ID + " INTEGER, " +
             MEMBER_NAME + " TEXT NOT NULL, " +
             DOB + " TEXT NOT NULL, " +
             GENDER + " TEXT NOT NULL, " +
             QUOTA + " TEXT NOT NULL, " +
             AADHAAR_CARD_ID + " INTEGER NOT NULL, " +
-            VOTER_ID + " INTEGER NOT NULL, " +
+            VOTER_ID + " TEXT NOT NULL, " +
             FAMILY_HEAD + " TEXT NOT NULL, " +
-            PERSONAL_SALARY + " INTEGER NOT NULL " +
+            PERSONAL_SALARY + " INTEGER NOT NULL, " +
+            OCCUPATION_ID + " INTEGER NOT NULL, " +
+            DISABILTIES_ID + " INTEGER NOT NULL, " +
+            RELATIONSHIP_ID + " INTEGER NOT NULL, " +
+            EDUCATION_ID + " INTEGER NOT NULL, " +
+            EDUCATION_STATUS_ID + " INTEGER NOT NULL, " +
+            MARITAL_STATUS_ID + " INTEGER NOT NULL, " +
+            RELIGION_ID + " INTEGER NOT NULL, " +
+            SCHEME_ID + " INTEGER NOT NULL " +
             ");";
 
     // Create Table for PROJECT
@@ -726,6 +734,8 @@ public class DBHandler extends SQLiteOpenHelper {
                         + "\ndistrictId=" + baselineInfo.getDistrictId()
                         + "\nblockId=" + baselineInfo.getBlockId()
                         + "\nvillageId=" + baselineInfo.getVillageId()
+                        + "\nbaselineId=" +  baselineInfo.getBaselineId()
+                        + "\nmemberId=" + baselineInfo.getFamilyHeadId()
                         + "\nsurveyUserId=" + baselineInfo.getSurveyUserId()
                         + "\nsocialCategoryId=" + baselineInfo.getSocialCategoryId()
                         + "\nreligionId=" + baselineInfo.getReligionId()
@@ -738,6 +748,34 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         return baselineInformationList;
     }
+
+    public int getLastBaselineId() {
+        int baselineId = 0;
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_BASELINE_INFORMATION + " ORDER BY " + BASELINE_ID + " DESC LIMIT 1";
+
+        //Cursor points to the results
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+        while (!c.isAfterLast()) {
+
+            baselineId = c.getInt(c.getColumnIndex(BASELINE_ID));
+
+            c.moveToNext();
+
+        }
+
+        db.close();
+
+        Log.d(TAG, "Row Fetched from Baseline table");
+
+        return baselineId;
+    }
+
 
     //INSERT ROW INTO TABLE_IMPACT_AREA
     public void insertImpactData(ImpactInfo impactInfo){
@@ -789,16 +827,21 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put(MEMBER_ID, memberInfo.getMemberId());
-        values.put(UNIQUE_ID, memberInfo.getUniqueId());
         values.put(MEMBER_NAME, memberInfo.getMemberName());
         values.put(DOB, memberInfo.getDob());
         values.put(GENDER, memberInfo.getGender());
         values.put(QUOTA, memberInfo.getSocialCategoryId());
         values.put(AADHAAR_CARD_ID, memberInfo.getAadhaarCardId());
         values.put(VOTER_ID, memberInfo.getVoterId());
-        values.put(FAMILY_HEAD, memberInfo.getFamilyHead());
         values.put(PERSONAL_SALARY, memberInfo.getPersonalSalary());
+        values.put(OCCUPATION_ID, memberInfo.getOccupationId());
+        values.put(DISABILTIES_ID, memberInfo.getDisabilityId());
+        values.put(RELATIONSHIP_ID, memberInfo.getRelationshipId());
+        values.put(EDUCATION_ID, memberInfo.getEducationId());
+        values.put(EDUCATION_STATUS_ID, memberInfo.getEducationStatusId());
+        values.put(MARITAL_STATUS_ID, memberInfo.getMaritalStatusId());
+        values.put(RELIGION_ID, memberInfo.getReligionId());
+        values.put(SCHEME_ID, memberInfo.getSchemeId());
 
         SQLiteDatabase db = getWritableDatabase();
 
@@ -808,16 +851,58 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public int getLastMemberId() {
+        int memberId = 0;
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_MEMBER + " ORDER BY " + MEMBER_ID + " DESC LIMIT 1";
+
+        //Cursor points to the results
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+        while (!c.isAfterLast()) {
+
+            memberId = c.getInt(c.getColumnIndex(MEMBER_ID));
+
+            c.moveToNext();
+
+        }
+
+        db.close();
+
+        Log.d(TAG, "Row Fetched from Member table");
+
+        return memberId;
+    }
+
+    //UPDATE Row from TABLE_MEMBER
+    public void updateMemberUniqueId(int memberId, int baselineId){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.execSQL("UPDATE "+ TABLE_MEMBER + " SET " + UNIQUE_ID + "="+ baselineId +" WHERE "+ MEMBER_ID +"="+ memberId+";");
+        Log.d(TAG, "Row Updated in updateMemberUniqueId");
+
+    }
+
+
     //UPDATE Row from TABLE_MEMBER
     public void updateMemberInformation(MemberInfo memberInfo){
 
         SQLiteDatabase db = getWritableDatabase();
 
-        db.execSQL("UPDATE"+ TABLE_MEMBER + "SET" + UNIQUE_ID + "=\"" + memberInfo.getUniqueId() + "\"" +
+        db.execSQL("UPDATE "+ TABLE_MEMBER + "SET " + UNIQUE_ID + "=\"" + memberInfo.getUniqueId() + "\"" +
                 MEMBER_NAME + "=\"" + memberInfo.getMemberName() + "\" " +DOB + "=\"" + memberInfo.getDob() +"\" " +
                 ""+GENDER + "=\"" + memberInfo.getGender()+ "\""+QUOTA + "=\"" + memberInfo.getSocialCategoryId()+ "\"" +
                 ""+AADHAAR_CARD_ID + "=\"" + memberInfo.getAadhaarCardId() +"\""+VOTER_ID + "=\"" + memberInfo.getVoterId() +"\"" +
-                ""+FAMILY_HEAD + "=\"" + memberInfo.getFamilyHead() +""+PERSONAL_SALARY + "=\"" + memberInfo.getPersonalSalary() +";");
+                ""+FAMILY_HEAD + "=\"" + memberInfo.getFamilyHead() +""+PERSONAL_SALARY + "=\"" + memberInfo.getPersonalSalary() +"\""+
+                ""+OCCUPATION_ID + "=\"" + memberInfo.getOccupationId() +"\""+DISABILTIES_ID + "=\"" + memberInfo.getDisabilityId() +"\""+
+                ""+RELATIONSHIP_ID + "=\"" + memberInfo.getRelationshipId() +"\""+EDUCATION_ID + "=\"" + memberInfo.getEducationId()+"\""+
+                ""+EDUCATION_STATUS_ID + "=\"" + memberInfo.getEducationStatusId() +"\""+MARITAL_STATUS_ID + "=\"" + memberInfo.getMaritalStatusId() +"\"" +
+                ""+RELIGION_ID + "=\"" + memberInfo.getReligionId() +"\""+SCHEME_ID + "=\"" + memberInfo.getSchemeId() +"\"" +";");
         Log.d(TAG, "Row Deleted in TABLE_Member_Information");
 
     }
