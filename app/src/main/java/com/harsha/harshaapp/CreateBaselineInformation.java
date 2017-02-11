@@ -33,10 +33,6 @@ import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.bean.Village;
 import com.harsha.harshaapp.database.DBHandler;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 /**
@@ -293,6 +289,8 @@ public class CreateBaselineInformation extends AppCompatActivity
         baselineInfo.setSurveyUserId(user.getUserId());
         Log.d("income=","Income="+income.getText().toString()+"\ngetIncome="+baselineInfo.getIncome());
         Log.d("user=",user + "\nuserId="+user.getUserId()+"\nUsername="+user.getUserName());
+
+        //dbHandler.insertBaselineInformation(baselineInfo);
     }
 
     public void spinnerList() {
@@ -385,8 +383,8 @@ public class CreateBaselineInformation extends AppCompatActivity
                if (flag==1) {
                    spinnerList();
                }
-                else if (flag==2) {
-                    readData();
+               else if (flag==2) {
+                   readData();
                }
             }
             catch (Exception e) {
@@ -402,6 +400,7 @@ public class CreateBaselineInformation extends AppCompatActivity
 
                 Bundle userBundle = new Bundle();
 
+                userBundle.putInt("baselineId", baselineInfo.getBaselineId());
                 userBundle.putInt("stateId", baselineInfo.getStateId());
                 userBundle.putInt("districtId", baselineInfo.getDistrictId());
                 userBundle.putInt("blockId", baselineInfo.getBlockId());
@@ -414,24 +413,61 @@ public class CreateBaselineInformation extends AppCompatActivity
                 userBundle.putInt("familyMemberNumber", baselineInfo.getFamilyMemberNumber());
                 userBundle.putString("income", baselineInfo.getIncome());
 
-                Log.d("userBundle:","stateId="+baselineInfo.getStateId()
-                +"\ndistrictId="+baselineInfo.getDistrictId()
-                +"\nblockId="+baselineInfo.getBlockId()
-                +"\nvillageId="+baselineInfo.getVillageId()
-                +"\nsurveyUserId="+ baselineInfo.getSurveyUserId()
-                +"\nsocialCategoryId="+baselineInfo.getSocialCategoryId()
-                +"\nreligionId="+baselineInfo.getReligionId()
-                +"\noccupationId="+baselineInfo.getOccupationId()
-                +"\ncontactNo="+baselineInfo.getContactNo()
-                +"\nfamilyMemberNumber="+baselineInfo.getFamilyMemberNumber()
-                +"\nincome="+baselineInfo.getIncome());
+                Log.d("userBundle:", "stateId=" + baselineInfo.getStateId()
+                        + "\ndistrictId=" + baselineInfo.getDistrictId()
+                        + "\nblockId=" + baselineInfo.getBlockId()
+                        + "\nvillageId=" + baselineInfo.getVillageId()
+                        + "\nsurveyUserId=" + baselineInfo.getSurveyUserId()
+                        + "\nsocialCategoryId=" + baselineInfo.getSocialCategoryId()
+                        + "\nreligionId=" + baselineInfo.getReligionId()
+                        + "\noccupationId=" + baselineInfo.getOccupationId()
+                        + "\ncontactNo=" + baselineInfo.getContactNo()
+                        + "\nfamilyMemberNumber=" + baselineInfo.getFamilyMemberNumber()
+                        + "\nincome=" + baselineInfo.getIncome()
+                        + "\nbaselineid=" + baselineInfo.getBaselineId());
 
                 Toast.makeText(CreateBaselineInformation.this, "Baseline Information is added successfully in Bundle", Toast.LENGTH_LONG).show();
 
-                Intent intent1 = new Intent(CreateBaselineInformation.this,AddMemberInformation.class);
+                Intent intent1 = new Intent(CreateBaselineInformation.this, AddMemberInformation.class);
                 intent1.putExtras(userBundle);
                 startActivity(intent1);
+                /*try {
+                    JSONArray jsonArray = new JSONArray(s);
+                    for (int i = 0; i < jsonArray.length(); i++) {
 
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+                        baselineInfo.setBaselineId(object.getInt("baselineId"));
+
+                        if(baselineInfo.getBaselineId()>0) {
+
+                        baselineInfo.setStateId(object.getInt("stateId"));
+                        baselineInfo.setDistrictId(object.getInt("districtId"));
+                        baselineInfo.setBlockId(object.getInt("blockId"));
+                        baselineInfo.setVillageId(object.getInt("villageId"));
+                        baselineInfo.setReligionId(object.getInt("religionId"));
+                        baselineInfo.setOccupationId(object.getInt("occupationId"));
+                        baselineInfo.setSocialCategoryId(object.getInt("socialCategoryId"));
+                        baselineInfo.setFamilyMemberNumber(object.getInt("noOfFamilyMember"));
+                        baselineInfo.setContactNo(object.getString("contactNo"));
+                        baselineInfo.setIncome(object.getString("income"));
+                        baselineInfo.setSurveyUserId(object.getInt("userId"));
+
+                        Log.d("Baseline Info:", "Baseline=" + dbHandler.getAllBaselineInformation());
+
+                        dbHandler.insertBaselineInformation(baselineInfo);
+
+                        Intent intent1 = new Intent(CreateBaselineInformation.this, AddMemberInformation.class);
+                        intent1.putExtras(userBundle);
+                        startActivity(intent1);
+                        }
+                        else {
+                            Toast.makeText(CreateBaselineInformation.this, "Baseline Information can't be added", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }*/
             }
             progressDialog.dismiss();
         }

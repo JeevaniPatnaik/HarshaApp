@@ -22,7 +22,7 @@
                 <item
                     android:id="@+id/impact_area"
                     android:icon="@drawable/impact_area"
-                    android:title="Impact Area" />
+                    android:title="Impact Data" />
 
                 <item
                     android:id="@+id/uploads"

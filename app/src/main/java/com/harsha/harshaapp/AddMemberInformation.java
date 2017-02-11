@@ -38,10 +38,6 @@ import com.harsha.harshaapp.bean.SocialCategory;
 import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.database.DBHandler;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 /**
@@ -437,9 +433,8 @@ public class AddMemberInformation extends AppCompatActivity
 
                 flag=2;
 
-                Intent intent = new Intent(AddMemberInformation.this,BaselineInformation.class);
-                //intent.putExtra(bundle);
-                startActivity(intent);
+                AddMemberAsyncTask obj1 = new AddMemberAsyncTask(AddMemberInformation.this);
+                obj1.execute();
 
             }
         });
@@ -472,7 +467,32 @@ public class AddMemberInformation extends AppCompatActivity
         }
     }
 
+    public String returnGender(int id){
+        RadioButton radioButton = (RadioButton) findViewById(id);
+        return radioButton.getText().toString();
+    }
+
     public void readData() {
+
+        memberInfo.setMemberName(name.getText().toString());
+        memberInfo.setDob(dob.getText().toString());
+        memberInfo.setGender(returnGender(gender.getCheckedRadioButtonId()));
+        memberInfo.setSocialCategoryId(socialCategoryBean.getSocialCategoryId());
+        memberInfo.setAadhaarCardId(Integer.parseInt(aadhaarCard.getText().toString()));
+        memberInfo.setVoterId(voterId.getText().toString());
+        memberInfo.setPersonalSalary(personalSalary.getText().toString());
+        memberInfo.setOccupationId(occupationBean.getOccupationId());
+        memberInfo.setDisabilityId(disabilitiesBean.getDisabilitiesId());
+        memberInfo.setRelationshipId(relationshipBean.getRelationshipId());
+        memberInfo.setEducationId(educationBean.getEducationId());
+        memberInfo.setEducationStatusId(educationStatusBean.getEducationStatusId());
+        memberInfo.setMaritalStatusId(maritalStatusBean.getMaritalStatusId());
+        memberInfo.setReligionId(religionBean.getReligionId());
+        memberInfo.setSchemeId(schemeBean.getSchemeId());
+
+        Log.d("user=",user + "\nuserId="+user.getUserId()+"\nUsername="+user.getUserName());
+
+        dbHandler.insertMemberInformation(memberInfo);
 
     }
 
@@ -653,16 +673,19 @@ public class AddMemberInformation extends AppCompatActivity
         protected void onPostExecute(String s) {
 
             if(flag==2) {
-                try {
-                    JSONArray jsonArray = new JSONArray(s);
-                    for (int i = 0; i < jsonArray.length(); i++) {
 
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                dbHandler.insertMemberInformation(memberInfo);
+                int memberId = dbHandler.getLastMemberId();
+                baselineInfo.setFamilyHeadId(memberId);
+                dbHandler.insertBaselineInformation(baselineInfo);
+                dbHandler.getAllBaselineInformation();
+                int baselineId = dbHandler.getLastBaselineId();
+                dbHandler.updateMemberUniqueId(memberId,baselineId);
 
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Intent intent = new Intent(AddMemberInformation.this,BaselineInformation.class);
+                //intent.putExtra(bundle);
+                startActivity(intent);
+
             }
             else if (flag==1) {
                 progressDialog.dismiss();

@@ -69,8 +69,8 @@ public class FamilyInformation extends AppCompatActivity
         bundle = receive.getExtras();
         user = dbHandler.getUserDetail();
 
-        occupation.setText(occupationBean.getOccupationName());
-        disabilities.setText(disabilitiesBean.getDisabilitiesName());
+       /* occupation.setText(occupationBean.getOccupationName());
+        disabilities.setText(disabilitiesBean.getDisabilitiesName());*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
