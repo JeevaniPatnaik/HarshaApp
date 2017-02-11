@@ -478,7 +478,7 @@ public class AddMemberInformation extends AppCompatActivity
         memberInfo.setDob(dob.getText().toString());
         memberInfo.setGender(returnGender(gender.getCheckedRadioButtonId()));
         memberInfo.setSocialCategoryId(socialCategoryBean.getSocialCategoryId());
-        memberInfo.setAadhaarCardId(Integer.parseInt(aadhaarCard.getText().toString()));
+        memberInfo.setAadhaarCardId(aadhaarCard.getText().toString());
         memberInfo.setVoterId(voterId.getText().toString());
         memberInfo.setPersonalSalary(personalSalary.getText().toString());
         memberInfo.setOccupationId(occupationBean.getOccupationId());

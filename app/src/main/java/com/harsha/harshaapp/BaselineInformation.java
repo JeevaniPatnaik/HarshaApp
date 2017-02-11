@@ -4,8 +4,11 @@ package com.harsha.harshaapp;
  * Created by Jeevani on 12/4/2016.
  */
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,15 +17,21 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.harsha.harshaapp.bean.BaselineHeadInfo;
+import com.harsha.harshaapp.bean.BaselineInfo;
 import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.database.DBHandler;
+
+import java.util.ArrayList;
 
 public class BaselineInformation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,10 +42,17 @@ public class BaselineInformation extends AppCompatActivity
 
     TextView nav_username,nav_email;
 
+    int flag=0;
+    String result="";
+
     private ListView list;
     private ArrayAdapter arrayAdapter;
     private String[] familyHeadArr = { "Family Head-1", "Family Head-2", "Family Head-3", "Family Head-4", "Family Head-5",
             "Family Head-6", "Family Head-7", "Family Head-8", "Family Head-9", "Family Head-10" };
+
+    ArrayList<String> baselineList = new ArrayList<String>();
+
+    ArrayList<BaselineHeadInfo> baselineHeadInfo = new ArrayList<BaselineHeadInfo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +62,18 @@ public class BaselineInformation extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         list = (ListView) findViewById(R.id.lists);
+
+        flag = 1;
+        DisplayAllBaselineAsyncTask obj1 = new DisplayAllBaselineAsyncTask(BaselineInformation.this);
+        obj1.execute();
+/*
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, familyHeadArr);
         list.setAdapter(arrayAdapter);
+*/
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
+            public void onItemClick(AdapterView<?> parent, View view, final int position,
                                     long id) {
 
                 //String item = ((TextView)view).getText().toString();
@@ -71,7 +93,10 @@ public class BaselineInformation extends AppCompatActivity
                             public void onClick(DialogInterface dialog,int id) {
                                 // if this button is clicked, close
                                 // current activity
+                                BaselineHeadInfo baseHead = baselineHeadInfo.get(position);
                                 Intent intent = new Intent(getApplicationContext(),FamilyInformation.class);
+                                //Bundle bundle = new Bundle();
+                                intent.putExtra("baselineHeadInfoPosition", position);
                                 startActivity(intent);
 
                             }
@@ -112,6 +137,67 @@ public class BaselineInformation extends AppCompatActivity
         nav_username.setText(user.getUserName());
         nav_email = (TextView) headerView.findViewById(R.id.nav_email);
         nav_email.setText(user.getEmail());
+    }
+
+    public void displayList() {
+
+        baselineHeadInfo = dbHandler.getAllBaselineHeadInformation();
+
+        for(int i=0; i<baselineHeadInfo.size(); i++) {
+            String text = baselineHeadInfo.get(i).getBaselineInfo().getVillageId() + "-"
+                    + baselineHeadInfo.get(i).getMemberInfo().getMemberName();
+            baselineList.add(text);
+        }
+
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, baselineList);
+        list.setAdapter(arrayAdapter);
+    }
+
+    public void readData() {
+
+    }
+
+    class DisplayAllBaselineAsyncTask extends AsyncTask<String, String, String> {
+
+        Context mContext;
+        ProgressDialog progressDialog;
+
+        public DisplayAllBaselineAsyncTask(Context mContext) {
+            this.mContext = mContext;
+            progressDialog = new ProgressDialog(mContext);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setTitle(R.string.app_name);
+            progressDialog.setMessage("Loading, Please Wait...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                if (flag==1) {
+                    displayList();
+                }
+                else if (flag==2) {
+                    readData();
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            if(flag==2) {
+
+            }
+            progressDialog.dismiss();
+        }
     }
 
     @Override

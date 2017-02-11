@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.harsha.harshaapp.bean.Asset;
+import com.harsha.harshaapp.bean.BaselineHeadInfo;
 import com.harsha.harshaapp.bean.BaselineInfo;
 import com.harsha.harshaapp.bean.Block;
 import com.harsha.harshaapp.bean.Disabilities;
@@ -695,6 +696,127 @@ public class DBHandler extends SQLiteOpenHelper {
                 ""+CONTACT_NO + "=\"" + baseinfo.getContactNo() +"" + ""+FAMILY_MEMBER_NUMBER + "=\"" + baseinfo.getFamilyMemberNumber()+
                 ""+INCOME + "=\"" + baseinfo.getIncome()+" WHERE "+USER_ID+ "=\"" + baseinfo.getSurveyUserId()+" ;");
         Log.d(TAG, "Row Deleted in TABLE_Baseline");
+
+    }
+
+    public int getRelationShipIdByName(String name) {
+
+        String query = "SELECT * FROM " + RELATIONSHIP + " WHERE " + RELATIONSHIP_NAME + "='" + name +"' LIMIT 1";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id = 0;
+        //Cursor points to the results
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+        while (!c.isAfterLast()) {
+
+            id = c.getInt(c.getColumnIndex(RELATIONSHIP_NAME));
+
+            c.moveToNext();
+
+        }
+
+        Log.d(TAG, "Row Fetched from Member table");
+
+        db.close();
+
+        return id;
+
+    }
+
+    // fetch form basline information table and member information table
+    public ArrayList<BaselineHeadInfo> getAllBaselineHeadInformation() {
+
+        ArrayList<BaselineHeadInfo> baselineHeadInfo = new ArrayList<BaselineHeadInfo>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        //db.beginTransaction();
+        String query = "";
+        String qry = "SELECT * FROM "+TABLE_BASELINE_INFORMATION+ " ORDER BY "+ BASELINE_ID + " ASC" ;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                BaselineHeadInfo baseHead = new BaselineHeadInfo();
+                BaselineInfo baselineInfo = new BaselineInfo();
+                baselineInfo.setBaselineId(cursor.getInt(cursor.getColumnIndex(BASELINE_ID)));
+                baselineInfo.setFamilyHeadId(cursor.getInt(cursor.getColumnIndex(FAMILY_HEAD_ID)));
+                baselineInfo.setStateId(cursor.getInt(cursor.getColumnIndex(STATE_ID)));
+                baselineInfo.setDistrictId(cursor.getInt(cursor.getColumnIndex(DISTRICT_ID)));
+                baselineInfo.setBlockId(cursor.getInt(cursor.getColumnIndex(BLOCK_ID)));
+                baselineInfo.setVillageId(cursor.getInt(cursor.getColumnIndex(VILLAGE_ID)));
+                baselineInfo.setSurveyUserId(cursor.getInt(cursor.getColumnIndex(USER_ID)));
+                baselineInfo.setSocialCategoryId(cursor.getInt(cursor.getColumnIndex(SOCIAL_CATEGORY_ID)));
+                baselineInfo.setReligionId(cursor.getInt(cursor.getColumnIndex(RELIGION_ID)));
+                baselineInfo.setOccupationId(cursor.getInt(cursor.getColumnIndex(OCCUPATION_ID)));
+                baselineInfo.setContactNo(cursor.getString(cursor.getColumnIndex(CONTACT_NO)));
+                baselineInfo.setFamilyMemberNumber(cursor.getInt(cursor.getColumnIndex(FAMILY_MEMBER_NUMBER)));
+                baselineInfo.setIncome(cursor.getString(cursor.getColumnIndex(INCOME)));
+
+                baseHead.setBaselineInfo(baselineInfo);
+
+                query = "SELECT * FROM " + TABLE_MEMBER + " WHERE "
+                        + RELATIONSHIP_ID + "=" + getRelationShipIdByName("Self") + " AND "
+                        + MEMBER_ID + "=" + baselineInfo.getFamilyHeadId() + " LIMIT 1";
+
+                //Cursor points to the results
+                Cursor c = db.rawQuery(query, null);
+
+                c.moveToFirst();
+
+                MemberInfo memberInfo = new MemberInfo();
+
+                while (!c.isAfterLast()) {
+
+                    memberInfo.setMemberId(c.getInt(c.getColumnIndex(MEMBER_ID)));
+                    memberInfo.setUniqueId(c.getInt(c.getColumnIndex(UNIQUE_ID)));
+                    memberInfo.setMemberName(c.getString(c.getColumnIndex(MEMBER_NAME)));
+                    memberInfo.setDob(c.getString(c.getColumnIndex(DOB)));
+                    memberInfo.setGender(c.getString(c.getColumnIndex(GENDER)));
+                    memberInfo.setSocialCategoryId(c.getInt(c.getColumnIndex(SOCIAL_CATEGORY_ID)));
+                    memberInfo.setAadhaarCardId(c.getString(c.getColumnIndex(AADHAAR_CARD_ID)));
+                    memberInfo.setVoterId(c.getString(c.getColumnIndex(VOTER_ID)));
+                    memberInfo.setFamilyHead(c.getString(c.getColumnIndex(FAMILY_HEAD)));
+                    memberInfo.setPersonalSalary(c.getString(c.getColumnIndex(PERSONAL_SALARY)));
+                    memberInfo.setOccupationId(c.getInt(c.getColumnIndex(OCCUPATION_ID)));
+                    memberInfo.setDisabilityId(c.getInt(c.getColumnIndex(DISABILTIES_ID)));
+                    memberInfo.setRelationshipId(c.getInt(c.getColumnIndex(RELATIONSHIP_ID)));
+                    memberInfo.setEducationId(c.getInt(c.getColumnIndex(EDUCATION_ID)));
+                    memberInfo.setEducationStatusId(c.getInt(c.getColumnIndex(EDUCATION_STATUS_ID)));
+                    memberInfo.setMaritalStatusId(c.getInt(c.getColumnIndex(MARITAL_STATUS_ID)));
+                    memberInfo.setRelationshipId(c.getInt(c.getColumnIndex(RELIGION_ID)));
+                    memberInfo.setSchemeId(c.getInt(c.getColumnIndex(SCHEME_ID)));
+
+                    c.moveToNext();
+
+                }
+
+                Log.d(TAG, "Row Fetched from Member table");
+
+                baseHead.setMemberInfo(memberInfo);
+                Log.d("Fetch Data:", "stateId=" + baselineInfo.getStateId()
+                        + "\ndistrictId=" + baselineInfo.getDistrictId()
+                        + "\nblockId=" + baselineInfo.getBlockId()
+                        + "\nvillageId=" + baselineInfo.getVillageId()
+                        + "\nbaselineId=" +  baselineInfo.getBaselineId()
+                        + "\nmemberId=" + baselineInfo.getFamilyHeadId()
+                        + "\nsurveyUserId=" + baselineInfo.getSurveyUserId()
+                        + "\nsocialCategoryId=" + baselineInfo.getSocialCategoryId()
+                        + "\nreligionId=" + baselineInfo.getReligionId()
+                        + "\noccupationId=" + baselineInfo.getOccupationId()
+                        + "\ncontactNo=" + baselineInfo.getContactNo()
+                        + "\nfamilyMemberNumber=" + baselineInfo.getFamilyMemberNumber()
+                        + "\nincome=" + baselineInfo.getIncome());
+
+                baselineHeadInfo.add(baseHead);
+            }
+        }
+
+        db.close();
+
+        return baselineHeadInfo;
 
     }
 

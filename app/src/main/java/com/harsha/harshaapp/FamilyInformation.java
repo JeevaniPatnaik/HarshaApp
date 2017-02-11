@@ -1,6 +1,9 @@
 package com.harsha.harshaapp;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,13 +14,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.harsha.harshaapp.bean.BaselineHeadInfo;
+import com.harsha.harshaapp.bean.BaselineInfo;
 import com.harsha.harshaapp.bean.Disabilities;
+import com.harsha.harshaapp.bean.MemberInfo;
 import com.harsha.harshaapp.bean.Occupation;
 import com.harsha.harshaapp.bean.Relationship;
 import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.database.DBHandler;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jeevani on 1/6/2017.
@@ -33,8 +42,15 @@ public class FamilyInformation extends AppCompatActivity
     Disabilities disabilitiesBean = new Disabilities();
     Relationship relationshipBean = new Relationship();
 
+    ArrayList<BaselineHeadInfo> baselineHeadInfo = new ArrayList<BaselineHeadInfo>();
+
+    BaselineHeadInfo baseHead;
 
     TextView nav_username,nav_email;
+
+    int flag=1;
+    int position = 0;
+    String result = "";
 
     TextView familyInformation, personalInformation,name,dob,aadhaarCard,voterId,familyHeadName,personalSalary, gender, quota, occupation, disabilities, relationship, education, educationStatus, migrationReason, maritalStatus, religion, centralScheme;
 
@@ -60,14 +76,19 @@ public class FamilyInformation extends AppCompatActivity
         relationship = (TextView) findViewById(R.id.relationship);
         education = (TextView) findViewById(R.id.education);
         educationStatus = (TextView) findViewById(R.id.educationStatus);
-        migrationReason = (TextView) findViewById(R.id.migrationReason);
+        //migrationReason = (TextView) findViewById(R.id.migrationReason);
         maritalStatus = (TextView) findViewById(R.id.maritalStatus);
         religion = (TextView) findViewById(R.id.religion);
         centralScheme = (TextView) findViewById(R.id.centralScheme);
 
         Intent receive = getIntent();
         bundle = receive.getExtras();
+        position = receive.getIntExtra("baselineHeadInfoPosition", 0);
         user = dbHandler.getUserDetail();
+
+        flag = 1;
+        DisplayBaselineAsyncTask obj1 = new DisplayBaselineAsyncTask(FamilyInformation.this);
+        obj1.execute();
 
        /* occupation.setText(occupationBean.getOccupationName());
         disabilities.setText(disabilitiesBean.getDisabilitiesName());*/
@@ -87,6 +108,66 @@ public class FamilyInformation extends AppCompatActivity
         nav_username.setText(user.getUserName());
         nav_email = (TextView) headerView.findViewById(R.id.nav_email);
         nav_email.setText(user.getEmail());
+    }
+
+    public void displayList() {
+
+        baselineHeadInfo = dbHandler.getAllBaselineHeadInformation();
+        baseHead = baselineHeadInfo.get(position);
+
+        BaselineInfo baselineInfo = baseHead.getBaselineInfo();
+        MemberInfo memberInfo = baseHead.getMemberInfo();
+
+        name.setText(name.getText().toString() + ": " + memberInfo.getMemberName());
+        dob.setText(dob.getText().toString() + ": " + memberInfo.getDob());
+
+    }
+
+    public void readData() {
+
+    }
+
+    class DisplayBaselineAsyncTask extends AsyncTask<String, String, String> {
+
+        Context mContext;
+        ProgressDialog progressDialog;
+
+        public DisplayBaselineAsyncTask(Context mContext) {
+            this.mContext = mContext;
+            progressDialog = new ProgressDialog(mContext);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setTitle(R.string.app_name);
+            progressDialog.setMessage("Loading, Please Wait...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                if (flag==1) {
+                    displayList();
+                }
+                else if (flag==2) {
+                    readData();
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            if(flag==2) {
+
+            }
+            progressDialog.dismiss();
+        }
     }
 
     @Override

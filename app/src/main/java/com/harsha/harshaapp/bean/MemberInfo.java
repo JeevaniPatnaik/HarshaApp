@@ -10,7 +10,7 @@ public class MemberInfo {
     private String dob;
     private String gender;
     private int socialCategoryId;
-    private int aadhaarCardId;
+    private String aadhaarCardId;
     private String voterId;
     private String familyHead;
     private String personalSalary;
@@ -135,11 +135,11 @@ public class MemberInfo {
         this.socialCategoryId = socialCategoryId;
     }
 
-    public int getAadhaarCardId() {
+    public String getAadhaarCardId() {
         return aadhaarCardId;
     }
 
-    public void setAadhaarCardId(int aadhaarCardId) {
+    public void setAadhaarCardId(String aadhaarCardId) {
         this.aadhaarCardId = aadhaarCardId;
     }
 
