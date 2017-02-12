@@ -720,8 +720,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Log.d(TAG, "Row Fetched from Member table");
 
-        db.close();
-
         return id;
 
     }
@@ -813,8 +811,6 @@ public class DBHandler extends SQLiteOpenHelper {
                 baselineHeadInfo.add(baseHead);
             }
         }
-
-        db.close();
 
         return baselineHeadInfo;
 

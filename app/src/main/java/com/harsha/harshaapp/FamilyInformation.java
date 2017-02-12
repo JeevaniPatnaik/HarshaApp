@@ -120,6 +120,20 @@ public class FamilyInformation extends AppCompatActivity
 
         name.setText(name.getText().toString() + ": " + memberInfo.getMemberName());
         dob.setText(dob.getText().toString() + ": " + memberInfo.getDob());
+        aadhaarCard.setText(aadhaarCard.getText().toString() + ": " + memberInfo.getAadhaarCardId());
+        voterId.setText(voterId.getText().toString() + ": " + memberInfo.getVoterId());
+        familyHeadName.setText(familyHeadName.getText().toString() + ": " + memberInfo.getFamilyHead());
+        personalSalary.setText(personalSalary.getText().toString() + ": " + memberInfo.getPersonalSalary());
+        gender.setText(gender.getText().toString() + ": " + memberInfo.getGender());
+        quota.setText(quota.getText().toString() + ": " + memberInfo.getSocialCategoryId());
+        occupation.setText(occupation.getText().toString() + ": " + memberInfo.getOccupationId());
+        disabilities.setText(disabilities.getText().toString()+ ": " + memberInfo.getDisabilityId());
+        relationship.setText(relationship.getText().toString() + ": " + memberInfo.getRelationshipId());
+        education.setText(education.getText().toString() + ": " + memberInfo.getEducationId());
+        educationStatus.setText(educationStatus.getText().toString() + ": " + memberInfo.getEducationStatusId());
+        maritalStatus.setText(maritalStatus.getText().toString() + ": " + memberInfo.getEducationStatusId());
+        religion.setText(religion.getText().toString() + ": " + memberInfo.getReligionId());
+        centralScheme.setText(centralScheme.getText().toString() + ": " + memberInfo.getSchemeId());
 
     }
 
