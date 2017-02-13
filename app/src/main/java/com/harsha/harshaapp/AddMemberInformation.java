@@ -138,7 +138,7 @@ public class AddMemberInformation extends AppCompatActivity
         Log.d("userBundle:","stateId="+userBundle.getInt("stateId"));
 
         baselineInfo.setDistrictId(userBundle.getInt("districtId"));
-        baselineInfo.setBaselineId(userBundle.getInt("blockId"));
+        baselineInfo.setBlockId(userBundle.getInt("blockId"));
         baselineInfo.setVillageId(userBundle.getInt("villageId"));
         baselineInfo.setSurveyUserId(userBundle.getInt("surveyUserId"));
         baselineInfo.setSocialCategoryId(userBundle.getInt("socialCategoryId"));

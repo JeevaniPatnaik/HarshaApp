@@ -145,7 +145,8 @@ public class BaselineInformation extends AppCompatActivity
 
         for(int i=0; i<baselineHeadInfo.size(); i++) {
             String text = baselineHeadInfo.get(i).getBaselineInfo().getVillageId() + "-"
-                    + baselineHeadInfo.get(i).getMemberInfo().getMemberName();
+                    + baselineHeadInfo.get(i).getMemberInfo().getMemberName() + "-"
+                    + baselineHeadInfo.get(i).getMemberInfo().getFamilyHead();
             baselineList.add(text);
         }
 
