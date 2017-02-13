@@ -662,7 +662,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put(BASELINE_ID, baseInfo.getBaselineId());
+        //values.put(BASELINE_ID, baseInfo.getBaselineId());
         values.put(FAMILY_HEAD_ID, baseInfo.getFamilyHeadId());
         values.put(STATE_ID, baseInfo.getStateId());
         values.put(DISTRICT_ID, baseInfo.getDistrictId());
@@ -1098,7 +1098,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
-
+//Update
     //INSERT ROW INTO TABLE_MEMBER
     public void insertMemberInformation(MemberInfo memberInfo){
 
