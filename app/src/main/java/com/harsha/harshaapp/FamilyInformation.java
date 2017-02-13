@@ -53,7 +53,7 @@ public class FamilyInformation extends AppCompatActivity
     int position = 0;
     String result = "";
 
-    TextView familyInformation, personalInformation,name,dob,aadhaarCard,voterId,familyHeadName,personalSalary, gender, quota, occupation, disabilities, relationship, education, educationStatus, migrationReason, maritalStatus, religion, centralScheme;
+    TextView familyInformation, personalInformation,name,dob1,aadhaarCard,voterId,familyHeadName,personalSalary, gender, quota, occupation, disabilities, relationship, education, educationStatus, migrationReason, maritalStatus, religion, centralScheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class FamilyInformation extends AppCompatActivity
         familyInformation = (TextView) findViewById(R.id.familyInformation);
         personalInformation = (TextView) findViewById(R.id.personalInformation);
         name = (TextView) findViewById(R.id.name);
-        dob = (TextView) findViewById(R.id.date);
+        dob1 = (TextView) findViewById(R.id.dob);
         aadhaarCard = (TextView) findViewById(R.id.aadhaarCard);
         voterId = (TextView) findViewById(R.id.voterId);
         familyHeadName = (TextView) findViewById(R.id.familyHeadName);
@@ -117,7 +117,7 @@ public class FamilyInformation extends AppCompatActivity
         baseHead = baselineHeadInfo.get(position);
 
         name.setText(name.getText().toString() + ": " + baseHead.memberName);
-        dob.setText(dob.getText().toString() + ": " + baseHead.dob);
+        dob1.setText(dob1.getText().toString() + ": " + baseHead.dob);
         aadhaarCard.setText(aadhaarCard.getText().toString() + ": " + baseHead.aadhaarCardId);
         voterId.setText(voterId.getText().toString() + ": " + baseHead.voterId);
         familyHeadName.setText(familyHeadName.getText().toString() + ": " + baseHead.familyHead);
