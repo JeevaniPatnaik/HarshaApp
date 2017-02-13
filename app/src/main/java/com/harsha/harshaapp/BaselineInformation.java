@@ -143,7 +143,7 @@ public class BaselineInformation extends AppCompatActivity
 
         for(int i=0; i<baselineHeadInfo.size(); i++) {
             BaselineHeadInfo2 baseHead = baselineHeadInfo.get(i);
-            String text = baseHead.voterId + "-" + baseHead.memberName + "-" + baseHead.familyHead;
+            String text = "-0"+ "-" + i + "-" + baseHead.voterId + "-" + baseHead.memberName + "-" + baseHead.familyHead;
             baselineList.add(text);
         }
 
