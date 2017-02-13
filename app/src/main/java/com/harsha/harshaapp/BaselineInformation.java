@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.harsha.harshaapp.bean.BaselineHeadInfo;
+import com.harsha.harshaapp.bean.BaselineHeadInfo2;
 import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.database.DBHandler;
 
@@ -49,7 +50,7 @@ public class BaselineInformation extends AppCompatActivity
 
     ArrayList<String> baselineList = new ArrayList<String>();
 
-    ArrayList<BaselineHeadInfo> baselineHeadInfo = new ArrayList<BaselineHeadInfo>();
+    ArrayList<BaselineHeadInfo2> baselineHeadInfo = new ArrayList<BaselineHeadInfo2>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +91,7 @@ public class BaselineInformation extends AppCompatActivity
                             public void onClick(DialogInterface dialog,int id) {
                                 // if this button is clicked, close
                                 // current activity
-                                BaselineHeadInfo baseHead = baselineHeadInfo.get(position);
+                                BaselineHeadInfo2 baseHead = baselineHeadInfo.get(position);
                                 Intent intent = new Intent(getApplicationContext(),FamilyInformation.class);
                                 //Bundle bundle = new Bundle();
                                 intent.putExtra("baselineHeadInfoPosition", position);
@@ -138,12 +139,11 @@ public class BaselineInformation extends AppCompatActivity
 
     public void displayList() {
 
-        baselineHeadInfo = dbHandler.getAllBaselineHeadInformation();
+        baselineHeadInfo = dbHandler.getAllBaselineHeadInformation2();
 
         for(int i=0; i<baselineHeadInfo.size(); i++) {
-            String text = baselineHeadInfo.get(i).getBaselineInfo().getVillageId() + "-"
-                    + baselineHeadInfo.get(i).getMemberInfo().getMemberName() + "-"
-                    + baselineHeadInfo.get(i).getMemberInfo().getFamilyHead();
+            BaselineHeadInfo2 baseHead = baselineHeadInfo.get(i);
+            String text = baseHead.voterId + "-" + baseHead.memberName + "-" + baseHead.familyHead;
             baselineList.add(text);
         }
 

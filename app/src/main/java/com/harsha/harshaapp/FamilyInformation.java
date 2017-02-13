@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.harsha.harshaapp.bean.BaselineHeadInfo;
+import com.harsha.harshaapp.bean.BaselineHeadInfo2;
 import com.harsha.harshaapp.bean.BaselineInfo;
 import com.harsha.harshaapp.bean.Disabilities;
 import com.harsha.harshaapp.bean.MemberInfo;
@@ -42,9 +43,9 @@ public class FamilyInformation extends AppCompatActivity
     Disabilities disabilitiesBean = new Disabilities();
     Relationship relationshipBean = new Relationship();
 
-    ArrayList<BaselineHeadInfo> baselineHeadInfo = new ArrayList<BaselineHeadInfo>();
+    ArrayList<BaselineHeadInfo2> baselineHeadInfo = new ArrayList<BaselineHeadInfo2>();
 
-    BaselineHeadInfo baseHead;
+    BaselineHeadInfo2 baseHead;
 
     TextView nav_username,nav_email;
 
@@ -112,28 +113,25 @@ public class FamilyInformation extends AppCompatActivity
 
     public void displayList() {
 
-        baselineHeadInfo = dbHandler.getAllBaselineHeadInformation();
+        baselineHeadInfo = dbHandler.getAllBaselineHeadInformation2();
         baseHead = baselineHeadInfo.get(position);
 
-        BaselineInfo baselineInfo = baseHead.getBaselineInfo();
-        MemberInfo memberInfo = baseHead.getMemberInfo();
-
-        name.setText(name.getText().toString() + ": " + memberInfo.getMemberName());
-        dob.setText(dob.getText().toString() + ": " + memberInfo.getDob());
-        aadhaarCard.setText(aadhaarCard.getText().toString() + ": " + memberInfo.getAadhaarCardId());
-        voterId.setText(voterId.getText().toString() + ": " + memberInfo.getVoterId());
-        familyHeadName.setText(familyHeadName.getText().toString() + ": " + memberInfo.getFamilyHead());
-        personalSalary.setText(personalSalary.getText().toString() + ": " + memberInfo.getPersonalSalary());
-        gender.setText(gender.getText().toString() + ": " + memberInfo.getGender());
-        quota.setText(quota.getText().toString() + ": " + memberInfo.getSocialCategoryId());
-        occupation.setText(occupation.getText().toString() + ": " + memberInfo.getOccupationId());
-        disabilities.setText(disabilities.getText().toString()+ ": " + memberInfo.getDisabilityId());
-        relationship.setText(relationship.getText().toString() + ": " + memberInfo.getRelationshipId());
-        education.setText(education.getText().toString() + ": " + memberInfo.getEducationId());
-        educationStatus.setText(educationStatus.getText().toString() + ": " + memberInfo.getEducationStatusId());
-        maritalStatus.setText(maritalStatus.getText().toString() + ": " + memberInfo.getEducationStatusId());
-        religion.setText(religion.getText().toString() + ": " + memberInfo.getReligionId());
-        centralScheme.setText(centralScheme.getText().toString() + ": " + memberInfo.getSchemeId());
+        name.setText(name.getText().toString() + ": " + baseHead.memberName);
+        dob.setText(dob.getText().toString() + ": " + baseHead.dob);
+        aadhaarCard.setText(aadhaarCard.getText().toString() + ": " + baseHead.aadhaarCardId);
+        voterId.setText(voterId.getText().toString() + ": " + baseHead.voterId);
+        familyHeadName.setText(familyHeadName.getText().toString() + ": " + baseHead.familyHead);
+        personalSalary.setText(personalSalary.getText().toString() + ": " + baseHead.personalSalary);
+        gender.setText(gender.getText().toString() + ": " + baseHead.gender);
+        quota.setText(quota.getText().toString() + ": " + baseHead.socialCategoryName);
+        occupation.setText(occupation.getText().toString() + ": " + baseHead.occupationName);
+        disabilities.setText(disabilities.getText().toString()+ ": " + baseHead.disabilitiesName);
+        relationship.setText(relationship.getText().toString() + ": " + baseHead.relationshipName);
+        education.setText(education.getText().toString() + ": " + baseHead.educationName);
+        educationStatus.setText(educationStatus.getText().toString() + ": " + baseHead.educationStatusName);
+        maritalStatus.setText(maritalStatus.getText().toString() + ": " + baseHead.maritalStatusName);
+        religion.setText(religion.getText().toString() + ": " + baseHead.religionName);
+        centralScheme.setText(centralScheme.getText().toString() + ": " + baseHead.schemeName);
 
     }
 
