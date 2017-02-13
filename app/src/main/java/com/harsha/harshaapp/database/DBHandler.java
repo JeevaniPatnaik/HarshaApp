@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.harsha.harshaapp.bean.Asset;
+import com.harsha.harshaapp.bean.BaselineHeadInfo;
+import com.harsha.harshaapp.bean.BaselineHeadInfo2;
 import com.harsha.harshaapp.bean.BaselineInfo;
 import com.harsha.harshaapp.bean.Block;
 import com.harsha.harshaapp.bean.Disabilities;
@@ -695,6 +697,276 @@ public class DBHandler extends SQLiteOpenHelper {
                 ""+CONTACT_NO + "=\"" + baseinfo.getContactNo() +"" + ""+FAMILY_MEMBER_NUMBER + "=\"" + baseinfo.getFamilyMemberNumber()+
                 ""+INCOME + "=\"" + baseinfo.getIncome()+" WHERE "+USER_ID+ "=\"" + baseinfo.getSurveyUserId()+" ;");
         Log.d(TAG, "Row Deleted in TABLE_Baseline");
+
+    }
+
+    public int getRelationShipIdByName(String name) {
+
+        String query = "SELECT * FROM " + RELATIONSHIP + " WHERE " + RELATIONSHIP_NAME + "='" + name +"' LIMIT 1";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id = 0;
+        //Cursor points to the results
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+        while (!c.isAfterLast()) {
+
+            id = c.getInt(c.getColumnIndex(RELATIONSHIP_NAME));
+
+            c.moveToNext();
+
+        }
+
+        Log.d(TAG, "Row Fetched from Member table");
+
+        return id;
+
+    }
+
+    public ArrayList<BaselineHeadInfo2> getAllBaselineHeadInformation2() {
+
+        String query = "SELECT " +
+                TABLE_BASELINE_INFORMATION + "." + BASELINE_ID +
+                TABLE_BASELINE_INFORMATION + "." + FAMILY_HEAD_ID +
+                TABLE_BASELINE_INFORMATION + "." + STATE_ID +
+                TABLE_BASELINE_INFORMATION + "." + DISTRICT_ID +
+                TABLE_BASELINE_INFORMATION + "." + BLOCK_ID +
+                TABLE_BASELINE_INFORMATION + "." + VILLAGE_ID +
+                TABLE_BASELINE_INFORMATION + "." + USER_ID +
+                TABLE_BASELINE_INFORMATION + "." + CONTACT_NO +
+                TABLE_BASELINE_INFORMATION + "." + FAMILY_MEMBER_NUMBER +
+                TABLE_BASELINE_INFORMATION + "." + INCOME +
+                TABLE_MEMBER + "." + MEMBER_ID +
+                TABLE_MEMBER + "." + UNIQUE_ID +
+                TABLE_MEMBER + "." + MEMBER_NAME +
+                TABLE_MEMBER + "." + DOB +
+                TABLE_MEMBER + "." + GENDER +
+                TABLE_MEMBER + "." + QUOTA +
+                TABLE_MEMBER + "." + AADHAAR_CARD_ID +
+                TABLE_MEMBER + "." + VOTER_ID +
+                TABLE_MEMBER + "." + FAMILY_HEAD +
+                TABLE_MEMBER + "." + PERSONAL_SALARY +
+                TABLE_MEMBER + "." + OCCUPATION_ID +
+                TABLE_MEMBER + "." + DISABILTIES_ID +
+                TABLE_MEMBER + "." + RELATIONSHIP_ID +
+                TABLE_MEMBER + "." + EDUCATION_ID +
+                TABLE_MEMBER + "." + EDUCATION_STATUS_ID +
+                TABLE_MEMBER + "." + MARITAL_STATUS_ID +
+                TABLE_MEMBER + "." + RELIGION_ID +
+                TABLE_MEMBER + "." + SCHEME_ID +
+                TABLE_STATE + "." + STATE_NAME +
+                TABLE_STATE + "." + STATE_CODE +
+                TABLE_DISTRICT + "." + DISTRICT_CODE +
+                TABLE_DISTRICT + "." + DISTRICT_NAME +
+                TABLE_BLOCK + "." + BLOCK_CODE +
+                TABLE_BLOCK + "." + BLOCK_NAME +
+                TABLE_VILLAGE + "." + VILLAGE_CODE +
+                TABLE_VILLAGE + "." + VILLAGE_NAME +
+                TABLE_USER + "." + USER_NAME +
+                SOCIAL_CATEGORY + "." + SOCIAL_CATEGORY_NAME +
+                OCCUPATION + "." + OCCUPATION_NAME +
+                DISABILITIES + "." + DISABILTIES_NAME +
+                RELATIONSHIP + "." + RELATIONSHIP_NAME +
+                EDUCATION + "." + EDUCATION_NAME +
+                EDUCATION_STATUS + "." + EDUCATION_STATUS_NAME +
+                MARITAL_STATUS + "." + MARTIAL_STATUS_NAME +
+                RELIGION + "." + RELIGION_NAME +
+                SCHEME + "." + SCHEME_NAME +
+                " FROM " +
+                TABLE_BASELINE_INFORMATION +
+                " LEFT JOIN " + TABLE_MEMBER + " ON " + TABLE_BASELINE_INFORMATION + "." + FAMILY_HEAD_ID + "=" + TABLE_MEMBER + "." + MEMBER_ID +
+                " LEFT JOIN " + TABLE_STATE + " ON " + TABLE_BASELINE_INFORMATION + "." + STATE_ID + "=" + TABLE_STATE + "." + STATE_ID +
+                " LEFT JOIN " + TABLE_DISTRICT + " ON " + TABLE_BASELINE_INFORMATION + "." + DISTRICT_ID + "=" + TABLE_DISTRICT + "." + DISTRICT_ID +
+                " LEFT JOIN " + TABLE_BLOCK + " ON " + TABLE_BASELINE_INFORMATION + "." + BLOCK_ID + "=" + TABLE_BLOCK + "." + BLOCK_ID +
+                " LEFT JOIN " + TABLE_VILLAGE + " ON " + TABLE_BASELINE_INFORMATION + "." + VILLAGE_ID + "=" + TABLE_VILLAGE + "." + VILLAGE_ID +
+                " LEFT JOIN " + TABLE_USER + " ON " + TABLE_BASELINE_INFORMATION + "." + USER_ID + "=" + TABLE_USER + "." + USER_ID +
+                " LEFT JOIN " + SOCIAL_CATEGORY + " ON " + TABLE_MEMBER + "." + QUOTA + "=" + SOCIAL_CATEGORY + "." + SOCIAL_CATEGORY_ID +
+                " LEFT JOIN " + OCCUPATION + " ON " + TABLE_MEMBER + "." + OCCUPATION_ID + "=" + OCCUPATION + "." + OCCUPATION_ID +
+                " LEFT JOIN " + DISABILITIES + " ON " + TABLE_MEMBER + "." + DISABILTIES_ID + "=" + DISABILITIES + "." + DISABILTIES_ID +
+                " LEFT JOIN " + RELATIONSHIP + " ON " + TABLE_MEMBER + "." + RELATIONSHIP_ID + "=" + RELATIONSHIP + "." + RELATIONSHIP_ID +
+                " LEFT JOIN " + EDUCATION + " ON " + TABLE_MEMBER + "." + EDUCATION_ID + "=" + EDUCATION + "." + EDUCATION_ID +
+                " LEFT JOIN " + EDUCATION_STATUS + " ON " + TABLE_MEMBER + "." + EDUCATION_STATUS_ID + "=" + EDUCATION_STATUS + "." + EDUCATION_STATUS_ID +
+                " LEFT JOIN " + MARITAL_STATUS + " ON " + TABLE_MEMBER + "." + MARITAL_STATUS_ID + "=" + MARITAL_STATUS + "." + MARITAL_STATUS_ID +
+                " LEFT JOIN " + RELIGION + " ON " + TABLE_MEMBER + "." + RELIGION_ID + "=" + RELIGION + "." + RELIGION_ID +
+                " LEFT JOIN " + SCHEME + " ON " + TABLE_MEMBER + "." + SCHEME_ID + "=" + SCHEME + "." + SCHEME_ID +
+                "";
+
+        ArrayList<BaselineHeadInfo2> baselineHeadInfo2 = new ArrayList<BaselineHeadInfo2>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        //db.beginTransaction();
+        /*
+        String query = "";
+        String qry = "SELECT * FROM "+TABLE_BASELINE_INFORMATION+ " ORDER BY "+ BASELINE_ID + " ASC" ;*/
+        Cursor cursor = db.rawQuery(query,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                BaselineHeadInfo2 baseHead = new BaselineHeadInfo2();
+
+                baseHead.baselineId = cursor.getInt(cursor.getColumnIndex(BASELINE_ID));
+                baseHead.familyHeadId = cursor.getInt(cursor.getColumnIndex(FAMILY_HEAD_ID));
+                baseHead.stateId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.districtId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.blockId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.villageId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.surveyUserId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.contactNo = cursor.getString(cursor.getColumnIndex());
+                baseHead.familyMemberNumber = cursor.getInt(cursor.getColumnIndex());
+                baseHead.income = cursor.getString(cursor.getColumnIndex());
+
+                baseHead.memberId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.uniqueId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.memberName = cursor.getString(cursor.getColumnIndex());
+                baseHead.dob = cursor.getString(cursor.getColumnIndex());
+                baseHead.gender = cursor.getString(cursor.getColumnIndex());
+                baseHead.socialCategoryId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.aadhaarCardId = cursor.getString(cursor.getColumnIndex());
+                baseHead.voterId = cursor.getString(cursor.getColumnIndex());
+                baseHead.familyHead = cursor.getString(cursor.getColumnIndex());
+                baseHead.personalSalary = cursor.getString(cursor.getColumnIndex());
+                baseHead.occupationId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.disabilitiesId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.relationshipId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.educationId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.educationStatusId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.maritalStatusId =  cursor.getInt(cursor.getColumnIndex());
+                baseHead.religionId = cursor.getInt(cursor.getColumnIndex());
+                baseHead.schemeId = cursor.getInt(cursor.getColumnIndex());
+
+                baseHead.stateCode = cursor.getString(cursor.getColumnIndex());
+                baseHead.stateName = cursor.getString(cursor.getColumnIndex());
+                baseHead.districtCode = cursor.getString(cursor.getColumnIndex());
+                baseHead.districtName = cursor.getString(cursor.getColumnIndex());
+                baseHead.blockCode = cursor.getString(cursor.getColumnIndex());
+                baseHead.blockName = cursor.getString(cursor.getColumnIndex());
+                baseHead.villageCode = cursor.getString(cursor.getColumnIndex());
+                baseHead.villageName = cursor.getString(cursor.getColumnIndex());
+
+                baseHead.userName = cursor.getString(cursor.getColumnIndex());
+
+                baseHead.socialCategoryName = cursor.getString(cursor.getColumnIndex());
+                baseHead.occupationName = cursor.getString(cursor.getColumnIndex());
+                baseHead.disabilitiesName = cursor.getString(cursor.getColumnIndex());
+                baseHead.relationshipName = cursor.getString(cursor.getColumnIndex());
+                baseHead.educationName = cursor.getString(cursor.getColumnIndex());
+                baseHead.educationStatusName = cursor.getString(cursor.getColumnIndex());
+                baseHead.maritalStatusName = cursor.getString(cursor.getColumnIndex());
+                baseHead.religionName = cursor.getString(cursor.getColumnIndex());
+                baseHead.schemeName = cursor.getString(cursor.getColumnIndex());
+
+                Log.d("Fetch Member Data:","\n" +
+                        "\n" +
+                        "\n" +
+                        "\n" +
+                        "\nDONE\n" +
+                        "\n" +
+                        "\n" +
+                        "\n" +
+                        "\n");
+
+                baselineHeadInfo2.add(baseHead);
+
+            }
+        }
+
+        return baselineHeadInfo2;
+
+    }
+
+    // fetch form basline information table and member information table
+    public ArrayList<BaselineHeadInfo> getAllBaselineHeadInformation() {
+
+        ArrayList<BaselineHeadInfo> baselineHeadInfo = new ArrayList<BaselineHeadInfo>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        //db.beginTransaction();
+        String query = "";
+        String qry = "SELECT * FROM "+TABLE_BASELINE_INFORMATION+ " ORDER BY "+ BASELINE_ID + " ASC" ;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                BaselineHeadInfo baseHead = new BaselineHeadInfo();
+                BaselineInfo baselineInfo = new BaselineInfo();
+                baselineInfo.setBaselineId(cursor.getInt(cursor.getColumnIndex(BASELINE_ID)));
+                baselineInfo.setFamilyHeadId(cursor.getInt(cursor.getColumnIndex(FAMILY_HEAD_ID)));
+                baselineInfo.setStateId(cursor.getInt(cursor.getColumnIndex(STATE_ID)));
+                baselineInfo.setDistrictId(cursor.getInt(cursor.getColumnIndex(DISTRICT_ID)));
+                baselineInfo.setBlockId(cursor.getInt(cursor.getColumnIndex(BLOCK_ID)));
+                baselineInfo.setVillageId(cursor.getInt(cursor.getColumnIndex(VILLAGE_ID)));
+                baselineInfo.setSurveyUserId(cursor.getInt(cursor.getColumnIndex(USER_ID)));
+                baselineInfo.setSocialCategoryId(cursor.getInt(cursor.getColumnIndex(SOCIAL_CATEGORY_ID)));
+                baselineInfo.setReligionId(cursor.getInt(cursor.getColumnIndex(RELIGION_ID)));
+                baselineInfo.setOccupationId(cursor.getInt(cursor.getColumnIndex(OCCUPATION_ID)));
+                baselineInfo.setContactNo(cursor.getString(cursor.getColumnIndex(CONTACT_NO)));
+                baselineInfo.setFamilyMemberNumber(cursor.getInt(cursor.getColumnIndex(FAMILY_MEMBER_NUMBER)));
+                baselineInfo.setIncome(cursor.getString(cursor.getColumnIndex(INCOME)));
+
+                baseHead.setBaselineInfo(baselineInfo);
+
+                query = "SELECT * FROM " + TABLE_MEMBER + " WHERE "
+                        + RELATIONSHIP_ID + "=" + getRelationShipIdByName("Self") + " AND "
+                        + MEMBER_ID + "=" + baselineInfo.getFamilyHeadId() + " LIMIT 1";
+                //SQLiteDatabase db1 = this.getReadableDatabase();
+                //Cursor points to the results
+                Log.d("Query:","\n\nQRY="+qry+"\n\nQUERY="+query);
+                Cursor c = db.rawQuery(query, null);
+
+                c.moveToFirst();
+
+                MemberInfo memberInfo = new MemberInfo();
+
+                while (!c.isAfterLast()) {
+
+                    memberInfo.setMemberId(c.getInt(c.getColumnIndex(MEMBER_ID)));
+                    memberInfo.setUniqueId(c.getInt(c.getColumnIndex(UNIQUE_ID)));
+                    memberInfo.setMemberName(c.getString(c.getColumnIndex(MEMBER_NAME)));
+                    memberInfo.setDob(c.getString(c.getColumnIndex(DOB)));
+                    memberInfo.setGender(c.getString(c.getColumnIndex(GENDER)));
+                    memberInfo.setSocialCategoryId(c.getInt(c.getColumnIndex(SOCIAL_CATEGORY_ID)));
+                    memberInfo.setAadhaarCardId(c.getString(c.getColumnIndex(AADHAAR_CARD_ID)));
+                    memberInfo.setVoterId(c.getString(c.getColumnIndex(VOTER_ID)));
+                    memberInfo.setFamilyHead(c.getString(c.getColumnIndex(FAMILY_HEAD)));
+                    memberInfo.setPersonalSalary(c.getString(c.getColumnIndex(PERSONAL_SALARY)));
+                    memberInfo.setOccupationId(c.getInt(c.getColumnIndex(OCCUPATION_ID)));
+                    memberInfo.setDisabilityId(c.getInt(c.getColumnIndex(DISABILTIES_ID)));
+                    memberInfo.setRelationshipId(c.getInt(c.getColumnIndex(RELATIONSHIP_ID)));
+                    memberInfo.setEducationId(c.getInt(c.getColumnIndex(EDUCATION_ID)));
+                    memberInfo.setEducationStatusId(c.getInt(c.getColumnIndex(EDUCATION_STATUS_ID)));
+                    memberInfo.setMaritalStatusId(c.getInt(c.getColumnIndex(MARITAL_STATUS_ID)));
+                    memberInfo.setRelationshipId(c.getInt(c.getColumnIndex(RELIGION_ID)));
+                    memberInfo.setSchemeId(c.getInt(c.getColumnIndex(SCHEME_ID)));
+
+                    c.moveToNext();
+
+                }
+
+                Log.d(TAG, "Row Fetched from Member table");
+
+                baseHead.setMemberInfo(memberInfo);
+                Log.d("Fetch Baseline Data:", "stateId=" + baselineInfo.getStateId()
+                        + "\ndistrictId=" + baselineInfo.getDistrictId()
+                        + "\nblockId=" + baselineInfo.getBlockId()
+                        + "\nvillageId=" + baselineInfo.getVillageId()
+                        + "\nbaselineId=" +  baselineInfo.getBaselineId()
+                        + "\nmemberId=" + baselineInfo.getFamilyHeadId()
+                        + "\nsurveyUserId=" + baselineInfo.getSurveyUserId()
+                        + "\nsocialCategoryId=" + baselineInfo.getSocialCategoryId()
+                        + "\nreligionId=" + baselineInfo.getReligionId()
+                        + "\noccupationId=" + baselineInfo.getOccupationId()
+                        + "\ncontactNo=" + baselineInfo.getContactNo()
+                        + "\nfamilyMemberNumber=" + baselineInfo.getFamilyMemberNumber()
+                        + "\nincome=" + baselineInfo.getIncome());
+                Log.d("Fetch Member Data:","");
+
+                baselineHeadInfo.add(baseHead);
+            }
+        }
+
+        return baselineHeadInfo;
 
     }
 

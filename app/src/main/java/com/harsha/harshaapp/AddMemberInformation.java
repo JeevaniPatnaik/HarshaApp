@@ -138,7 +138,7 @@ public class AddMemberInformation extends AppCompatActivity
         Log.d("userBundle:","stateId="+userBundle.getInt("stateId"));
 
         baselineInfo.setDistrictId(userBundle.getInt("districtId"));
-        baselineInfo.setBaselineId(userBundle.getInt("blockId"));
+        baselineInfo.setBlockId(userBundle.getInt("blockId"));
         baselineInfo.setVillageId(userBundle.getInt("villageId"));
         baselineInfo.setSurveyUserId(userBundle.getInt("surveyUserId"));
         baselineInfo.setSocialCategoryId(userBundle.getInt("socialCategoryId"));
@@ -478,7 +478,7 @@ public class AddMemberInformation extends AppCompatActivity
         memberInfo.setDob(dob.getText().toString());
         memberInfo.setGender(returnGender(gender.getCheckedRadioButtonId()));
         memberInfo.setSocialCategoryId(socialCategoryBean.getSocialCategoryId());
-        memberInfo.setAadhaarCardId(Integer.parseInt(aadhaarCard.getText().toString()));
+        memberInfo.setAadhaarCardId(aadhaarCard.getText().toString());
         memberInfo.setVoterId(voterId.getText().toString());
         memberInfo.setPersonalSalary(personalSalary.getText().toString());
         memberInfo.setOccupationId(occupationBean.getOccupationId());

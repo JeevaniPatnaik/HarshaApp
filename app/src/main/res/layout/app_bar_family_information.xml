@@ -191,6 +191,7 @@
                 android:textColor="#020202"
                 android:layout_below="@+id/education"
                 android:text="Education Status" />
+<!--
 
             <TextView
                 android:layout_width="match_parent"
@@ -201,6 +202,7 @@
                 android:textColor="#020202"
                 android:layout_below="@+id/educationStatus"
                 android:text="Migration Reason" />
+-->
 
             <TextView
                 android:layout_width="match_parent"
@@ -209,7 +211,7 @@
                 android:textSize="20dp"
                 android:id="@+id/maritalStatus"
                 android:textColor="#020202"
-                android:layout_below="@+id/migrationReason"
+                android:layout_below="@+id/educationStatus"
                 android:text="Marital Status" />
 
             <TextView
