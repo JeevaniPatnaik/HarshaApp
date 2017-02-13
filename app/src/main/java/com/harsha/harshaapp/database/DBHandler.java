@@ -728,52 +728,52 @@ public class DBHandler extends SQLiteOpenHelper {
     public ArrayList<BaselineHeadInfo2> getAllBaselineHeadInformation2() {
 
         String query = "SELECT " +
-                TABLE_BASELINE_INFORMATION + "." + BASELINE_ID +
-                TABLE_BASELINE_INFORMATION + "." + FAMILY_HEAD_ID +
-                TABLE_BASELINE_INFORMATION + "." + STATE_ID +
-                TABLE_BASELINE_INFORMATION + "." + DISTRICT_ID +
-                TABLE_BASELINE_INFORMATION + "." + BLOCK_ID +
-                TABLE_BASELINE_INFORMATION + "." + VILLAGE_ID +
-                TABLE_BASELINE_INFORMATION + "." + USER_ID +
-                TABLE_BASELINE_INFORMATION + "." + CONTACT_NO +
-                TABLE_BASELINE_INFORMATION + "." + FAMILY_MEMBER_NUMBER +
-                TABLE_BASELINE_INFORMATION + "." + INCOME +
-                TABLE_MEMBER + "." + MEMBER_ID +
-                TABLE_MEMBER + "." + UNIQUE_ID +
-                TABLE_MEMBER + "." + MEMBER_NAME +
-                TABLE_MEMBER + "." + DOB +
-                TABLE_MEMBER + "." + GENDER +
-                TABLE_MEMBER + "." + QUOTA +
-                TABLE_MEMBER + "." + AADHAAR_CARD_ID +
-                TABLE_MEMBER + "." + VOTER_ID +
-                TABLE_MEMBER + "." + FAMILY_HEAD +
-                TABLE_MEMBER + "." + PERSONAL_SALARY +
-                TABLE_MEMBER + "." + OCCUPATION_ID +
-                TABLE_MEMBER + "." + DISABILTIES_ID +
-                TABLE_MEMBER + "." + RELATIONSHIP_ID +
-                TABLE_MEMBER + "." + EDUCATION_ID +
-                TABLE_MEMBER + "." + EDUCATION_STATUS_ID +
-                TABLE_MEMBER + "." + MARITAL_STATUS_ID +
-                TABLE_MEMBER + "." + RELIGION_ID +
-                TABLE_MEMBER + "." + SCHEME_ID +
-                TABLE_STATE + "." + STATE_NAME +
-                TABLE_STATE + "." + STATE_CODE +
-                TABLE_DISTRICT + "." + DISTRICT_CODE +
-                TABLE_DISTRICT + "." + DISTRICT_NAME +
-                TABLE_BLOCK + "." + BLOCK_CODE +
-                TABLE_BLOCK + "." + BLOCK_NAME +
-                TABLE_VILLAGE + "." + VILLAGE_CODE +
-                TABLE_VILLAGE + "." + VILLAGE_NAME +
-                TABLE_USER + "." + USER_NAME +
-                SOCIAL_CATEGORY + "." + SOCIAL_CATEGORY_NAME +
-                OCCUPATION + "." + OCCUPATION_NAME +
-                DISABILITIES + "." + DISABILTIES_NAME +
-                RELATIONSHIP + "." + RELATIONSHIP_NAME +
-                EDUCATION + "." + EDUCATION_NAME +
-                EDUCATION_STATUS + "." + EDUCATION_STATUS_NAME +
-                MARITAL_STATUS + "." + MARTIAL_STATUS_NAME +
-                RELIGION + "." + RELIGION_NAME +
-                SCHEME + "." + SCHEME_NAME +
+                TABLE_BASELINE_INFORMATION + "." + BASELINE_ID + ", " +
+                TABLE_BASELINE_INFORMATION + "." + FAMILY_HEAD_ID + ", " +
+                TABLE_BASELINE_INFORMATION + "." + STATE_ID + ", " +
+                TABLE_BASELINE_INFORMATION + "." + DISTRICT_ID + ", " +
+                TABLE_BASELINE_INFORMATION + "." + BLOCK_ID + ", " +
+                TABLE_BASELINE_INFORMATION + "." + VILLAGE_ID + ", " +
+                TABLE_BASELINE_INFORMATION + "." + USER_ID + ", " +
+                TABLE_BASELINE_INFORMATION + "." + CONTACT_NO + ", " +
+                TABLE_BASELINE_INFORMATION + "." + FAMILY_MEMBER_NUMBER + ", " +
+                TABLE_BASELINE_INFORMATION + "." + INCOME + ", " +
+                TABLE_MEMBER + "." + MEMBER_ID + ", " +
+                TABLE_MEMBER + "." + UNIQUE_ID + ", " +
+                TABLE_MEMBER + "." + MEMBER_NAME + ", " +
+                TABLE_MEMBER + "." + DOB + ", " +
+                TABLE_MEMBER + "." + GENDER + ", " +
+                TABLE_MEMBER + "." + QUOTA + ", " +
+                TABLE_MEMBER + "." + AADHAAR_CARD_ID + ", " +
+                TABLE_MEMBER + "." + VOTER_ID + ", " +
+                TABLE_MEMBER + "." + FAMILY_HEAD + ", " +
+                TABLE_MEMBER + "." + PERSONAL_SALARY + ", " +
+                TABLE_MEMBER + "." + OCCUPATION_ID + ", " +
+                TABLE_MEMBER + "." + DISABILTIES_ID + ", " +
+                TABLE_MEMBER + "." + RELATIONSHIP_ID + ", " +
+                TABLE_MEMBER + "." + EDUCATION_ID + ", " +
+                TABLE_MEMBER + "." + EDUCATION_STATUS_ID + ", " +
+                TABLE_MEMBER + "." + MARITAL_STATUS_ID + ", " +
+                TABLE_MEMBER + "." + RELIGION_ID + ", " +
+                TABLE_MEMBER + "." + SCHEME_ID + ", " +
+                TABLE_STATE + "." + STATE_NAME + ", " +
+                TABLE_STATE + "." + STATE_CODE + ", " +
+                TABLE_DISTRICT + "." + DISTRICT_CODE + ", " +
+                TABLE_DISTRICT + "." + DISTRICT_NAME + ", " +
+                TABLE_BLOCK + "." + BLOCK_CODE + ", " +
+                TABLE_BLOCK + "." + BLOCK_NAME + ", " +
+                TABLE_VILLAGE + "." + VILLAGE_CODE + ", " +
+                TABLE_VILLAGE + "." + VILLAGE_NAME + ", " +
+                TABLE_USER + "." + USER_NAME + ", " +
+                SOCIAL_CATEGORY + "." + SOCIAL_CATEGORY_NAME + ", " +
+                OCCUPATION + "." + OCCUPATION_NAME + ", " +
+                DISABILITIES + "." + DISABILTIES_NAME + ", " +
+                RELATIONSHIP + "." + RELATIONSHIP_NAME + ", " +
+                EDUCATION + "." + EDUCATION_NAME + ", " +
+                EDUCATION_STATUS + "." + EDUCATION_STATUS_NAME + ", " +
+                MARITAL_STATUS + "." + MARTIAL_STATUS_NAME + ", " +
+                RELIGION + "." + RELIGION_NAME + ", " +
+                SCHEME + "." + SCHEME_NAME + " " +
                 " FROM " +
                 TABLE_BASELINE_INFORMATION +
                 " LEFT JOIN " + TABLE_MEMBER + " ON " + TABLE_BASELINE_INFORMATION + "." + FAMILY_HEAD_ID + "=" + TABLE_MEMBER + "." + MEMBER_ID +
@@ -792,6 +792,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 " LEFT JOIN " + RELIGION + " ON " + TABLE_MEMBER + "." + RELIGION_ID + "=" + RELIGION + "." + RELIGION_ID +
                 " LEFT JOIN " + SCHEME + " ON " + TABLE_MEMBER + "." + SCHEME_ID + "=" + SCHEME + "." + SCHEME_ID +
                 "";
+
+        Log.d("QUERY:", "\n" +
+                "\n" + query+"\n\n");
 
         ArrayList<BaselineHeadInfo2> baselineHeadInfo2 = new ArrayList<BaselineHeadInfo2>();
 
@@ -822,7 +825,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 baseHead.memberName = cursor.getString(cursor.getColumnIndex(MEMBER_NAME));
                 baseHead.dob = cursor.getString(cursor.getColumnIndex(DOB));
                 baseHead.gender = cursor.getString(cursor.getColumnIndex(GENDER));
-                baseHead.socialCategoryId = cursor.getInt(cursor.getColumnIndex(SOCIAL_CATEGORY_ID));
+                baseHead.socialCategoryId = cursor.getInt(cursor.getColumnIndex(QUOTA));
                 baseHead.aadhaarCardId = cursor.getString(cursor.getColumnIndex(AADHAAR_CARD_ID));
                 baseHead.voterId = cursor.getString(cursor.getColumnIndex(VOTER_ID));
                 baseHead.familyHead = cursor.getString(cursor.getColumnIndex(FAMILY_HEAD));
@@ -866,6 +869,8 @@ public class DBHandler extends SQLiteOpenHelper {
                         "\n" +
                         "\n" +
                         "\n");
+
+                Log.d("baselineId:", "" + baseHead.baselineId);
 
                 baselineHeadInfo2.add(baseHead);
 
