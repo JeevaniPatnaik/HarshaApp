@@ -275,6 +275,23 @@
         </activity>
 
         <activity
+            android:name=".AddFamilyMemberInformation"
+            android:label="Add Family Member Information"
+            android:noHistory="false"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:parentActivityName="com.harsha.harshaapp.AddMemberInformation"
+            android:theme="@style/Theme.DesignDemo">
+            <intent-filter>
+                <action android:name="com.harsha.harshaapp.AddFamilyMemberInformation" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.harsha.harshaapp.AddMemberInformation" />
+        </activity>
+
+        <activity
             android:name=".UpdateMemberInformation"
             android:label="Update Member Information"
             android:noHistory="false"

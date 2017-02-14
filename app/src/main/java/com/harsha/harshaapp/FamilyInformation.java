@@ -14,14 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.harsha.harshaapp.bean.BaselineHeadInfo;
 import com.harsha.harshaapp.bean.BaselineHeadInfo2;
-import com.harsha.harshaapp.bean.BaselineInfo;
 import com.harsha.harshaapp.bean.Disabilities;
-import com.harsha.harshaapp.bean.MemberInfo;
 import com.harsha.harshaapp.bean.Occupation;
 import com.harsha.harshaapp.bean.Relationship;
 import com.harsha.harshaapp.bean.User;
@@ -208,7 +204,7 @@ public class FamilyInformation extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.add_info) {
-            Intent intent = new Intent(getApplicationContext(), AddMemberInformation.class);
+            Intent intent = new Intent(getApplicationContext(), AddFamilyMemberInformation.class);
             //intent.putExtras(bundle);
             startActivity(intent);
         } else if (id == R.id.update_info) {
