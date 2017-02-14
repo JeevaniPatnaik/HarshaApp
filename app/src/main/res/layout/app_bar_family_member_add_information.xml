@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".AddMemberInformation">
+    tools:context=".AddFamilyMemberInformation">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -48,33 +48,33 @@
                 android:layout_marginTop="70dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:text="Family Head Information" />
+                android:text="Member Information" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:inputType="textPersonName"
-                android:hint="Family Head Name"
+                android:hint="Member Name"
                 android:ems="10"
-                android:id="@+id/name"
+                android:id="@+id/memberName"
                 android:layout_below="@+id/familyInformation"
                 android:layout_alignStart="@+id/familyInformation"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/date"
+                android:id="@+id/memberDob"
                 android:hint="Date Of Birth (DD-MM-YYYY)"
                 android:ems="10"
-                android:layout_below="@+id/name"
-                android:layout_alignStart="@+id/name" />
+                android:layout_below="@+id/memberName"
+                android:layout_alignStart="@+id/memberName" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
-                android:id="@+id/gender"
-                android:layout_below="@+id/date"
+                android:id="@+id/memberGender"
+                android:layout_below="@+id/memberDob"
                 android:layout_centerHorizontal="true">
 
                 <RadioButton
@@ -84,7 +84,7 @@
                     android:ems="10"
                     android:id="@+id/male"
                     android:textSize="20dp"
-                    android:layout_below="@+id/date"
+                    android:layout_below="@+id/memberDob"
                     android:layout_centerHorizontal="true"
                     android:checked="true" />
 
@@ -96,8 +96,8 @@
                     android:textSize="20dp"
                     android:id="@+id/female"
                     android:checked="false"
-                    android:layout_below="@+id/date"
-                    android:layout_alignEnd="@+id/date" />
+                    android:layout_below="@+id/memberDob"
+                    android:layout_alignEnd="@+id/memberDob" />
 
                 <RadioButton
                     android:layout_width="110dp"
@@ -107,17 +107,17 @@
                     android:textSize="20dp"
                     android:id="@+id/other"
                     android:checked="false"
-                    android:layout_below="@+id/date"
-                    android:layout_alignEnd="@+id/date" />
+                    android:layout_below="@+id/memberDob"
+                    android:layout_alignEnd="@+id/memberDob" />
 
             </RadioGroup>
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/socialCategory"
+                android:id="@+id/memberSocialCategory"
                 android:ems="10"
-                android:layout_below="@+id/gender"
+                android:layout_below="@+id/memberGender"
                 android:layout_alignParentStart="true" />
 
             <EditText
@@ -125,8 +125,8 @@
                 android:layout_height="50dp"
                 android:inputType="numberDecimal"
                 android:ems="10"
-                android:id="@+id/aadhaarCard"
-                android:layout_below="@+id/socialCategory"
+                android:id="@+id/memberAadhaarCard"
+                android:layout_below="@+id/memberSocialCategory"
                 android:layout_alignParentStart="true"
                 android:hint="Aadhaar Card Number" />
 
@@ -135,9 +135,9 @@
                 android:layout_height="50dp"
                 android:inputType="numberDecimal"
                 android:ems="10"
-                android:id="@+id/voterId"
+                android:id="@+id/memberVoterId"
                 android:hint="Voter ID"
-                android:layout_below="@+id/aadhaarCard"
+                android:layout_below="@+id/memberAadhaarCard"
                 android:layout_alignParentStart="true" />
 
             <EditText
@@ -145,10 +145,10 @@
                 android:layout_height="50dp"
                 android:inputType="numberDecimal"
                 android:ems="10"
-                android:id="@+id/personalSalary"
-                android:layout_below="@+id/voterId"
+                android:id="@+id/memberPersonalSalary"
+                android:layout_below="@+id/memberVoterId"
                 android:layout_alignParentStart="true"
-                android:layout_alignEnd="@+id/voterId"
+                android:layout_alignEnd="@+id/memberVoterId"
                 android:hint="Personal Salary" />
 
             <TextView
@@ -158,13 +158,13 @@
                 android:textSize="25dp"
                 android:id="@+id/personalInformation"
                 android:textColor="#1205c4"
-                android:layout_below="@+id/personalSalary"
+                android:layout_below="@+id/memberPersonalSalary"
                 android:text="Personal Information" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/occupation"
+                android:id="@+id/memberOccupation"
                 android:ems="10"
                 android:layout_below="@+id/personalInformation"
                 android:layout_alignParentStart="true" />
@@ -172,57 +172,57 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/disabilities"
+                android:id="@+id/memberDisabilities"
                 android:ems="10"
-                android:layout_below="@+id/occupation"
+                android:layout_below="@+id/memberOccupation"
                 android:layout_alignParentStart="true" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/relationship"
+                android:id="@+id/memberRelationship"
                 android:ems="10"
-                android:layout_below="@+id/disabilities"
+                android:layout_below="@+id/memberDisabilities"
                 android:layout_alignParentStart="true" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/education"
+                android:id="@+id/memberEducation"
                 android:ems="10"
-                android:layout_below="@+id/relationship"
+                android:layout_below="@+id/memberRelationship"
                 android:layout_alignParentStart="true" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/educationStatus"
+                android:id="@+id/memberEducationStatus"
                 android:ems="10"
-                android:layout_below="@+id/education"
+                android:layout_below="@+id/memberEducation"
                 android:layout_alignParentStart="true" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/maritalStatus"
+                android:id="@+id/memberMaritalStatus"
                 android:ems="10"
-                android:layout_below="@+id/educationStatus"
+                android:layout_below="@+id/memberEducationStatus"
                 android:layout_alignParentStart="true" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/religion"
+                android:id="@+id/memberReligion"
                 android:ems="10"
-                android:layout_below="@+id/maritalStatus"
+                android:layout_below="@+id/memberMaritalStatus"
                 android:layout_alignParentStart="true" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/centralScheme"
+                android:id="@+id/memberCentralScheme"
                 android:ems="10"
-                android:layout_below="@+id/religion"
+                android:layout_below="@+id/memberReligion"
                 android:layout_alignParentStart="true" />
 
             <Button
@@ -230,8 +230,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ADD"
-                android:id="@+id/add"
-                android:layout_below="@+id/centralScheme"
+                android:id="@+id/memberAdd"
+                android:layout_below="@+id/memberCentralScheme"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="37dp"
                 android:background="#a854d4"/>
