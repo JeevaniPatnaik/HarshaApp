@@ -326,6 +326,74 @@
         </activity>
 
         <activity
+            android:name=".Farm"
+            android:label="Farm"
+            android:noHistory="false"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:parentActivityName="com.harsha.harshaapp.ImpactArea"
+            android:theme="@style/Theme.DesignDemo">
+            <intent-filter>
+                <action android:name="com.harsha.harshaapp.Farm" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.harsha.harshaapp.ImpactArea" />
+        </activity>
+
+        <activity
+            android:name=".OnFarm"
+            android:label="On Farm"
+            android:noHistory="false"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:parentActivityName="com.harsha.harshaapp.Farm"
+            android:theme="@style/Theme.DesignDemo">
+            <intent-filter>
+                <action android:name="com.harsha.harshaapp.OnFarm" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.harsha.harshaapp.Farm" />
+        </activity>
+
+        <activity
+            android:name=".OffFarm"
+            android:label="Off Farm"
+            android:noHistory="false"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:parentActivityName="com.harsha.harshaapp.Farm"
+            android:theme="@style/Theme.DesignDemo">
+            <intent-filter>
+                <action android:name="com.harsha.harshaapp.OffFarm" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.harsha.harshaapp.Farm" />
+        </activity>
+
+        <activity
+            android:name=".NonFarm"
+            android:label="Non Farm"
+            android:noHistory="false"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:parentActivityName="com.harsha.harshaapp.Farm"
+            android:theme="@style/Theme.DesignDemo">
+            <intent-filter>
+                <action android:name="com.harsha.harshaapp.NonFarm" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.harsha.harshaapp.Farm" />
+        </activity>
+
+        <activity
             android:name=".ProjectDetails"
             android:label="Uploads"
             android:noHistory="false"
