@@ -80,6 +80,7 @@ public class FamilyInformation extends AppCompatActivity
 
         Intent receive = getIntent();
         bundle = receive.getExtras();
+
         position = receive.getIntExtra("baselineHeadInfoPosition", 0);
         user = dbHandler.getUserDetail();
 
@@ -206,6 +207,16 @@ public class FamilyInformation extends AppCompatActivity
         if (id == R.id.add_info) {
             Intent intent = new Intent(getApplicationContext(), AddFamilyMemberInformation.class);
             //intent.putExtras(bundle);
+            intent.putExtra("baselineId", baseHead.baselineId);
+            intent.putExtra("familyHeadName", baseHead.memberName);
+            intent.putExtra("stateId", baseHead.stateId);
+            intent.putExtra("stateName", baseHead.stateName);
+            intent.putExtra("districtId", baseHead.districtId);
+            intent.putExtra("districtName", baseHead.districtName);
+            intent.putExtra("blockId", baseHead.blockId);
+            intent.putExtra("blockName", baseHead.blockName);
+            intent.putExtra("villageId", baseHead.villageId);
+            intent.putExtra("villageName", baseHead.villageName);
             startActivity(intent);
         } else if (id == R.id.update_info) {
             Intent intent = new Intent(getApplicationContext(), UpdateMemberInformation.class);
