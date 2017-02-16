@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.harsha.harshaapp.ImpactArea">
+    tools:context="com.harsha.harshaapp.Farm">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -38,13 +38,36 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <ListView
-                android:layout_width="wrap_content"
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/lists"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="195dp"
+                android:id="@+id/onFarm"
+                android:text="On Farm"
+                android:background="#a854d4"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_alignParentStart="true" />
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Off Farm"
+                android:id="@+id/offFarm"
+                android:layout_marginTop="45dp"
+                android:background="#a854d4"
+                android:layout_below="@+id/onFarm"
+                android:layout_alignParentStart="true" />
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Non Farm"
+                android:id="@+id/nonFarm"
+                android:layout_marginTop="45dp"
+                android:background="#a854d4"
+                android:layout_below="@+id/offFarm"
+                android:layout_alignParentStart="true" />
 
         </RelativeLayout>
 

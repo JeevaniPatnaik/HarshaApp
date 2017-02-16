@@ -1,97 +1,66 @@
 package com.harsha.harshaapp;
 
-/**
- * Created by Jeevani on 12/4/2016.
- */
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.database.DBHandler;
 
-public class ImpactArea extends AppCompatActivity
+/**
+ * Created by Jeevani on 2/15/2017.
+ */
+
+public class NonFarm extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    DBHandler dbHandler = new DBHandler(ImpactArea.this, null, null, 1);
+    DBHandler dbHandler = new DBHandler(NonFarm.this, null, null, 1);
     Bundle bundle;
     User user = new User();
 
     TextView nav_username,nav_email;
 
-    private ListView list;
-    private ArrayAdapter arrayAdapter;
-    private String[] familyHeadArr = { "Family Head-1", "Family Head-2", "Family Head-3", "Family Head-4", "Family Head-5",
-            "Family Head-6", "Family Head-7", "Family Head-8", "Family Head-9", "Family Head-10" };
+    TextView familyHeadname;
+    EditText details,investment,weeklySales,monthlySales,income,nonFarmDate,impact;
+    Spinner state, district, block, village, project;
+    Button save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_baseline_information);
+        setContentView(R.layout.activity_non_farm);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        list = (ListView) findViewById(R.id.lists);
+        familyHeadname = (TextView) findViewById(R.id.familyHeadName);
+        details = (EditText) findViewById(R.id.details);
+        investment = (EditText) findViewById(R.id.investment);
+        weeklySales = (EditText) findViewById(R.id.weeklySales);
+        monthlySales = (EditText) findViewById(R.id.monthlySales);
+        income = (EditText) findViewById(R.id.income);
+        impact = (EditText) findViewById(R.id.impact);
+        nonFarmDate = (EditText) findViewById(R.id.nonFarmDate);
+        state = (Spinner) findViewById(R.id.state);
+        district = (Spinner) findViewById(R.id.district);
+        block = (Spinner) findViewById(R.id.block);
+        village = (Spinner) findViewById(R.id.village);
+        project = (Spinner) findViewById(R.id.project);
+        save = (Button) findViewById(R.id.save);
 
-
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, familyHeadArr);
-        list.setAdapter(arrayAdapter);
-
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position,
-                                    long id) {
-
-                //String item = ((TextView)view).getText().toString();
-
-                //Toast.makeText(getBaseContext(), item, Toast.LENGTH_LONG).show();
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        ImpactArea.this );
-
-                // set title
-                alertDialogBuilder.setTitle("Want To See Impact Information");
-
-                // set dialog message
-                alertDialogBuilder
-                        .setMessage("")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                // if this button is clicked, close
-                                // current activity
-                                Intent intent = new Intent(getApplicationContext(),Farm.class);
-                                //Bundle bundle = new Bundle();
-                                //intent.putExtra("baselineHeadInfoPosition", position);
-                                startActivity(intent);
-
-                            }
-                        })
-                        .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // if this button is clicked, just close
-                                // the dialog box and do nothing
-                                dialog.cancel();
-                            }
-                        });
-
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
-                alertDialog.show();
+            public void onClick(View v) {
 
             }
         });
