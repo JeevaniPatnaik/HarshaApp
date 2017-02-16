@@ -630,12 +630,15 @@ public class AddFamilyMemberInformation extends AppCompatActivity
             if(flag==2) {
 
                 dbHandler.insertMemberInformation(memberInfo);
+                int memberId = dbHandler.getLastMemberId();
+                dbHandler.updateMemberUniqueId(memberId, baseHead.baselineId);
+
                 /*int memberId = dbHandler.getLastMemberId();
                 baselineInfo.setFamilyHeadId(memberId);
                 dbHandler.insertBaselineInformation(baselineInfo);
                 dbHandler.getAllBaselineInformation();
                 int baselineId = dbHandler.getLastBaselineId();
-                dbHandler.updateMemberUniqueId(memberId,baselineId);*/
+                dbHandler.updateMemberUniqueId(memberId,baselineId);*//*
                 Log.d("MemberData:", "memberId=" + memberInfo.getMemberId()
                         + "\nmemberName=" + memberInfo.getMemberName()
                         + "\nDOB=" + memberInfo.getDob()
@@ -651,7 +654,7 @@ public class AddFamilyMemberInformation extends AppCompatActivity
                         + "\neducationStatusId=" + memberInfo.getEducationStatusId()
                         + "\nmaritalStatusId=" + memberInfo.getMaritalStatusId()
                         + "\nreligionId=" + memberInfo.getReligionId()
-                        + "\nSchemeId=" + memberInfo.getSchemeId());
+                        + "\nSchemeId=" + memberInfo.getSchemeId());*/
 
                 Toast.makeText(AddFamilyMemberInformation.this,"Successfully Inserted in Member Table",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(AddFamilyMemberInformation.this,BaselineInformation.class);
