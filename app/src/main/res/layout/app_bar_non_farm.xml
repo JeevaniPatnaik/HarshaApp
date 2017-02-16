@@ -50,38 +50,61 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true" />
 
-            <Spinner
-                android:layout_width="match_parent"
+            <TextView
+                android:text="State"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:ems="10"
+                android:textColor="#020202"
                 android:id="@+id/state"
                 android:layout_below="@+id/familyHeadname"
                 android:layout_alignStart="@+id/familyHeadname"
                 android:layout_alignEnd="@+id/familyHeadname" />
 
-            <Spinner
-                android:layout_width="match_parent"
+            <TextView
+                android:text="District"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:ems="10"
+                android:textColor="#020202"
                 android:id="@+id/district"
                 android:layout_below="@+id/state"
                 android:layout_alignStart="@+id/state"
                 android:layout_alignEnd="@+id/state" />
 
-            <Spinner
-                android:layout_width="match_parent"
+            <TextView
+                android:text="Block"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:ems="10"
+                android:textColor="#020202"
                 android:id="@+id/block"
                 android:layout_below="@+id/district"
                 android:layout_alignStart="@+id/district"
-                android:layout_alignEnd="@+id/district" />
+                android:layout_alignEnd="@+id/district"  />
 
-            <Spinner
-                android:layout_width="match_parent"
+            <TextView
+                android:text="Village"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:ems="10"
+                android:textColor="#020202"
                 android:id="@+id/village"
                 android:layout_below="@+id/block"
                 android:layout_alignStart="@+id/block"
                 android:layout_alignEnd="@+id/block" />
 
+            <!--<TextView
+                android:text="State"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:textColor="#020202"
+                android:id="@+id/project"
+                android:layout_below="@+id/village"
+                android:layout_alignStart="@+id/village"
+                android:layout_alignEnd="@+id/village" />
+-->
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

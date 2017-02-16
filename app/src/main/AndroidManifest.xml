@@ -259,7 +259,7 @@
 
         <activity
             android:name=".AddMemberInformation"
-            android:label="Add Member Information"
+            android:label="Add Family Head Information"
             android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.BaselineInformation"
@@ -327,7 +327,7 @@
 
         <activity
             android:name=".Farm"
-            android:label="Farm"
+            android:label="Different Projects"
             android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="com.harsha.harshaapp.ImpactArea"
