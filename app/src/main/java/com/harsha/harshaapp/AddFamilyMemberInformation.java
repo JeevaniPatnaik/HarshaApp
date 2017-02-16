@@ -24,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.harsha.harshaapp.bean.BaselineHeadInfo2;
 import com.harsha.harshaapp.bean.BaselineInfo;
 import com.harsha.harshaapp.bean.Disabilities;
 import com.harsha.harshaapp.bean.Education;
@@ -45,6 +46,8 @@ import java.util.ArrayList;
  */
 public class AddFamilyMemberInformation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    BaselineHeadInfo2 baseHead = new BaselineHeadInfo2();
 
     DBHandler dbHandler = new DBHandler(AddFamilyMemberInformation.this, null, null, 1);
     Bundle bundle;
@@ -128,6 +131,18 @@ public class AddFamilyMemberInformation extends AppCompatActivity
         add = (Button) findViewById(R.id.memberAdd);
 
         Intent receive = getIntent();
+
+        baseHead.baselineId = receive.getIntExtra("baselineId", 0);
+        baseHead.memberName = receive.getStringExtra("memberName");
+        baseHead.stateId = receive.getIntExtra("stateId", 0);
+        baseHead.districtId = receive.getIntExtra("districtId", 0);
+        baseHead.blockId = receive.getIntExtra("blockId", 0);
+        baseHead.villageId = receive.getIntExtra("villageId", 0);
+        baseHead.stateName = receive.getStringExtra("stateName");
+        baseHead.districtName = receive.getStringExtra("districtName");
+        baseHead.blockName = receive.getStringExtra("blockName");
+        baseHead.villageName = receive.getStringExtra("villageName");
+
         bundle = receive.getExtras();
         user = dbHandler.getUserDetail();
 
