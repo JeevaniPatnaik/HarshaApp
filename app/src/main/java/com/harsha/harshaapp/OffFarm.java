@@ -31,9 +31,9 @@ public class OffFarm extends AppCompatActivity
 
     TextView nav_username,nav_email;
 
-    TextView familyHeadname;
+    TextView familyHeadname, state, district, block, village;
     EditText unitBeginning,unitPresent,fieldConsumption,bodyWeight,mortality,unitSold,income,offFarmDate,impact;
-    Spinner state, district, block, village, project;
+    Spinner project;
     Button save;
 
     @Override
@@ -53,10 +53,10 @@ public class OffFarm extends AppCompatActivity
         income = (EditText) findViewById(R.id.income);
         impact = (EditText) findViewById(R.id.impact);
         offFarmDate = (EditText) findViewById(R.id.offFarmDate);
-        state = (Spinner) findViewById(R.id.state);
-        district = (Spinner) findViewById(R.id.district);
-        block = (Spinner) findViewById(R.id.block);
-        village = (Spinner) findViewById(R.id.village);
+        state = (TextView) findViewById(R.id.state);
+        district = (TextView) findViewById(R.id.district);
+        block = (TextView) findViewById(R.id.block);
+        village = (TextView) findViewById(R.id.village);
         project = (Spinner) findViewById(R.id.project);
         save = (Button) findViewById(R.id.save);
 

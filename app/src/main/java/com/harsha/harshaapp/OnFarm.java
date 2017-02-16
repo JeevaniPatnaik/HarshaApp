@@ -1,6 +1,9 @@
 package com.harsha.harshaapp;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,8 +18,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.harsha.harshaapp.bean.BaselineHeadInfo2;
+import com.harsha.harshaapp.bean.BaselineInfo;
+import com.harsha.harshaapp.bean.Block;
+import com.harsha.harshaapp.bean.District;
+import com.harsha.harshaapp.bean.State;
 import com.harsha.harshaapp.bean.User;
 import com.harsha.harshaapp.database.DBHandler;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jeevani on 2/15/2017.
@@ -28,12 +38,24 @@ public class OnFarm extends AppCompatActivity
     DBHandler dbHandler = new DBHandler(OnFarm.this, null, null, 1);
     Bundle bundle;
     User user = new User();
+    State state = new State();
+    District district = new District();
+    Block block = new Block();
+
+    String result = "";
+    int flag = 1;
+    int position = 0;
+
+    BaselineInfo baselineInfo = new BaselineInfo();
+    ArrayList<BaselineHeadInfo2> baselineHeadInfo = new ArrayList<BaselineHeadInfo2>();
+
+    BaselineHeadInfo2 baseHead;
 
     TextView nav_username,nav_email;
 
-    TextView familyHeadname;
+    TextView familyHeadname, onFarmState, onFarmDistrict, onFarmBlock, onFarmVillage;
     EditText land,noOfPlants,yearOfPlanting,production,income,onFarmDate,impact;
-    Spinner state, district, block, village, project;
+    Spinner onFarmproject;
     Button save;
 
     @Override
@@ -51,22 +73,28 @@ public class OnFarm extends AppCompatActivity
         income = (EditText) findViewById(R.id.income);
         onFarmDate = (EditText) findViewById(R.id.onFarmDate);
         impact = (EditText) findViewById(R.id.impact);
-        state = (Spinner) findViewById(R.id.state);
-        district = (Spinner) findViewById(R.id.district);
-        block = (Spinner) findViewById(R.id.block);
-        village = (Spinner) findViewById(R.id.village);
-        project = (Spinner) findViewById(R.id.project);
+        onFarmState = (TextView) findViewById(R.id.state);
+        onFarmDistrict = (TextView) findViewById(R.id.district);
+        onFarmBlock = (TextView) findViewById(R.id.block);
+        onFarmVillage = (TextView) findViewById(R.id.village);
+        onFarmproject = (Spinner) findViewById(R.id.project);
         save = (Button) findViewById(R.id.save);
+
+        AddOnFarmAsyncTask obj = new AddOnFarmAsyncTask(this);
+        obj.execute();
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                flag=2;
+                AddOnFarmAsyncTask obj1 = new AddOnFarmAsyncTask(OnFarm.this);
+                obj1.execute();
             }
         });
 
         Intent receive = getIntent();
         bundle = receive.getExtras();
+        position = receive.getIntExtra("baselineHeadInfoPosition", 0);
         user = dbHandler.getUserDetail();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -93,6 +121,72 @@ public class OnFarm extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    public void readData() {
+
+        /*baselineInfo.setStateId(state.getStateId());
+        baselineInfo.setDistrictId(district.getDistrictId());
+        baselineInfo.setBlockId(block.getBlockId());
+        baselineInfo.setSurveyUserId(user.getUserId());
+        Log.d("income=","Income="+income.getText().toString()+"\ngetIncome="+baselineInfo.getIncome());
+        Log.d("user=",user + "\nuserId="+user.getUserId()+"\nUsername="+user.getUserName());*/
+
+    }
+
+    public void spinnerList() {
+
+        baselineHeadInfo = dbHandler.getAllBaselineHeadInformation2();
+        baseHead = baselineHeadInfo.get(position);
+
+        familyHeadname.setText(familyHeadname.getText().toString() + ": " + baseHead.memberName);
+        onFarmState.setText(onFarmState.getText().toString() + ": " + baseHead.stateName);
+        onFarmDistrict.setText(onFarmDistrict.getText().toString() + ": " + baseHead.districtName);
+        onFarmBlock.setText(onFarmBlock.getText().toString() + ": " + baseHead.blockName);
+        onFarmVillage.setText(onFarmVillage.getText().toString() + ": " + baseHead.villageName);
+    }
+
+    class AddOnFarmAsyncTask extends AsyncTask<String, String, String> {
+
+        Context mContext;
+        ProgressDialog progressDialog;
+
+        public AddOnFarmAsyncTask(Context mContext) {
+            this.mContext = mContext;
+            progressDialog = new ProgressDialog(mContext);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setTitle(R.string.app_name);
+            progressDialog.setMessage("Loading, Please Wait...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                if (flag==1) {
+                    spinnerList();
+                }
+                else if (flag==2) {
+                    readData();
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            if(flag==2) {
+
+            }
+            progressDialog.dismiss();
         }
     }
 
