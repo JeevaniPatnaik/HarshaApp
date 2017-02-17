@@ -1,6 +1,9 @@
 package com.harsha.harshaapp;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,13 +13,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.harsha.harshaapp.bean.BaselineHeadInfo2;
+import com.harsha.harshaapp.bean.BaselineInfo;
+import com.harsha.harshaapp.bean.Block;
+import com.harsha.harshaapp.bean.District;
+import com.harsha.harshaapp.bean.Project;
+import com.harsha.harshaapp.bean.State;
 import com.harsha.harshaapp.bean.User;
+import com.harsha.harshaapp.bean.Village;
 import com.harsha.harshaapp.database.DBHandler;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jeevani on 2/15/2017.
@@ -28,12 +42,28 @@ public class NonFarm extends AppCompatActivity
     DBHandler dbHandler = new DBHandler(NonFarm.this, null, null, 1);
     Bundle bundle;
     User user = new User();
+    State stateBean = new State();
+    District districtBean = new District();
+    Block blockBean = new Block();
+    Village villageBean = new Village();
+    Project projectBean = new Project();
+
+    String result = "";
+    int flag = 1;
+    int position = 0;
+
+    BaselineInfo baselineInfo = new BaselineInfo();
+    ArrayList<BaselineHeadInfo2> baselineHeadInfo = new ArrayList<BaselineHeadInfo2>();
+    ArrayList<String> projectArray = new ArrayList<String>();
+    ArrayList<Project> listProject;
+
+    BaselineHeadInfo2 baseHead;
 
     TextView nav_username,nav_email;
 
-    TextView familyHeadname, state, district, block, village;
+    TextView familyHeadname, nonFarmState, nonFarmDistrict, nonFarmBlock, nonFarmVillage;
     EditText details,investment,weeklySales,monthlySales,income,nonFarmDate,impact;
-    Spinner project;
+    Spinner nonFarmProject;
     Button save;
 
     @Override
@@ -51,17 +81,48 @@ public class NonFarm extends AppCompatActivity
         income = (EditText) findViewById(R.id.income);
         impact = (EditText) findViewById(R.id.impact);
         nonFarmDate = (EditText) findViewById(R.id.nonFarmDate);
-        state = (TextView) findViewById(R.id.state);
-        district = (TextView) findViewById(R.id.district);
-        block = (TextView) findViewById(R.id.block);
-        village = (TextView) findViewById(R.id.village);
-        project = (Spinner) findViewById(R.id.project);
+        nonFarmState = (TextView) findViewById(R.id.state);
+        nonFarmDistrict = (TextView) findViewById(R.id.district);
+        nonFarmBlock = (TextView) findViewById(R.id.block);
+        nonFarmVillage = (TextView) findViewById(R.id.village);
+        nonFarmProject = (Spinner) findViewById(R.id.project);
         save = (Button) findViewById(R.id.save);
+
+        AddNonFarmAsyncTask obj = new AddNonFarmAsyncTask(this);
+        obj.execute();
+
+        nonFarmProject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listProject.size(); i++) {
+                        Project pr = listProject.get(i);
+                        if(item.equalsIgnoreCase(pr.getProjectName() + "-" + pr.getProjectId())) {
+                            projectBean = pr;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                flag=2;
+                AddNonFarmAsyncTask obj1 = new AddNonFarmAsyncTask(NonFarm.this);
+                obj1.execute();
             }
         });
 
@@ -93,6 +154,101 @@ public class NonFarm extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    public void readData() {
+
+        /*baselineInfo.setStateId(state.getStateId());
+        baselineInfo.setDistrictId(district.getDistrictId());
+        baselineInfo.setBlockId(block.getBlockId());
+        baselineInfo.setSurveyUserId(user.getUserId());
+        Log.d("income=","Income="+income.getText().toString()+"\ngetIncome="+baselineInfo.getIncome());
+        Log.d("user=",user + "\nuserId="+user.getUserId()+"\nUsername="+user.getUserName());*/
+        baselineInfo.setStateId(stateBean.getStateId());
+        baselineInfo.setDistrictId(districtBean.getDistrictId());
+        baselineInfo.setBlockId(blockBean.getBlockId());
+        baselineInfo.setVillageId(villageBean.getVillageId());
+        baselineInfo.setSurveyUserId(user.getUserId());
+
+    }
+
+    public void spinnerList() {
+
+   /*     baselineHeadInfo = dbHandler.getAllBaselineHeadInformation2();
+        baseHead = baselineHeadInfo.get(position);
+
+        familyHeadname.setText(familyHeadname.getText().toString() + ": " + baseHead.memberName);
+        onFarmState.setText(onFarmState.getText().toString() + ": " + baseHead.stateName);
+        onFarmDistrict.setText(onFarmDistrict.getText().toString() + ": " + baseHead.districtName);
+        onFarmBlock.setText(onFarmBlock.getText().toString() + ": " + baseHead.blockName);
+        onFarmVillage.setText(onFarmVillage.getText().toString() + ": " + baseHead.villageName);*/
+        stateBean = dbHandler.getLastState();
+        districtBean = dbHandler.getLastDistrict();
+        blockBean = dbHandler.getLastBlock();
+        villageBean = dbHandler.getLastVillage();
+
+        nonFarmState.setText(stateBean.getStateName() + "-" + stateBean.getStateCode());
+        nonFarmDistrict.setText(districtBean.getDistrictName()+ "-"+districtBean.getDistrictCode());
+        nonFarmBlock.setText(blockBean.getBlockName()+"-"+blockBean.getBlockCode());
+        nonFarmVillage.setText(villageBean.getVillageName()+"-"+villageBean.getVillageCode());
+
+
+        listProject = dbHandler.getAllProject();
+        String pr = "---- Select Project ----";
+        projectArray.add(pr);
+        for(int i=0; i<listProject.size(); i++) {
+            Project proj = listProject.get(i);
+            String name = proj.getProjectName() + "-" + proj.getProjectId();
+            projectArray.add(name);
+        }
+
+        ArrayAdapter<String> projectListAdapter = new ArrayAdapter<String>(NonFarm.this, android.R.layout.simple_spinner_item, projectArray);
+        projectListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        nonFarmProject.setAdapter(projectListAdapter);
+
+    }
+
+    class AddNonFarmAsyncTask extends AsyncTask<String, String, String> {
+
+        Context mContext;
+        ProgressDialog progressDialog;
+
+        public AddNonFarmAsyncTask(Context mContext) {
+            this.mContext = mContext;
+            progressDialog = new ProgressDialog(mContext);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setTitle(R.string.app_name);
+            progressDialog.setMessage("Loading, Please Wait...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                if (flag==1) {
+                    spinnerList();
+                }
+                else if (flag==2) {
+                    readData();
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            if(flag==2) {
+
+            }
+            progressDialog.dismiss();
         }
     }
 

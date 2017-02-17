@@ -1400,6 +1400,25 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    //fetch data from village
+    public Village getLastVillage(){
+
+        Village village = new Village();
+        SQLiteDatabase db = this.getReadableDatabase();
+        //db.beginTransaction();
+        String qry = "SELECT * FROM "+TABLE_VILLAGE+ " ORDER BY " + VILLAGE_ID + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                village.setVillageId(cursor.getInt(cursor.getColumnIndex(VILLAGE_ID)));
+                village.setVillageName(cursor.getString(cursor.getColumnIndex(VILLAGE_NAME)));
+                village.setVillageCode(cursor.getString(cursor.getColumnIndex(VILLAGE_CODE)));
+
+            }
+        }
+        return village;
+    }
+
     //inser Into Asset
     public void insertAsset(Asset asset){
 
@@ -1499,7 +1518,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return educationList;
     }
 
-    //inser Into Project
+    //insert Into Project
     public void insertProject(Project project){
 
         ContentValues values = new ContentValues();
@@ -1513,6 +1532,34 @@ public class DBHandler extends SQLiteOpenHelper {
         Log.d(TAG, "Row Inserted in TABLE_PROJECT");
         db.close();
     }
+
+    //fetch from project table
+    public ArrayList<Project> getAllProject(){
+
+        ArrayList<Project> projectList = new ArrayList<Project>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        //db.beginTransaction();
+        String qry = "SELECT * FROM "+TABLE_PROJECT+ " ORDER BY "+ PROJECT_NAME + " ASC" ;
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+
+                /*String religionName = cursor.getString(cursor.getColumnIndex("religionName"));
+                String religionCode = cursor.getString(cursor.getColumnIndex("religionCode"));
+                religionList.add(religionCode);
+                religionList.add(religionName);*/
+
+                Project project = new Project();
+                project.setProjectId(cursor.getInt(cursor.getColumnIndex(PROJECT_ID)));
+                project.setProjectName(cursor.getString(cursor.getColumnIndex(PROJECT_NAME)));
+                project.setDonorName(cursor.getString(cursor.getColumnIndex(DONOR_NAME)));
+                projectList.add(project);
+
+            }
+        }
+        return projectList;
+    }
+
 
     //inser Into EducationStatus
     public void insertEducationStatus(EducationStatus educationstatus){

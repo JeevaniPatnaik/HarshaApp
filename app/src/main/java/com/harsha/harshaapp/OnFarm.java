@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -22,8 +24,10 @@ import com.harsha.harshaapp.bean.BaselineHeadInfo2;
 import com.harsha.harshaapp.bean.BaselineInfo;
 import com.harsha.harshaapp.bean.Block;
 import com.harsha.harshaapp.bean.District;
+import com.harsha.harshaapp.bean.Project;
 import com.harsha.harshaapp.bean.State;
 import com.harsha.harshaapp.bean.User;
+import com.harsha.harshaapp.bean.Village;
 import com.harsha.harshaapp.database.DBHandler;
 
 import java.util.ArrayList;
@@ -38,9 +42,11 @@ public class OnFarm extends AppCompatActivity
     DBHandler dbHandler = new DBHandler(OnFarm.this, null, null, 1);
     Bundle bundle;
     User user = new User();
-    State state = new State();
-    District district = new District();
-    Block block = new Block();
+    State stateBean = new State();
+    District districtBean = new District();
+    Block blockBean = new Block();
+    Village villageBean = new Village();
+    Project projectBean = new Project();
 
     String result = "";
     int flag = 1;
@@ -48,6 +54,8 @@ public class OnFarm extends AppCompatActivity
 
     BaselineInfo baselineInfo = new BaselineInfo();
     ArrayList<BaselineHeadInfo2> baselineHeadInfo = new ArrayList<BaselineHeadInfo2>();
+    ArrayList<String> projectArray = new ArrayList<String>();
+    ArrayList<Project> listProject;
 
     BaselineHeadInfo2 baseHead;
 
@@ -55,7 +63,7 @@ public class OnFarm extends AppCompatActivity
 
     TextView familyHeadname, onFarmState, onFarmDistrict, onFarmBlock, onFarmVillage;
     EditText land,noOfPlants,yearOfPlanting,production,income,onFarmDate,impact;
-    Spinner onFarmproject;
+    Spinner onFarmProject;
     Button save;
 
     @Override
@@ -77,11 +85,37 @@ public class OnFarm extends AppCompatActivity
         onFarmDistrict = (TextView) findViewById(R.id.district);
         onFarmBlock = (TextView) findViewById(R.id.block);
         onFarmVillage = (TextView) findViewById(R.id.village);
-        onFarmproject = (Spinner) findViewById(R.id.project);
+        onFarmProject = (Spinner) findViewById(R.id.project);
         save = (Button) findViewById(R.id.save);
 
         AddOnFarmAsyncTask obj = new AddOnFarmAsyncTask(this);
         obj.execute();
+
+        onFarmProject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0) {
+                    return;
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    for(int i=0; i<listProject.size(); i++) {
+                        Project pr = listProject.get(i);
+                        if(item.equalsIgnoreCase(pr.getProjectName() + "-" + pr.getProjectId())) {
+                            projectBean = pr;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,25 +160,47 @@ public class OnFarm extends AppCompatActivity
 
     public void readData() {
 
-        /*baselineInfo.setStateId(state.getStateId());
-        baselineInfo.setDistrictId(district.getDistrictId());
-        baselineInfo.setBlockId(block.getBlockId());
+        baselineInfo.setStateId(stateBean.getStateId());
+        baselineInfo.setDistrictId(districtBean.getDistrictId());
+        baselineInfo.setBlockId(blockBean.getBlockId());
+        baselineInfo.setVillageId(villageBean.getVillageId());
         baselineInfo.setSurveyUserId(user.getUserId());
-        Log.d("income=","Income="+income.getText().toString()+"\ngetIncome="+baselineInfo.getIncome());
-        Log.d("user=",user + "\nuserId="+user.getUserId()+"\nUsername="+user.getUserName());*/
-
     }
 
     public void spinnerList() {
 
-        baselineHeadInfo = dbHandler.getAllBaselineHeadInformation2();
+   /*     baselineHeadInfo = dbHandler.getAllBaselineHeadInformation2();
         baseHead = baselineHeadInfo.get(position);
 
         familyHeadname.setText(familyHeadname.getText().toString() + ": " + baseHead.memberName);
         onFarmState.setText(onFarmState.getText().toString() + ": " + baseHead.stateName);
         onFarmDistrict.setText(onFarmDistrict.getText().toString() + ": " + baseHead.districtName);
         onFarmBlock.setText(onFarmBlock.getText().toString() + ": " + baseHead.blockName);
-        onFarmVillage.setText(onFarmVillage.getText().toString() + ": " + baseHead.villageName);
+        onFarmVillage.setText(onFarmVillage.getText().toString() + ": " + baseHead.villageName);*/
+        //TextView
+        stateBean = dbHandler.getLastState();
+        districtBean = dbHandler.getLastDistrict();
+        blockBean = dbHandler.getLastBlock();
+        villageBean = dbHandler.getLastVillage();
+
+        onFarmState.setText(stateBean.getStateName() + "-" + stateBean.getStateCode());
+        onFarmDistrict.setText(districtBean.getDistrictName()+ "-"+districtBean.getDistrictCode());
+        onFarmBlock.setText(blockBean.getBlockName()+"-"+blockBean.getBlockCode());
+        onFarmVillage.setText(villageBean.getVillageName()+"-"+villageBean.getVillageCode());
+
+        listProject = dbHandler.getAllProject();
+        String pr = "---- Select Project ----";
+        projectArray.add(pr);
+        for(int i=0; i<listProject.size(); i++) {
+            Project proj = listProject.get(i);
+            String name = proj.getProjectName() + "-" + proj.getProjectId();
+            projectArray.add(name);
+        }
+
+        ArrayAdapter<String> projectListAdapter = new ArrayAdapter<String>(OnFarm.this, android.R.layout.simple_spinner_item, projectArray);
+        projectListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        onFarmProject.setAdapter(projectListAdapter);
+
     }
 
     class AddOnFarmAsyncTask extends AsyncTask<String, String, String> {
