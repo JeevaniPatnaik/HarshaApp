@@ -142,6 +142,7 @@ public class ImpactArea extends AppCompatActivity
         for(int i=0; i<baselineHeadInfo.size(); i++) {
             BaselineHeadInfo2 baseHead = baselineHeadInfo.get(i);
             String text = "-0"+ "-" + i + "-" + baseHead.voterId + "-" + baseHead.memberName + "-" + baseHead.familyHead;
+            text = "Name:" + baseHead.memberName + " - Village:" + baseHead.villageName;
             baselineList.add(text);
         }
 

@@ -1148,11 +1148,79 @@ public class DBHandler extends SQLiteOpenHelper {
 
         }
 
-        db.close();
-
         Log.d(TAG, "Row Fetched from Member table");
 
         return memberId;
+    }
+
+    public ArrayList<MemberInfo> getAllMemberDetail(int uniqueId) {
+
+        ArrayList<MemberInfo> allMember = new ArrayList<MemberInfo>();
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_MEMBER + " WHERE " + UNIQUE_ID + "=" + uniqueId;
+
+        //Cursor points to the results
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.getCount() > 0) {
+
+            c.moveToFirst();
+
+            while (!c.isAfterLast()) {
+
+                MemberInfo memberInfo = new MemberInfo();
+
+                memberInfo.setMemberId(c.getInt(c.getColumnIndex(MEMBER_ID)));
+                memberInfo.setUniqueId(c.getInt(c.getColumnIndex(UNIQUE_ID)));
+                memberInfo.setMemberName(c.getString(c.getColumnIndex(MEMBER_NAME)));
+                memberInfo.setDob(c.getString(c.getColumnIndex(DOB)));
+                memberInfo.setGender(c.getString(c.getColumnIndex(GENDER)));
+                memberInfo.setSocialCategoryId(c.getInt(c.getColumnIndex(QUOTA)));
+                memberInfo.setAadhaarCardId(c.getString(c.getColumnIndex(AADHAAR_CARD_ID)));
+                memberInfo.setVoterId(c.getString(c.getColumnIndex(VOTER_ID)));
+                memberInfo.setFamilyHead(c.getString(c.getColumnIndex(FAMILY_HEAD)));
+                memberInfo.setPersonalSalary(c.getString(c.getColumnIndex(PERSONAL_SALARY)));
+                memberInfo.setOccupationId(c.getInt(c.getColumnIndex(OCCUPATION_ID)));
+                memberInfo.setDisabilityId(c.getInt(c.getColumnIndex(DISABILTIES_ID)));
+                memberInfo.setRelationshipId(c.getInt(c.getColumnIndex(RELATIONSHIP_ID)));
+                memberInfo.setEducationId(c.getInt(c.getColumnIndex(EDUCATION_ID)));
+                memberInfo.setEducationStatusId(c.getInt(c.getColumnIndex(EDUCATION_STATUS_ID)));
+                memberInfo.setMaritalStatusId(c.getInt(c.getColumnIndex(MARITAL_STATUS_ID)));
+                memberInfo.setRelationshipId(c.getInt(c.getColumnIndex(RELIGION_ID)));
+                memberInfo.setSchemeId(c.getInt(c.getColumnIndex(SCHEME_ID)));
+
+                Log.d("DBHandler-GetAllMember", "Data:\n" +
+                        "\nmemberId=" + memberInfo.getMemberId() + "" +
+                        "\nuniqueId=" + memberInfo.getUniqueId() + "" +
+                        "\nmemberName=" + memberInfo.getMemberName() + "" +
+                        "\nDOB=" + memberInfo.getDob() + "" +
+                        "\ngender=" + memberInfo.getGender() + "" +
+                        "\nsocialCategoryId=" + memberInfo.getSocialCategoryId() + "" +
+                        "\naadhar=" + memberInfo.getAadhaarCardId() + "" +
+                        "\nvoterId=" + memberInfo.getVoterId() + "" +
+                        "\nfamilyHead=" + memberInfo.getFamilyHead() + "" +
+                        "\npersonalSalary=" + memberInfo.getPersonalSalary() + "" +
+                        "\noccupationId=" + memberInfo.getOccupationId() + "" +
+                        "\ndisabilitiesId=" + memberInfo.getDisabilityId() + "" +
+                        "\nrelationshipId=" + memberInfo.getRelationshipId() + "" +
+                        "\neducationId=" + memberInfo.getEducationId() + "" +
+                        "\neducationStatusId=" + memberInfo.getEducationStatusId() + " " +
+                        "\nmaritalStatusId=" + memberInfo.getMaritalStatusId() + " " +
+                        "\nreligionId=" + memberInfo.getReligionId() + " " +
+                        "\nschemeId=" + memberInfo.getSchemeId());
+
+                allMember.add(memberInfo);
+
+                c.moveToNext();
+
+            }
+        }
+
+        Log.d(TAG, "Row Fetched from Member table");
+
+        return allMember;
     }
 
     //UPDATE Row from TABLE_MEMBER
@@ -1162,6 +1230,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.execSQL("UPDATE "+ TABLE_MEMBER + " SET " + UNIQUE_ID + "="+ baselineId +" WHERE "+ MEMBER_ID +"="+ memberId+";");
         Log.d(TAG, "Row Updated in updateMemberUniqueId");
+        getAllMemberDetail(baselineId);
 
     }
 
