@@ -1400,6 +1400,25 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    //fetch data from village
+    public Village getLastVillage(){
+
+        Village village = new Village();
+        SQLiteDatabase db = this.getReadableDatabase();
+        //db.beginTransaction();
+        String qry = "SELECT * FROM "+TABLE_VILLAGE+ " ORDER BY " + VILLAGE_ID + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(qry,null);
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                village.setVillageId(cursor.getInt(cursor.getColumnIndex(VILLAGE_ID)));
+                village.setVillageName(cursor.getString(cursor.getColumnIndex(VILLAGE_NAME)));
+                village.setVillageCode(cursor.getString(cursor.getColumnIndex(VILLAGE_CODE)));
+
+            }
+        }
+        return village;
+    }
+
     //inser Into Asset
     public void insertAsset(Asset asset){
 
