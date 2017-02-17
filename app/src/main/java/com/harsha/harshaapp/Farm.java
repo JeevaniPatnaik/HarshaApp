@@ -64,8 +64,30 @@ public class Farm extends AppCompatActivity
         baselineHeadInfo = dbHandler.getAllBaselineHeadInformation2();
         baseHead = baselineHeadInfo.get(position);
         MemberInfo memberInfo = new MemberInfo();
+        BaselineInfo baselineInfo = new BaselineInfo();
+        bundle.putInt("baselineId", baselineInfo.getBaselineId());
+        bundle.putInt("familyHeadId", baselineInfo.getFamilyHeadId());
+        bundle.putInt("stateId", baselineInfo.getStateId());
+        bundle.putInt("districtId", baselineInfo.getDistrictId());
+        bundle.putInt("blockId", baselineInfo.getBlockId());
+        bundle.putInt("villageId", baselineInfo.getVillageId());
+        bundle.putInt("surveyUserId", baselineInfo.getSurveyUserId());
+        bundle.putInt("socialCategoryId", baselineInfo.getSocialCategoryId());
+        bundle.putInt("religionId", baselineInfo.getReligionId());
+        bundle.putInt("occupationId", baselineInfo.getOccupationId());
 
-        bundle.putInt("memberId", memberInfo.getMemberId());
+        Log.d("userBundle:","baselineId"+ baselineInfo.getBaselineId()
+                + "\nfamilyHeadId=" + baselineInfo.getFamilyHeadId()
+                + "\nstateId=" + baselineInfo.getStateId()
+                + "\ndistrictId=" + baselineInfo.getDistrictId()
+                + "\nblockId=" + baselineInfo.getBlockId()
+                + "\nvillageId=" + baselineInfo.getVillageId()
+                + "\nsurveyUserId=" + baselineInfo.getSurveyUserId()
+                + "\nsocialCategoryId=" + baselineInfo.getSocialCategoryId()
+                + "\nreligionId=" + baselineInfo.getReligionId()
+                + "\noccupationId=" + baselineInfo.getOccupationId());
+
+/*        bundle.putInt("memberId", memberInfo.getMemberId());
         bundle.putInt("uniqueId", memberInfo.getUniqueId());
         bundle.putString("memberName", memberInfo.getMemberName());
         bundle.putString("dob", memberInfo.getDob());
@@ -100,7 +122,7 @@ public class Farm extends AppCompatActivity
                 + "educationStatusId=" + memberInfo.getEducationStatusId()
                 + "maritalStatusId=" + memberInfo.getMaritalStatusId()
                 +"religionId" + memberInfo.getReligionId()
-                + "\nschemeId="+ memberInfo.getSchemeId());
+                + "\nschemeId="+ memberInfo.getSchemeId());*/
 
         onFarm.setOnClickListener(new View.OnClickListener() {
             @Override
