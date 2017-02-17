@@ -27,6 +27,7 @@ import com.harsha.harshaapp.bean.District;
 import com.harsha.harshaapp.bean.Project;
 import com.harsha.harshaapp.bean.State;
 import com.harsha.harshaapp.bean.User;
+import com.harsha.harshaapp.bean.Village;
 import com.harsha.harshaapp.database.DBHandler;
 
 import java.util.ArrayList;
@@ -41,9 +42,10 @@ public class OnFarm extends AppCompatActivity
     DBHandler dbHandler = new DBHandler(OnFarm.this, null, null, 1);
     Bundle bundle;
     User user = new User();
-    State state = new State();
-    District district = new District();
-    Block block = new Block();
+    State stateBean = new State();
+    District districtBean = new District();
+    Block blockBean = new Block();
+    Village villageBean = new Village();
     Project projectBean = new Project();
 
     String result = "";
@@ -158,13 +160,11 @@ public class OnFarm extends AppCompatActivity
 
     public void readData() {
 
-        /*baselineInfo.setStateId(state.getStateId());
-        baselineInfo.setDistrictId(district.getDistrictId());
-        baselineInfo.setBlockId(block.getBlockId());
+        baselineInfo.setStateId(stateBean.getStateId());
+        baselineInfo.setDistrictId(districtBean.getDistrictId());
+        baselineInfo.setBlockId(blockBean.getBlockId());
+        baselineInfo.setVillageId(villageBean.getVillageId());
         baselineInfo.setSurveyUserId(user.getUserId());
-        Log.d("income=","Income="+income.getText().toString()+"\ngetIncome="+baselineInfo.getIncome());
-        Log.d("user=",user + "\nuserId="+user.getUserId()+"\nUsername="+user.getUserName());*/
-
     }
 
     public void spinnerList() {
@@ -177,6 +177,16 @@ public class OnFarm extends AppCompatActivity
         onFarmDistrict.setText(onFarmDistrict.getText().toString() + ": " + baseHead.districtName);
         onFarmBlock.setText(onFarmBlock.getText().toString() + ": " + baseHead.blockName);
         onFarmVillage.setText(onFarmVillage.getText().toString() + ": " + baseHead.villageName);*/
+        //TextView
+        stateBean = dbHandler.getLastState();
+        districtBean = dbHandler.getLastDistrict();
+        blockBean = dbHandler.getLastBlock();
+        villageBean = dbHandler.getLastVillage();
+
+        onFarmState.setText(stateBean.getStateName() + "-" + stateBean.getStateCode());
+        onFarmDistrict.setText(districtBean.getDistrictName()+ "-"+districtBean.getDistrictCode());
+        onFarmBlock.setText(blockBean.getBlockName()+"-"+blockBean.getBlockCode());
+        onFarmVillage.setText(villageBean.getVillageName()+"-"+villageBean.getVillageCode());
 
         listProject = dbHandler.getAllProject();
         String pr = "---- Select Project ----";
